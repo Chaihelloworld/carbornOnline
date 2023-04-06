@@ -1,0 +1,66 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "-t"
+      - "$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME/$_BRANCH_NAME_CI:$_COMMIT_SHA_CI"
+      - .
+      - "-f"
+      - Dockerfile
+
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME/$_BRANCH_NAME_CI:$_COMMIT_SHA_CI"
+    id: Push
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - "--platform=managed"
+      - "--image=$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME/$_BRANCH_NAME_CI:$_COMMIT_SHA_CI"
+      - "--region=$_DEPLOY_REGION"
+      - "--quiet"
+    id: Deploy
+    entrypoint: gcloud
+images:
+  - "$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME/$_BRANCH_NAME_CI:$_COMMIT_SHA_CI"
+# steps:
+#   - name: gcr.io/kaniko-project/executor:latest
+#     args:
+#       - '--dockerfile=Dockerfile'
+#       - '--destination=$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME/$_SERVICE_NAME:$_BRANCH_NAME_CI'
+#       - '--cache=true'
+#       - '--cache-ttl=24h'
+#     id: Build
+#   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+#     args:
+#     - run
+#     - deploy
+#     - $_SERVICE_NAME
+#     - '--platform=managed'
+#     - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME/$_SERVICE_NAME:$_BRANCH_NAME_CI'
+#     # - '--set-env-vars=API_URL=$_API_URL'
+#     - '--region=$_DEPLOY_REGION'
+#     - '--port=3000'
+#     - '--quiet'
+#     id: Deploy
+#     entrypoint: gcloud
+timeout: 1200s
+options:
+  substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _SERVICE_NAME: nvsl-admin-dev
+  _DEPLOY_REGION: asia-southeast1
+  _GCR_HOSTNAME: asia.gcr.io
+  _PLATFORM: managed
+  _BRANCH_NAME_CI: dev
+  _COMMIT_SHA_CI: latest
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - nvsl-admin-dev

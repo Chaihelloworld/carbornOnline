@@ -1,0 +1,776 @@
+.header_detail{
+    margin: 1rem 0;
+    font-weight: bold;
+}
+.header_detail h1,.header_detail h2{
+    font-size: 2rem;
+    color: #FFF;
+    font-weight: bold;
+}
+.header_detail h3{
+    font-size: 1.8rem;
+    color: #DBB752;
+    font-weight: bold;
+}
+.header_detail p{
+    font-size: 1rem;
+    color: #FFF;
+    margin-bottom: 3rem;
+    font-weight:normal;
+}
+.btn_card_loginGame img{
+    width: 26px !important;
+}
+.x_banner_header{
+    padding: 7rem 0 8rem;
+    // background: url(../public/webp/bgsection1.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    // background-position-y: -23px;
+    // height: 800px;
+}
+.x_banner_color{
+    padding: 7rem 1rem 4rem;
+    background: linear-gradient(#1a1a1a 0%, #383737 100%);
+}
+.x_banner_new_page{
+    padding: 6rem 0 3rem  ;
+    // background: url(../public/webp/bgsection1.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -23px;
+    .img-banner-new-page{
+        width: 400px;
+        margin: auto;
+    }
+}
+.box_btn_inside{
+    width: 200px;
+    position: relative;
+}
+
+
+.box_btn_register{
+    margin-top: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.box_btn_register button:focus{
+    outline: none !important;
+    box-shadow: 0 0 15px 2px #FFDC80;
+    border: 1px solid #FFEB80;
+    color: #3C2C00;
+}
+.btn_register{
+    animation: neon-play 1.5s ease infinite;
+}
+.img-banner{
+    width: 450px;
+    margin: auto;
+}
+.logo-banner{
+    width: 300px;
+    // margin: auto;
+}
+.box-header-right{
+    // width: 400px;
+    margin: auto;
+    margin-top: 3rem;
+}
+@-webkit-keyframes x-ball-1 {
+    0% {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+
+    50% {
+        -webkit-transform: translate(15px, -5px) rotate(-5deg);
+        transform: translate(15px, -5px) rotate(-5deg)
+    }
+
+    to {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+}
+
+@keyframes x-ball-1 {
+    0% {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+
+    50% {
+        -webkit-transform: translate(15px, -5px) rotate(-5deg);
+        transform: translate(15px, -5px) rotate(-5deg)
+    }
+
+    to {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+}
+@-webkit-keyframes x-ball-2 {
+    0% {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+
+    50% {
+        -webkit-transform: translate(5px, 10px) rotate(-80deg);
+        transform: translate(5px, 10px) rotate(-80deg)
+    }
+
+    to {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+}
+
+@keyframes x-ball-2 {
+    0% {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+
+    50% {
+        -webkit-transform: translate(5px, 10px) rotate(-80deg);
+        transform: translate(5px, 10px) rotate(-80deg)
+    }
+
+    to {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+}
+@-webkit-keyframes x-ball-3 {
+    0% {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+
+    50% {
+        -webkit-transform: translate(-30px, -15px) rotate(-1deg);
+        transform: translate(-30px, -15px) rotate(-1deg)
+    }
+
+    to {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+}
+
+@keyframes x-ball-3 {
+    0% {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+
+    50% {
+        -webkit-transform: translate(-30px, -15px) rotate(-1deg);
+        transform: translate(-30px, -15px) rotate(-1deg)
+    }
+
+    to {
+        -webkit-transform: translate(0) rotate(0);
+        transform: translate(0) rotate(0)
+    }
+}
+@-webkit-keyframes rotateIn {
+    from {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate3d(0, 0, 1, 365deg);
+        transform: rotate3d(0, 0, 1, 365deg);
+        /* opacity: 0 */
+    }
+    50%{
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: none;
+        transform: none;
+        /* opacity: 1 */
+    }
+    to {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate3d(0, 0, 1, -365deg);
+        transform: rotate3d(0, 0, 1, -365deg);
+        /* opacity: 0 */
+    } /* opacity: 1 */
+}
+@keyframes rotateIn {
+    from {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate3d(0, 0, 1, 365deg);
+        transform: rotate3d(0, 0, 1, 365deg);
+        /* opacity: 0 */
+    }
+    50%{
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: none;
+        transform: none;
+        /* opacity: 1 */
+    }
+    to {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate3d(0, 0, 1, -365deg);
+        transform: rotate3d(0, 0, 1, -365deg);
+        /* opacity: 0 */
+    }
+}
+@keyframes bounce {
+	from, 20%, 53%, 80%, to {
+		animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+		transform: translate3d(0,0,0);
+	}
+
+	40%, 43% {
+		animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+		transform: translate3d(0, -12px, 0);
+	}
+
+	70% {
+		animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+		transform: translate3d(0, -6px, 0);
+	}
+
+	90% {
+		transform: translate3d(0,-1px,0);
+	}
+}
+@keyframes neon-play {
+    0% {
+        box-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 8px #fff, 0 0 10px #fff,
+            0 0 20px #ffdc80, 0 0 30px #ffdc80, 0 0 40px #ffdc80, 0 0 50px #ffdc80;
+    }
+
+    50% {
+        box-shadow: 0 0 2px #fff, 0 0 3px #fff, 0 0 4px #fff, 0 0 5px #fff,
+            0 0 5px #ffdc80, 0 0 10px #ffdc80, 0 0 20px #ffdc80, 0 0 30px #ffdc80;
+    }
+    to {
+        box-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 8px #fff, 0 0 10px #fff,
+            0 0 20px #ffdc80, 0 0 30px #ffdc80, 0 0 40px #ffdc80, 0 0 50px #ffdc80;
+    }
+}
+@-webkit-keyframes swing {
+    20% {
+        -webkit-transform: rotate3d(0, 0, 1, 15deg);
+        transform: rotate3d(0, 0, 1, 15deg)
+    }
+    40% {
+        -webkit-transform: rotate3d(0, 0, 1, -10deg);
+        transform: rotate3d(0, 0, 1, -10deg)
+    }
+    60% {
+        -webkit-transform: rotate3d(0, 0, 1, 5deg);
+        transform: rotate3d(0, 0, 1, 5deg)
+    }
+    80% {
+        -webkit-transform: rotate3d(0, 0, 1, -5deg);
+        transform: rotate3d(0, 0, 1, -5deg)
+    }
+    to {
+        -webkit-transform: rotate3d(0, 0, 1, 0deg);
+        transform: rotate3d(0, 0, 1, 0deg)
+    }
+}
+
+@keyframes swing {
+    20% {
+        -webkit-transform: rotate3d(0, 0, 1, 15deg);
+        transform: rotate3d(0, 0, 1, 15deg)
+    }
+    40% {
+        -webkit-transform: rotate3d(0, 0, 1, -10deg);
+        transform: rotate3d(0, 0, 1, -10deg)
+    }
+    60% {
+        -webkit-transform: rotate3d(0, 0, 1, 5deg);
+        transform: rotate3d(0, 0, 1, 5deg)
+    }
+    80% {
+        -webkit-transform: rotate3d(0, 0, 1, -5deg);
+        transform: rotate3d(0, 0, 1, -5deg)
+    }
+    to {
+        -webkit-transform: rotate3d(0, 0, 1, 0deg);
+        transform: rotate3d(0, 0, 1, 0deg)
+    }
+}
+.btn_ball{
+    position: absolute;
+    top: 8px;
+    left: -18px;
+    width: 84px;
+    height: auto;
+    z-index: 2;
+    animation: swing 1s ease infinite;
+}
+.btn_bas{
+    position: absolute;
+    top: -28px;
+    left: -21px;
+    width: 85px;
+    height: auto;
+    z-index: 1;
+    animation: bounce 1.5s ease infinite;
+}
+// .btn_dice{
+//     position: absolute;
+//     top: 24px;
+//     left: 19px;
+//     width: 45px;
+//     height: auto;
+//     z-index: 2;
+//     animation: swing 1s ease infinite;
+//     // animation-delay: 2s;
+// }
+// .card_gamecamp{
+//     z-index: 5;
+//     text-align: center;
+//     transition: all .4s ease;
+// }
+
+
+.text_gold{
+    background: -webkit-linear-gradient(#C55300, #FFB800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.text_white{
+    color:#FFF
+}
+.gamecamp{
+    margin-top: 2.5rem;
+}
+
+.box_btn_playgame{
+    position: relative;
+    text-align: center;
+    // border-radius: 18px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    background: linear-gradient(180deg, #242424 0%, rgba(0, 0, 0, 0) 100%);
+    padding: 1rem;
+    height: 100%;
+    border-top: 2px solid #FFDAAE;
+    border-left: 2px solid  #fdbf73 ;
+    border-right: 2px solid  #fdbf73 ;
+    // border-image-source: linear-gradient(180deg, #FFDAAE 0%, rgba(255, 138, 0, 0) 100%);
+    
+
+
+    
+    .borderLeft {
+        // border-left: 2px solid #0e0a06;
+        background: linear-gradient(180deg ,transparent 50%,#0e0a06);
+        width: 2px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -2px;
+      }
+    .borderRight {
+        background: linear-gradient(180deg ,transparent 50%,#0e0a06);
+        width: 2px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -2px;
+      }
+    .zone_playgame{
+        margin-top: -65px;
+        .img_game {
+            text-align: right;
+        }
+        .img_game img{
+            width: 110px !important;
+        }
+        p:nth-child(2){
+            font-size: 21px !important;
+        }
+        p:nth-child(5){
+            font-size: 16px !important;
+            font-weight: normal;
+            margin-bottom: 2rem;
+            height: 85px;
+        }
+        p{
+            font-weight: 700;
+            font-size: 25px;
+            margin-bottom: .5rem;
+            text-align: right;
+        }
+        .border_linear_gradient{
+            margin: auto;
+            width: fit-content;
+            padding: 2px;
+            background: linear-gradient(180deg, #FF9900 0%, rgba(255, 122, 0, 0.372168) 49.47%, rgba(140, 50, 0, 0.479167) 52.08%, #FFA800 100%) border-box;
+            border-radius: 50px; 
+            
+            .btn_card_loginGame{
+                color: #FFF;
+                font-size: 1.2rem;
+                background: radial-gradient(100% 100% at 50% 0%, #553D00 0%, #000000 100%);
+                box-shadow: 0px 0px 20px rgba(255, 184, 0, 0.25) ;
+                background-color: none;
+                border: 1px solid #FF9900 !important;
+                box-shadow: 0 0 10px #FFDC80;
+                text-align: center;
+                width: 170px;
+                height: 45px;
+                z-index: 1;
+                border-radius: 50px !important;
+                position: relative;
+                a{
+                    color: #FFF !important;
+                }
+                &:hover{
+                    box-shadow: 0px 0px 15px 0px #FFE2A9;
+                }
+                &:focus{
+                    color: #FFF !important;
+                    box-shadow: 0 0 10px #FFDC80 !important;
+                    outline: 0 !important;
+                }
+                div{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .text_in_btn{
+                        margin-left: .15rem;
+                    }
+                }
+            }
+        }
+    }
+}
+// .btn_card_loginGame::before{
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     border-radius: 50px; 
+//     border: 2px solid transparent;
+//     background: linear-gradient(180deg, #FFE2A9 0%, rgba(255, 168, 0, 0.372168) 49.47%, rgba(140, 93, 0, 0.479167) 49.48%, #FFE2A9 100%) border-box;
+//     -webkit-mask:
+//       linear-gradient(#fff 0 0) padding-box, 
+//       linear-gradient(#fff 0 0);
+//     -webkit-mask-composite: destination-out;
+//     mask-composite: exclude;
+// }
+@media(min-width:1926px){
+    .x_banner_header{
+        background-position-y: -26rem;
+    }
+}
+@media(min-width:992px){
+    // .card_gamecamp:hover{
+    //     transform: translateY(-10px);
+    // }
+    .btn_register:hover{
+        filter: brightness(1.1);
+        color: #3C2C00;
+        border: 1px solid #FFEB80;
+    }
+}
+@media(max-width:1024px){
+    .img-banner{
+        width: 400px;
+    }
+}
+@media(max-width:991.98px){
+    .x_banner_header{
+        background-position: top;
+        background-size: 1400px;
+    }
+    .card_gamecamp:nth-child(3),
+    .card_gamecamp:nth-child(4){
+        margin-top: 3rem;
+    }
+    .logo-banner{
+        width: 260px;
+    }
+    .img-banner{
+        width: 100%;
+    }
+    
+}
+@media(max-width:767.98px){
+    .x_banner_header{
+        background-size: 1500px;
+    }
+    .x_banner_new_page{
+        .img-banner-new-page{
+            width: 350px;
+        }
+    }
+    .box-header-right{
+        display: grid;
+        margin-top: 1rem;
+    }
+    
+    .img-banner{
+        width: 400px;
+    }
+    .logo-banner{
+        margin: auto;
+    }
+    .btn_ball{
+        left: -13px;
+    }
+    .btn_dice{
+        left: 19px;
+    }
+    // .btn_bas{
+    //     left: 29px;
+    // }
+    .header_right{
+        display: grid;
+    }
+    .logo-banner{
+        order: 1;
+        width: 330px;
+        margin-top: 1rem;
+        text-align: center;
+    }
+    .header_detail {
+        order: 2;
+        text-align: center;
+    }
+    .box_btn_register{
+        order: 0;
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .box_btn_inside{
+        margin: auto;
+    }
+    .card_gamecamp{
+        margin-top: 1rem;
+    }
+    .header_detail p{
+        margin-bottom: 0rem;
+    }
+    
+}
+@media(max-width:991.98px){
+    .box-header-right{
+        width: 350px;
+    }
+    
+}
+@media(max-width:575.98px){
+    .header_detail h1{
+        font-size: 1.8rem;
+    }
+    .header_detail p{
+        font-size: 1rem;
+    }
+    .x_banner_header{
+        background-size: 1400px;
+    }
+    .zone_playgame{
+        
+        p:nth-child(5){
+            height: 110px !important;
+        }
+        .border_linear_gradient{
+            width: 70% !important;
+            .btn_card_loginGame{
+                width: 100% !important;
+                height: 45px;
+            }
+        }
+    }
+    // .gamecamp img{
+    //     width: 100% !important;
+    // }
+    .header_detail{
+        text-align: center;
+    }
+    .box_btn_playgame{
+        .zone_playgame{
+            p{
+                font-size: 18px;
+            }
+            p:nth-child(2){
+                font-size: 18px !important;
+            }
+            p:nth-child(5){
+                font-size: 14px !important;
+            }
+        }
+    }
+}
+@media(max-width:425px){
+    .header_detail h1{
+        font-size: 1.6rem;
+    }
+    .header_detail p{
+        font-size: 1rem;
+    }
+    .zone_playgame{
+        .border_linear_gradient{
+            width: 80% !important;
+            .btn_card_loginGame{
+                width: 100% !important;
+                height: 40px !important;
+            }
+        }
+    }
+    .x_banner_header{
+        background-size: 1700px;
+        padding: 7rem 0 3rem;
+    }
+    .btn_card_loginGame{
+        font-size: 1.1rem !important;
+        width: 140px !important;
+        height: 43px !important; 
+    }
+    
+    .x_feature{
+        margin-top: 25rem;
+    }
+    
+    .img-banner{
+        width: 350px;
+    }
+    .logo-banner{
+        width: 300px;
+    }
+    .box-header-right{
+        width: unset;
+    }
+    .header_detail h2{
+        font-size: 2rem;
+    }
+    .header_detail h3{
+        font-size: 1.6rem;
+    }
+    .header_detail p{
+        font-size: 1rem;
+    }
+    .card_gamecamp{
+        margin-top: 0.8rem;
+    }
+    .box_btn_playgame{
+        .zone_playgame{
+            p{
+                font-size: 18px;
+            }
+            p:nth-child(2){
+                font-size: 18px !important;
+            }
+        }
+    }
+}
+@media(max-width:375px){
+    .header_detail h1{
+        font-size: 1.4rem;
+    }
+    .header_detail p{
+        font-size: 1rem;
+    }
+    .zone_playgame{
+        p:nth-child(5){
+            height: 90px !important;
+        }
+    }
+    .x_banner_header{
+        background-size: 1500px;
+    }
+    .border_linear_gradient{
+        width: unset !important;
+    }
+    .box_btn_playgame{
+        .zone_playgame{
+           
+            p:nth-child(5){
+                font-size: 12px !important;
+            }
+           
+        }
+    }
+    .card_gamecamp:nth-child(1),
+    .card_gamecamp:nth-child(3){
+       padding-right: .28rem;
+    }
+    .card_gamecamp:nth-child(2),
+    .card_gamecamp:nth-child(4){
+       padding-left: .28rem;
+    }
+    .btn_card_loginGame{
+        font-size: 1rem !important;
+        width: 130px !important;
+        height: 40px !important; 
+    }
+    .box_btn_playgame{
+        .zone_playgame{
+            p{
+                font-size: 16px;
+            }
+            p:nth-child(2){
+                font-size: 16px !important;
+            }
+        }
+    }
+    .img-banner {
+        width: 300px;
+    }
+    .logo-banner {
+        width: 250px;
+    }
+    
+    .x_banner_new_page{
+        .img-banner-new-page{
+            width: 100%;
+        }
+    }
+    .btn_card_loginGame{
+        font-size: 0.8rem !important;
+        width: 100% !important;
+        height: 43px !important; 
+    }
+}
+@media(max-width:320px){
+    .x_banner_header{
+        background-size: 1400px;
+    }
+    .box_btn_playgame{
+        .zone_playgame{
+            p{
+                font-size: 16px;
+            }
+            p:nth-child(2){
+                font-size: 15px !important;
+            }
+        }
+    }
+    
+    .img-banner {
+        width: 280px;
+    }
+    .logo-banner {
+        width: 230px;
+    }
+    
+    .header_detail {
+        margin: 1rem 0 .5rem;
+    }
+    .card_gamecamp{
+        margin-top: 0.5rem;
+    }
+}
+.btn-warning{
+    background: #FFEB80 !important;
+}

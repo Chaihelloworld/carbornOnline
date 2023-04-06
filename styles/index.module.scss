@@ -1,0 +1,89 @@
+.btn_login {
+    width: 210px;
+    height: 40px;
+    border-radius: 20px !important;
+    // color: #FFF !important;
+    font-size: 1.1rem;
+    background: radial-gradient(100% 100% at 50% 0%, #553D00 0%, #000000 100%);
+    // border: 1px solid #FF9900 !important;
+    // box-shadow: 0px 0px 10px 0px #FF9900;
+    position: relative;
+
+}
+.btn_login::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px; 
+    border: 2px solid transparent;
+    // background: linear-gradient(180deg, #FF9900 0%, rgba(255, 122, 0, 0.372168) 49.47%, rgba(140, 50, 0, 0.479167) 52.08%, #FFA800 100%) border-box;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) padding-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+.toggle{
+    position: relative;
+    width: 50px;
+    height: 40px;
+    // background: #ffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 1s;
+    overflow: hidden;
+    
+    span{
+        position: absolute;
+        background:#fa9044 !important;
+        width: 10px;
+        height: 4px;
+        border-radius: 4px;
+        left: 10px;
+        transition: 0.3s;
+        animation: middle_loader 1s ease infinite;
+    }
+    span:nth-child(1){
+        background: #C55300 !important;
+        transform: translateY(-10px);
+        width: 10px;
+        left: 10px;
+        animation: loader 1s ease infinite;
+    }
+    span:nth-child(2){
+        background:#FFB800 !important;
+        transform: translateY(10px);
+        width: 10px;
+        left: 10px;
+        animation: loader-100 1s ease infinite;
+    }
+    // span:nth-child(3){
+    //     background:#E1A900;
+    // }
+}
+@media(max-width:375px){
+    .toggle{
+        width: 30px;
+        height: 30px;
+        span{
+            left: 5px;
+            height: 3px;
+            animation: middle_loader 1s ease infinite;
+        }
+        span:nth-child(1){
+            left: 5px;
+            animation: loader 1s ease infinite;
+        }
+        span:nth-child(2){
+            left: 5px;
+            animation: loader-100 1s ease infinite;
+        }
+    }
+}
