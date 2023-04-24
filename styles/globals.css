@@ -112,12 +112,34 @@ body,html{
   box-shadow: none !important;
 
 }
+.modal{
+padding: 0 !important;
+}
+.form-select:focus {
+  border-color: #007a06 !important;
+  outline: 0 !important;
+  box-shadow:unset !important;
+  
+}
+
+.form-select:active {
+  border-color: #007a06 !important;
+  outline: 0 !important;
+  box-shadow:unset !important;
+
+}
+option:hover,
+option:focus,
+option:active{
+  background: linear-gradient(#5A2569, #5A2569) !important;
+  padding: 15px;
+}
 
 .modal-content{
   /* background: linear-gradient(180deg,#242424,#000000); */
-  border: 1px solid #C55300 !important;
-  border-radius: 16px !important;
-  box-shadow: 0px 0px 16px #FFB800;
+  /* border: 1px solid #5af3dc!important; */
+  border-radius: 0px !important;
+  /* box-shadow: 0px 0px 4px #5af3dc; */
 }
 .modalAll_modal_content_logout__DOiB1 .modal-dialog .modal-content {
   background: #313131 !important;
@@ -127,12 +149,22 @@ body,html{
 }
 .modal-title{
   text-align: center;
-  /* color: #FFF; */
-  background: -webkit-linear-gradient(#C55300, #FFB800);
+  /* color: #18bd20; */
+  background: -webkit-linear-gradient(#faf5f5, #454645);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold !important;
-  font-size: 30px !important;
+  font-size: 25px !important;
+}
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+    justify-content: center !important;
 }
 .form {
   height: 48px;
@@ -284,10 +316,11 @@ input::-webkit-inner-spin-button {
 }
 .modal-backdrop {
   opacity: .5;
+  background-color: #36363669 !important;
 }
 input {
   font: small-caption;
-  font-size: 1.4rem !important;
+  font-size: 1rem !important;
 }
 .modalSize_sm .modal-content{
   /* position: fixed !important ; */
@@ -319,6 +352,9 @@ input {
 }
 .modal_test_test{
   color:#000;
+}
+.form-control-sm{
+  padding: .35rem .5rem !important;
 }
 .modal_Cancel .modal-content{
   margin: unset !important;
@@ -370,7 +406,7 @@ input {
 }
 @media (min-width: 1200px){
   .container{
-    max-width: 1140px !important;
+    max-width: 1440px !important;
   }
 }
 @media (min-width: 576px) and (max-width: 991px){
@@ -414,7 +450,7 @@ input {
     padding: 0.7rem !important;
   }
   input[type='password'] {
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
   }
    .modal-dialog{
     /* max-width: 100% !important; */

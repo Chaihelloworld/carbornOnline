@@ -1,4 +1,4 @@
-import Banner from '../components/headerBanner';
+import Banner from '../components/productList';
 import Navbar from '../components/NavbarMain';
 
 import ActionBottom from '../components/actionBottom';

@@ -25,15 +25,11 @@ function NavbarMain(props) {
 
     const router = useRouter();
 
-
-   
     const openModalLogin = () => {
         setModalLogin(true);
         check_maintanence();
     };
- 
 
-    
     const [checkScroll, setCheckScroll] = useState(false);
     const [BGcolor, setBGcolor] = useState('transparent');
 
@@ -91,7 +87,7 @@ function NavbarMain(props) {
         };
 
         window.addEventListener('scroll', checkScroll);
-      
+
         window.addEventListener('scroll', windowScrollPage);
         AOS.init();
     }, [cookieToken.newufa_api_token]);
@@ -136,17 +132,11 @@ function NavbarMain(props) {
                                 </Offcanvas.Header>
                                 {cookie.newufa_phone ? (
                                     <>
-                                
-                                           
-                                            <div
-                                                className={'text-white mb-0 mt-3'}
-                                                style={{ marginTop: '-25px', fontSize: '16px' }}>
-                                             
-                                                <p className={'mb-2'}>
-                                                    {' '}
-                                                    Username : tharadon
-                                                </p>
-                                            </div>
+                                        <div
+                                            className={'text-white mb-0 mt-3'}
+                                            style={{ marginTop: '-25px', fontSize: '16px' }}>
+                                            <p className={'mb-2'}> Username : tharadon</p>
+                                        </div>
                                     </>
                                 ) : (
                                     <div className={styles.text_center}>
@@ -167,7 +157,6 @@ function NavbarMain(props) {
                                             show={modalLogin}
                                             onHide={() => setModalLogin(false)}
                                         /> */}
-                                       
                                     </div>
                                 )}
 
@@ -189,7 +178,6 @@ function NavbarMain(props) {
                                                 styles.text_nav,
                                                 styles.text_sideNav
                                             ].join(' ')}>
-   
                                             <div
                                                 className={[styles.img_icon_in_nav]}
                                                 style={{
@@ -197,13 +185,13 @@ function NavbarMain(props) {
                                                     justifyContent: 'center',
                                                     alignItems: 'center'
                                                 }}>
-                                                <Image
+                                                {/* <Image
                                                     src={STORE.ic_navbar_recommend}
                                                     alt="STORE.ic_navbar_recommend"
-                                                />
+                                                /> */}
                                             </div>
                                             <span className={styles.text_white}>
-                                            แผนที่จุดขายสินค้า ลดคาร์บอน
+                                                แผนที่จุดขายสินค้า ลดคาร์บอน
                                             </span>
                                         </Nav.Link>
                                         <Nav.Link
@@ -213,7 +201,6 @@ function NavbarMain(props) {
                                                 styles.text_nav,
                                                 styles.text_sideNav
                                             ].join(' ')}>
-
                                             <div
                                                 className={[styles.img_icon_in_nav]}
                                                 style={{
@@ -221,16 +208,16 @@ function NavbarMain(props) {
                                                     justifyContent: 'center',
                                                     alignItems: 'center'
                                                 }}>
-                                                <Image
+                                                {/* <Image
                                                     src={STORE.ic_document_hover}
                                                     alt="ic_navbar_article"
-                                                />
+                                                /> */}
                                             </div>
                                             <span className={styles.text_white}>
-                                            สินค้าลดคาร์บอน
+                                                สินค้าลดคาร์บอน
                                             </span>
                                         </Nav.Link>
-
+                                       
                                     </Nav>
                                 </Offcanvas.Body>
                             </div>
@@ -239,8 +226,11 @@ function NavbarMain(props) {
                                     {/* <FontAwesomeIcon icon={faLine} color="#FFFFF" pull="left" /> */}
                                     <Image src={STORE.img_line} alt="" width={20} height={20} />
                                     <span style={{ marginLeft: '.3rem' }}>
-                                        <Link href="https://lin.ee/bs1V7UI" passHref>
-                                            <a target="_blank" style={{ color: '#FFF' }}>
+                                        <Link
+                                            // href="https://lin.ee/bs1V7UI"
+                                            href=""
+                                            passHref>
+                                            <a target="_blank" style={{ color: '#4d8b37' }}>
                                                 Line Support
                                             </a>
                                         </Link>
@@ -258,8 +248,7 @@ function NavbarMain(props) {
                                         styles.text_white,
                                         styles.text_nav,
                                         router.pathname == '/#' ? styles.active_text : ''
-                                    ].join(' ')}
-                                >
+                                    ].join(' ')}>
                                     <div
                                         style={{
                                             display: 'flex',
@@ -273,17 +262,19 @@ function NavbarMain(props) {
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}>
-                                                     <div className={styles.none_hover}>
-                                                <Image src={STORE.ic_settings} alt="ic_settings" />
+                                            <div className={styles.none_hover}>
+                                                {/* <Image src={STORE.ic_settings} alt="ic_settings" /> */}
                                             </div>
                                             <div className={styles.ic_hover}>
-                                                <Image
+                                                {/* <Image
                                                     src={STORE.ic_settings_hover}
                                                     alt="ic_settings"
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
-                                        <span style={{ marginLeft: '.2rem' }}>แผนที่จุดขายสินค้า ลดคาร์บอน</span>
+                                        <span style={{ marginLeft: '.2rem' }}>
+                                            แผนที่จุดขายสินค้า ลดคาร์บอน
+                                        </span>
                                     </div>
                                 </Nav.Link>
                                 <Nav.Link
@@ -307,25 +298,55 @@ function NavbarMain(props) {
                                                 alignItems: 'center'
                                             }}>
                                             <div className={styles.none_hover}>
-                                                <Image src={STORE.ic_settings} alt="ic_settings" />
+                                                {/* <Image src={STORE.ic_settings} alt="ic_settings" /> */}
                                             </div>
                                             <div className={styles.ic_hover}>
-                                                <Image
+                                                {/* <Image
                                                     src={STORE.ic_settings_hover}
                                                     alt="ic_settings"
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
-                                        <span style={{ marginLeft: '.2rem' }}>
-                                            สินค้าลดคาร์บอน
-                                        </span>
+                                        <span style={{ marginLeft: '.2rem' }}>สินค้าลดคาร์บอน</span>
+                                    </div>
+                                </Nav.Link>
+                                <Nav.Link
+                                    href="/productList"
+                                    className={[
+                                        styles.text_white,
+                                        styles.text_nav,
+                                        router.pathname == '/productList' ? styles.active_text : ''
+                                    ].join(' ')}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                        <div
+                                            className={[styles.img_icon]}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
+                                            <div className={styles.none_hover}>
+                                                {/* <Image src={STORE.ic_settings} alt="ic_settings" /> */}
+                                            </div>
+                                            <div className={styles.ic_hover}>
+                                                {/* <Image
+                                                    src={STORE.ic_settings_hover}
+                                                    alt="ic_settings"
+                                                /> */}
+                                            </div>
+                                        </div>
+                                        <span style={{ marginLeft: '.2rem' }}>STORE</span>
                                     </div>
                                 </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </div>
                     {!cookie.newufa_phone && isCheck && (
-         
                         <Button
                             className={[stylesINDEX.btn_login, stylesINDEX.btn_register_bar]}
                             onClick={openModalLogin}

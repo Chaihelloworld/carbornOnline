@@ -12,16 +12,17 @@ import MydModalWithGrid from './modal';
 import axios from 'axios';
 import Top_Products from './TopProducts';
 import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
+import Table from 'react-bootstrap/Table';
+import { MdAdd } from 'react-icons/md';
 
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
 
-    const router = useRouter();
     const [modalRegister, setModalResgister] = useState(false);
 
     const [trigger, setTrigger] = useState(false);
-
+    const router = useRouter();
     useEffect(() => {
         AOS.init();
         // fetchLink();
@@ -34,26 +35,13 @@ export default function HeaderBanner(props) {
     // const handleChangeInputSearchFilter = (event) => {
     //     setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
     // };
-    const [listProductCetagory, setListProductCetagory] = useState();
-
     const clearFilter = () => {
         setFilterProduct({ ...filterProduct, [name]: '' });
         setFilterProduct({ ...filterProduct, [category_id]: '' });
         searchFilter();
     };
     const hendleChange = (event) => {
-        console.log(filterProduct);
         setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
-    };
-    const getCategories = async (event) => {
-        try {
-            await axios.get('http://localhost:5000/api/categories').then((response) => {
-                console.log(response.data.data);
-                setListProductCetagory(response.data.data);
-            });
-        } catch (error) {
-            console.log(error);
-        }
     };
     const searchFilter = async (event) => {
         if (event) {
@@ -91,9 +79,6 @@ export default function HeaderBanner(props) {
         }
         // searchFilter();
     }, [filterProduct.name]);
-    useEffect(() => {
-        getCategories();
-    }, []);
     // console.log(setFilter_Product);
     return (
         <div>
@@ -136,24 +121,9 @@ export default function HeaderBanner(props) {
                                                             name={filterProduct.category_id}
                                                             id="category_id"
                                                             onChange={hendleChange}>
-                                                            {/* <option> ประเภทสินค้า</option>
+                                                            <option> ประเภทสินค้า</option>
                                                             <option value={1}>ของใช้</option>
-                                                            <option value={2}>อาหาร</option> */}
-                                                            <option key={-1} value={-1}>
-                                                                ประเภทอุตสาหกรรม
-                                                            </option>
-                                                            {listProductCetagory &&
-                                                                listProductCetagory.map(
-                                                                    (data, index) => {
-                                                                        return (
-                                                                            <option
-                                                                                key={index}
-                                                                                value={data.id}>
-                                                                                {data.name}
-                                                                            </option>
-                                                                        );
-                                                                    }
-                                                                )}
+                                                            <option value={2}>อาหาร</option>
                                                         </Form.Select>
                                                     </InputGroup>
                                                 </Col>
@@ -191,70 +161,90 @@ export default function HeaderBanner(props) {
                                         <Col xs={12} md={12}>
                                             <div
                                                 style={{
+                                                    background: 'green',
                                                     width: '100%',
-                                                    // height: '150px'
-
-                                                    position: 'relative'
-
+                                                    height: '150px'
                                                 }}>
-                                                <Image src={STORE.banner} alt="banner" 
-                                                   objectFit="cover"
-
-                                                  />
+                                                BANNER
                                             </div>
                                         </Col>
                                         <br />
                                     </div>
-                                    {listProduct &&
-                                        listProduct.map((data, index) => {
-                                            return (
-                                                <>
-                                                    <Col
-                                                        key={index}
-                                                        md={3}
-                                                        style={{ paddingBottom: '20px' }}>
-                                                        <Button
+                                    <div>
+                                        <Button
+                                            variant="primary"
+                                            size="md"
+                                            style={{ float: 'right',display:'flex',justifyContent:'center' ,alignItems:'center'}}
+                                            onClick={()=>{router.push('/createStore')}}
+                                            >
+                                            <MdAdd fontSize={'25px'} />
+                                            เพิ่มข้อมูล
+                                        </Button>{' '}
+                                        <br />
+                                    </div>
+                                    <Table striped>
+                                        <thead>
+                                            <tr align="center">
+                                                <th>#</th>
+                                                <th>รูป Product</th>
+                                                <th>ชื่อ Product</th>
+                                                <th>Carbon (CO2Kg)</th>
+                                                <th>ประเภท</th>
+                                                <th>จัดการ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {listProduct &&
+                                                listProduct.map((data, index) => {
+                                                    return (
+                                                        <tr
+                                                            key={index}
                                                             style={{
-                                                                display: 'contents',
-                                                                position: 'absolute'
-                                                            }}
-                                                            onClick={() => {
-                                                                setModalShow(true), Productid(data);
+                                                                fontSize: '16px',
+                                                                paddingTop: '25px'
                                                             }}>
-                                                            <Card key={index}>
-                                                                <div style={{ margin: 'auto' }}>
-                                                                    <Image
-                                                                        src={STORE.cart}
-                                                                        // src={`${i.img}`}
-                                                                        alt="cart"
-                                                                        width={120}
-                                                                        height={120}
-                                                                    />
-                                                                </div>
-                                                                <Card.Body
-                                                                    style={{ color: 'black' }}>
-                                                                    <Card.Title>
-                                                                        {data.name}
-                                                                    </Card.Title>
-                                                                    <div>
-                                                                        ปริมาณ CF: {data.CO2} kgCO2e
-                                                                    </div>
-                                                                    <br />{' '}
-                                                                    <Card.Text>
-                                                                        {/* สถานที่จำหน่าย : {i.marksell} */}
-                                                                    </Card.Text>
-                                                                </Card.Body>
-                                                            </Card>
-                                                        </Button>
-                                                    </Col>
-                                                </>
-                                            );
-                                        })}
-                                    <MydModalWithGrid
-                                        show={modalShow}
-                                        data={productid}
-                                        onHide={() => setModalShow(false)}
-                                    />
+                                                            <td
+                                                                align="center"
+                                                                style={{ paddingTop: '25px' }}>
+                                                                {index + 1}
+                                                            </td>
+                                                            <td align="center">
+                                                                <Image
+                                                                    src={STORE.cart}
+                                                                    width={50}
+                                                                    height={50}
+                                                                />
+                                                            </td>
+                                                            <td
+                                                                align="center"
+                                                                style={{ paddingTop: '25px' }}>
+                                                                {data.name}
+                                                            </td>
+                                                            <td
+                                                                align="center"
+                                                                style={{ paddingTop: '25px' }}>
+                                                                {' '}
+                                                                {data.CO2}
+                                                            </td>
+                                                            <td
+                                                                align="center"
+                                                                style={{ paddingTop: '25px' }}>
+                                                                {data.category_id == 1
+                                                                    ? 'ขนมขบเคี้ยว'
+                                                                    : data.category_id == 2
+                                                                    ? 'เครื่องดื่ม'
+                                                                    : ''}
+                                                            </td>
+                                                            <td
+                                                                align="center"
+                                                                style={{ paddingTop: '25px' }}>
+                                                                123
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </Table>
                                 </Row>
                                 <div style={{ float: 'right' }}>
                                     <Pagination>

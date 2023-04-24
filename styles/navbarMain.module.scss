@@ -91,7 +91,7 @@
         display: none !important;
     }
     &:hover{
-        background: -webkit-linear-gradient(#C55300, #FFB800);
+        background: -webkit-linear-gradient(#ffee00, #ffee00);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: bold;
@@ -104,7 +104,7 @@
     }
 }
 .active_text{
-    background: -webkit-linear-gradient(#C55300, #FFB800) !important;
+    background: -webkit-linear-gradient(#ffee00, #ffee00) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     font-weight: bold !important;
@@ -147,7 +147,7 @@
 // --------------------------- sidebar ---------------------------------
 
 .offcanvas {
-    background-color: #111111 !important;
+    background-color: #4d8b37 !important;
     width: 280px !important;
     height: 100%;
     border-radius: 0px 14px 14px 0px;
@@ -185,7 +185,7 @@
 
 .line_bar {
     height: 40px;
-    background-color: #383838;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -231,7 +231,7 @@
 .menu_additional {
     color: #FFF;
     font-size: 17px;
-    background-color: #111111;
+    background-color: #4d8b37;
     margin-top: -28px;
     z-index: 1;
 }

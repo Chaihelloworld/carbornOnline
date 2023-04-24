@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^3.0.4",
     "react-helmet": "^6.1.0",
+    "react-icons": "^4.8.0",
     "react-loading": "^2.0.3",
     "react-otp-input": "^2.4.0",
     "react-player": "^2.9.0",

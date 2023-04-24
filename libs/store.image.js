@@ -11,9 +11,11 @@ import menu2 from '../public/newimg/event.png';
 import menu3 from '../public/newimg/basket.png';
 import menu4 from '../public/newimg/search-location.png';
 import menu5 from '../public/newimg/user.png';
+import banner from '../public/newimg/banner.png'
 
 
 const STORE = {
+    banner:banner,
     menu1:menu1,
     menu2:menu2,
     menu3:menu3,

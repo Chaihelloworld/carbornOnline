@@ -1,4 +1,7 @@
 module.exports = {
+    // images: {
+    //     formats: ['image/avif', 'image/webp'],
+    // },
     images: {
         formats: ['image/avif', 'image/webp'],
     },

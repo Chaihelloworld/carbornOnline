@@ -1,0 +1,34 @@
+[{
+    "type": "food",
+    "subType": "sodadrink",
+    "id": "1",
+    "title": "โค้ก",
+    "carbon": 60.5,
+    "marksell":"7ELEVEN",
+    "img":"/newimg/img1.jpg"
+},{
+    "type": "food",
+    "subType": "sodadrink",
+    "id": "2",
+    "title": "โค้กไม่มีน้ำตาล",
+    "carbon": 55.5,
+    "marksell":"7ELEVEN",
+    "img":"/newimg/img2.jpg"
+}
+,{
+    "type": "food",
+    "subType": "sodadrink",
+    "id": "3",
+    "title": "แฟนต้า สตอเบอรี่",
+    "carbon": 70.5,
+    "marksell":"7ELEVEN",
+    "img":"/newimg/img3.jpg"
+},{
+    "type": "food",
+    "subType": "mainfood",
+    "id": "4",
+    "title": "เบอเกอร์หมูรมควัน",
+    "carbon": 160.5,
+    "marksell":"7ELEVEN",
+    "img":"/newimg/img4.jpg"
+}]
