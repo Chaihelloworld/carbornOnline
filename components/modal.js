@@ -14,22 +14,24 @@ function MydModalWithGrid(props) {
     const [CO2, setCO2] = useState(0);
     const [type, setType] = useState();
     const [description, setDescription] = useState();
+    const [img, setImg] = useState();
+    const [datail, setDetail] = useState([]);
 
     const searchFilter = async () => {
-        if (props.data) {
-            try {
-                await axios
-                    .get(`http://localhost:5000/api/info_product?id=${props.data.id}`)
-                    .then((response) => {
-                        console.log(response.data.data);
-                        setName(response.data.data[0].name);
-                        setCO2(response.data.data[0].CO2);
-                        setType(response.data.data[0].category_name);
-                        setDescription(response.data.data[0].description);
-                    });
-            } catch (error) {
-                console.log(error);
-            }
+        try {
+            await axios
+                .get(`http://localhost:5000/api/info_product?id=${props.data.id}`)
+                .then((response) => {
+                    setDetail(response.data.data);
+                    setName(response.data.data[0].name);
+                    setCO2(response.data.data[0].CO2);
+                    setType(response.data.data[0].category_name);
+                    setDescription(response.data.data[0].description);
+                    setImg(response.data.data[0].image);
+                    console.log(response.data.data[0].image);
+                });
+        } catch (error) {
+            console.log(error);
         }
     };
     useEffect(() => {
@@ -48,112 +50,105 @@ function MydModalWithGrid(props) {
                 </Modal.Header>
                 <Modal.Body className="show-grid">
                     <Container>
-                        <Row>
-                            <Col xs={12} md={4}>
-                                <div
-                                    style={{
-                                        margin: 'auto',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        flexDirection: 'column',
-                                        alignContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    {/* {console.log(i.img)} */}
-                                    <Image
-                                        src={STORE.cart}
-                                        // src='/newimg/img1.jpg'
-                                        // src={props.data ? props.data.img : ''}
-                                        alt="cart"
-                                        margin={'auto'}
-                                        width={400}
-                                        height={400}
-                                    />
-                                    <p
-                                        style={{
-                                            fontSize: '30px',
-                                            background: '#4d8b37',
-                                            width: '100%',
-                                            borderRadius: '35px',
-                                            color: '#FFF',
-                                            padding: '11px',
-                                        }}>
-                                        &ensp;{name ? name : ''}
-                                    </p>
-                                </div>
-                            </Col>
-                            <Col xs={12} md={8}>
-                                <style jsx>{`
-                                    .text {
-                                        font-size: 10px;
-                                        background-color: #d0e523;
-                                        width: 100%;
-                                        padding: 10px;
-                                    }
-                                    .texthead {
-                                        font-size: 15px;
-                                        width: 100%;
-                                        padding: 10px;
-                                    }
-                                    @media (min-width: 991.98px) {
-                                        .text {
-                                            font-size: 15px;
-                                        }
-                                        .texthead {
-                                            font-size: 20px;
-                                        }
-                                    }
-                                    @media (min-width: 791.98px) {
-                                        .text {
-                                            font-size: 15px;
-                                        }
-                                        .texthead {
-                                            font-size: 25px;
-                                        }
-                                    }
-                                `}</style>
+                        {datail.map((data, index) => {
+                            return (
+                                <>
+                                    <Row key={index}>
+                                        <Col xs={12} md={4}>
+                                            <div
+                                                style={{
+                                                    margin: 'auto',
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    flexDirection: 'column',
+                                                    alignContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
+                                                {/* {console.log(i.img)} */}
+                                                <Image
+                                                    src={data.image}
+                                                    // src='/newimg/img1.jpg'
+                                                    // src={props.data ? props.data.img : ''}
+                                                    alt="cart"
+                                                    margin={'auto'}
+                                                    width={400}
+                                                    height={400}
+                                                />
+                                                {/* <p
+                                                    style={{
+                                                        fontSize: '25px',
+                                                        background: '#4d8b37',
+                                                        width: '100%',
+                                                        borderRadius: '35px',
+                                                        color: '#FFF',
+                                                        padding: '11px'
+                                                    }}>
+                                                    &ensp;{data ? data.name : ''}
+                                                </p> */}
+                                            </div>
+                                        </Col>
+                                        <Col xs={12} md={8}>
+                                            <style jsx>{`
+                                                .text {
+                                                    font-size: 10px;
+                                                    // background-color: #d0e523;
+                                                    width: 100%;
+                                                    padding: 10px;
+                                                }
+                                                .texthead {
+                                                    font-size: 15px;
+                                                    // background-color: #d0e523;
+                                                    // border-radius: 10px;
+                                                    color: #007a06;
+                                                    width: 100%;
+                                                    padding: 10px;
+                                                }
 
-                                <p className="texthead"> {name ? name : ''}</p>
-                                <p className="texthead"> {description ? description : ''}</p>
+                                                .textheadDes {
+                                                    font-size: 15px;
+                                                    width: 100%;
+                                                    padding: 10px;
+                                                }
+                                                @media (min-width: 991.98px) {
+                                                    .text {
+                                                        font-size: 15px;
+                                                    }
+                                                    .texthead {
+                                                        font-size: 20px;
+                                                    }
+                                                }
+                                                @media (min-width: 791.98px) {
+                                                    .text {
+                                                        font-size: 15px;
+                                                    }
+                                                    .texthead {
+                                                        font-size: 25px;
+                                                    }
+                                                }
+                                            `}</style>
 
-                                {/* <span > สินค้าใกล้เคียง</span>
-                                <Row>
-                                    <Col xs={4} md={4}>
-                                        <div
-                                            style={{
-                                                margin: 'auto',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                flexDirection: 'column',
-                                                alignContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
-                                            <Image
-                                                src={STORE.cart}
-                                                alt="cart"
-                                                margin={'auto'}
-                                                width={120}
-                                                height={120}
-                                            />
+                                            <p className="texthead"> {data ? data.name : ''}</p>
+                                            <hr />
+                                            <p className="text"> ข้อมูลรายละเอียด &ensp;<br/>{data ? data.description : ''}</p>
 
-                                            <p className="text">
-                                                {props.data ? props.data.title : ''}
-                                            </p>
-                                        </div>
-                                    </Col>
-                                </Row> */}
-                                <Row>
-                                    <Col>
-                                        <hr />
-                                        <p style={{ fontSize: '20px' }}> ประเภทสินค้า : {type}</p>
-                                        <p style={{ fontSize: '20px' }}>
-                                            {' '}
-                                            ลดคาร์บอน : {CO2 ? CO2 : ''} kgCO2e
-                                        </p>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
+                                            <Row>
+                                                <Col>
+                                                    <hr />
+                                                    <p style={{ fontSize: '20px' }}>
+                                                        {' '}
+                                                        ประเภทสินค้า : {type}
+                                                    </p>
+                                                    <p style={{ fontSize: '20px' }}>
+                                                        {' '}
+                                                        ลดคาร์บอน : {data ? data.CO2 : ''} kgCO2e
+                                                    </p>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                </>
+                            );
+                        })}
 
                         <Row>
                             <Col xs={12} md={12}>
@@ -166,78 +161,78 @@ function MydModalWithGrid(props) {
                                         {/* <Sonnet /> */}
                                     </Tab>
                                     <Tab eventKey="profile" title="เปรียบเทียบสินค้า">
-                                        <span > สินค้าใกล้เคียง</span>
-                                <Row>
-                                    <Col xs={4} md={4}>
-                                        <div
-                                            style={{
-                                                margin: 'auto',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                flexDirection: 'column',
-                                                alignContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
-                                            <Image
-                                                src={STORE.cart}
-                                                alt="cart"
-                                                margin={'auto'}
-                                                width={120}
-                                                height={120}
-                                            />
+                                        <span> สินค้าใกล้เคียง</span>
+                                        <Row>
+                                            <Col xs={4} md={4}>
+                                                <div
+                                                    style={{
+                                                        margin: 'auto',
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        flexDirection: 'column',
+                                                        alignContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                    <Image
+                                                        src={STORE.cart}
+                                                        alt="cart"
+                                                        margin={'auto'}
+                                                        width={120}
+                                                        height={120}
+                                                    />
 
-                                            <p className="text">
-                                                {props.data ? props.data.title : ''}
-                                            </p>
-                                        </div>
-                                    </Col>
-                                    <Col xs={4} md={4}>
-                                        <div
-                                            style={{
-                                                margin: 'auto',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                flexDirection: 'column',
-                                                alignContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
-                                            <Image
-                                                src={STORE.cart}
-                                                alt="cart"
-                                                margin={'auto'}
-                                                width={120}
-                                                height={120}
-                                            />
+                                                    <p className="text">
+                                                        {props.data ? props.data.title : ''}
+                                                    </p>
+                                                </div>
+                                            </Col>
+                                            <Col xs={4} md={4}>
+                                                <div
+                                                    style={{
+                                                        margin: 'auto',
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        flexDirection: 'column',
+                                                        alignContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                    <Image
+                                                        src={STORE.cart}
+                                                        alt="cart"
+                                                        margin={'auto'}
+                                                        width={120}
+                                                        height={120}
+                                                    />
 
-                                            <p className="text">
-                                                {props.data ? props.data.title : ''}
-                                            </p>
-                                        </div>
-                                    </Col>
-                                    <Col xs={4} md={4}>
-                                        <div
-                                            style={{
-                                                margin: 'auto',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                flexDirection: 'column',
-                                                alignContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
-                                            <Image
-                                                src={STORE.cart}
-                                                alt="cart"
-                                                margin={'auto'}
-                                                width={120}
-                                                height={120}
-                                            />
+                                                    <p className="text">
+                                                        {props.data ? props.data.title : ''}
+                                                    </p>
+                                                </div>
+                                            </Col>
+                                            <Col xs={4} md={4}>
+                                                <div
+                                                    style={{
+                                                        margin: 'auto',
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        flexDirection: 'column',
+                                                        alignContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                    <Image
+                                                        src={STORE.cart}
+                                                        alt="cart"
+                                                        margin={'auto'}
+                                                        width={120}
+                                                        height={120}
+                                                    />
 
-                                            <p className="text">
-                                                {props.data ? props.data.title : ''}
-                                            </p>
-                                        </div>
-                                    </Col>
-                                </Row>
+                                                    <p className="text">
+                                                        {props.data ? props.data.title : ''}
+                                                    </p>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                         {/* <Sonnet /> */}
                                     </Tab>
                                     <Tab eventKey="longer-tab" title="จุดขาย">

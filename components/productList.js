@@ -1,6 +1,6 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Container, Row, Col, Button, Card, Form, Pagination, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Form, Pagination, InputGroup,Spinner } from 'react-bootstrap';
 import styles from '../styles/headerBanner.module.scss';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -11,10 +11,16 @@ import data from './product.json';
 import MydModalWithGrid from './modal';
 import axios from 'axios';
 import Top_Products from './TopProducts';
-import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
+import { FaSearch, FaSync, FaFilter, FaRegClipboard } from 'react-icons/fa';
 import Table from 'react-bootstrap/Table';
 import { MdAdd } from 'react-icons/md';
+import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '../libs/firebase';
+import firebase from '../libs/firebase';
+import { fill } from '@cloudinary/url-gen/actions/resize';
+import Swal from 'sweetalert2'
 
+import { CloudinaryImage } from '@cloudinary/url-gen';
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
@@ -43,7 +49,9 @@ export default function HeaderBanner(props) {
     const hendleChange = (event) => {
         setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
     };
+  const [isLoading,setLoading] = useState(false)
     const searchFilter = async (event) => {
+        setLoading(true)
         if (event) {
             event.preventDefault();
             try {
@@ -57,6 +65,8 @@ export default function HeaderBanner(props) {
                     .then((response) => {
                         // console.log(response.data);
                         setListProduct(response.data.data);
+                        setLoading(false)
+
                     });
             } catch (error) {
                 console.log(error);
@@ -66,6 +76,8 @@ export default function HeaderBanner(props) {
                 await axios.get('http://localhost:5000/api/products_list').then((response) => {
                     // console.log(response.data);
                     setListProduct(response.data.data);
+                    setLoading(false)
+
                 });
             } catch (error) {
                 console.log(error);
@@ -73,6 +85,34 @@ export default function HeaderBanner(props) {
         }
     };
 
+    const deleteProduct = async (id) => {
+
+        Swal.fire({
+            title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
+            showCloseButton: true,
+            icon: 'error',
+            reverseButtons: true,
+            showCancelButton: true,
+            confirmButtonText: `ยืนยัน`,
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'ยกเลิก'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    try {
+                        console.log(id);
+                        await axios
+                            .delete(`http://localhost:5000/api/delete_product?id=${id}`)
+                            .then((response) => {
+                                console.log(response);
+                                searchFilter();
+                            });
+                    } catch (error) {
+                        console.log(error);
+                    }
+            }
+        }});
+    };
     useEffect(() => {
         if (filterProduct.name == '') {
             searchFilter();
@@ -161,11 +201,16 @@ export default function HeaderBanner(props) {
                                         <Col xs={12} md={12}>
                                             <div
                                                 style={{
-                                                    background: 'green',
                                                     width: '100%',
-                                                    height: '150px'
+                                                    // height: '150px'
+
+                                                    position: 'relative'
                                                 }}>
-                                                BANNER
+                                                <Image
+                                                    src={STORE.banner}
+                                                    alt="banner"
+                                                    objectFit="cover"
+                                                />
                                             </div>
                                         </Col>
                                         <br />
@@ -174,9 +219,15 @@ export default function HeaderBanner(props) {
                                         <Button
                                             variant="primary"
                                             size="md"
-                                            style={{ float: 'right',display:'flex',justifyContent:'center' ,alignItems:'center'}}
-                                            onClick={()=>{router.push('/createStore')}}
-                                            >
+                                            style={{
+                                                float: 'right',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}
+                                            onClick={() => {
+                                                router.push('/createStore');
+                                            }}>
                                             <MdAdd fontSize={'25px'} />
                                             เพิ่มข้อมูล
                                         </Button>{' '}
@@ -194,7 +245,7 @@ export default function HeaderBanner(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {listProduct &&
+                                            { listProduct && !isLoading ?
                                                 listProduct.map((data, index) => {
                                                     return (
                                                         <tr
@@ -210,10 +261,15 @@ export default function HeaderBanner(props) {
                                                             </td>
                                                             <td align="center">
                                                                 <Image
-                                                                    src={STORE.cart}
+                                                                    src={data.image}
+                                                                    alt="My Image"
                                                                     width={50}
                                                                     height={50}
                                                                 />
+                                                                {/* <Image src={myImage} /> */}
+                                                                {/* {data.image} */}
+                                                                {/* {data.image} */}
+                                                                {/* {Preview(`${data.image}`)} */}
                                                             </td>
                                                             <td
                                                                 align="center"
@@ -229,22 +285,51 @@ export default function HeaderBanner(props) {
                                                             <td
                                                                 align="center"
                                                                 style={{ paddingTop: '25px' }}>
-                                                                {data.category_id == 1
-                                                                    ? 'ขนมขบเคี้ยว'
-                                                                    : data.category_id == 2
-                                                                    ? 'เครื่องดื่ม'
-                                                                    : ''}
+                                                                {data.category_name}
                                                             </td>
                                                             <td
                                                                 align="center"
-                                                                style={{ paddingTop: '25px' }}>
-                                                                123
+                                                                style={{ paddingTop: '20px' }}>
+                                                                {/* <Button size='sm' style={{ backgroundColor: '#ac2bac' ,borderRadius:'50%'}} href='#'> */}
+                                                                <Button
+                                                                    variant="link"
+                                                                    onClick={() => {
+                                                                        setModalShow(true),
+                                                                            Productid(data);
+                                                                    }}>
+                                                                    {' '}
+                                                                    <FaRegClipboard fontSize={18} />
+                                                                </Button>
+
+                                                                <Button
+                                                                    variant="link"
+                                                                    onClick={() => {
+                                                                        deleteProduct(data.id);
+                                                                    }}>
+                                                                    {' '}
+                                                                    <FaRegClipboard fontSize={18} />
+                                                                </Button>
+                                                                {/* </Button> */}
                                                             </td>
                                                         </tr>
                                                     );
-                                                })}
+                                                }): 
+                                                <tr>
+                                                <td colSpan="16" style={{ textAlign: 'center' }}>
+                                                  <div style={{ display: 'inline-block' }}>
+                                                  <Spinner animation="border" variant="success" />
+
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                                }
                                         </tbody>
                                     </Table>
+                                    <MydModalWithGrid
+                                        show={modalShow}
+                                        data={productid}
+                                        onHide={() => setModalShow(false)}
+                                    />
                                 </Row>
                                 <div style={{ float: 'right' }}>
                                     <Pagination>

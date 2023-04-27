@@ -28,7 +28,7 @@ export default function HeaderBanner(props) {
     }, []);
     const [listProduct, setListProduct] = useState();
     const [filterProduct, setFilterProduct] = useState({
-        name: '',
+        name: null,
         category_id: null
     });
     // const handleChangeInputSearchFilter = (event) => {
@@ -37,13 +37,23 @@ export default function HeaderBanner(props) {
     const [listProductCetagory, setListProductCetagory] = useState();
 
     const clearFilter = () => {
-        setFilterProduct({ ...filterProduct, [name]: '' });
-        setFilterProduct({ ...filterProduct, [category_id]: '' });
+        setFilterProduct({ ...filterProduct, ['name']: '' });
+        setFilterProduct({ ...filterProduct, ['category_id']: null });
+        // router.push('/')
+
+        // location.reload();
         searchFilter();
     };
     const hendleChange = (event) => {
-        console.log(filterProduct);
-        setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
+        if(event.target.id == 'category_id' && event.target.value == -1){
+            console.log(filterProduct);
+
+            setFilterProduct({ ...filterProduct, [event.target.id]: null });
+
+        }else{
+            setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
+        }
+       
     };
     const getCategories = async (event) => {
         try {
@@ -86,7 +96,7 @@ export default function HeaderBanner(props) {
     };
 
     useEffect(() => {
-        if (filterProduct.name == '') {
+        if (filterProduct.name == '' || filterProduct.name == null) {
             searchFilter();
         }
         // searchFilter();
@@ -146,11 +156,13 @@ export default function HeaderBanner(props) {
                                                                 listProductCetagory.map(
                                                                     (data, index) => {
                                                                         return (
-                                                                            <option
-                                                                                key={index}
-                                                                                value={data.id}>
-                                                                                {data.name}
-                                                                            </option>
+                                                                            <>
+                                                                                <option
+                                                                                    key={index}
+                                                                                    value={data.id}>
+                                                                                    {data.name}
+                                                                                </option>
+                                                                            </>
                                                                         );
                                                                     }
                                                                 )}
@@ -195,12 +207,12 @@ export default function HeaderBanner(props) {
                                                     // height: '150px'
 
                                                     position: 'relative'
-
                                                 }}>
-                                                <Image src={STORE.banner} alt="banner" 
-                                                   objectFit="cover"
-
-                                                  />
+                                                <Image
+                                                    src={STORE.banner}
+                                                    alt="banner"
+                                                    objectFit="cover"
+                                                />
                                             </div>
                                         </Col>
                                         <br />
@@ -224,8 +236,8 @@ export default function HeaderBanner(props) {
                                                             <Card key={index}>
                                                                 <div style={{ margin: 'auto' }}>
                                                                     <Image
-                                                                        src={STORE.cart}
-                                                                        // src={`${i.img}`}
+                                                                        // src={STORE.cart}
+                                                                        src={`${data.image}`}
                                                                         alt="cart"
                                                                         width={120}
                                                                         height={120}

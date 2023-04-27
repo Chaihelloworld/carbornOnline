@@ -13,7 +13,10 @@ import axios from 'axios';
 import Top_Products from './TopProducts';
 import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
 import Table from 'react-bootstrap/Table';
-import { MdAdd } from 'react-icons/md';
+import { storage } from '../libs/firebase';
+import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { v4 } from 'uuid';
+import Swal from 'sweetalert2';
 
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -32,31 +35,96 @@ export default function HeaderBanner(props) {
         name: '',
         category_id: null
     });
-    // const handleChangeInputSearchFilter = (event) => {
-    //     setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
-    // };
+    const [paramData, setParamData] = useState({
+        name: '',
+        description: '',
+        image: '',
+        CO2: 0,
+        // type_products: [],
+        category_id: 0
+    });
+    const [urls, setUrl] = useState();
+
+    const handleChangeInputSearchFilter = (event) => {
+        setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
+    };
+
+    // const fileRef = ref(storage, 'images/322009532_612865703940880_7966293539931641968_n.pngea9ff755-edd7-4cc3-8ec5-dc10ef31006b');
+    // useEffect(() => {
+    //     getDownloadURL(fileRef)
+    //         .then((url) => {
+    //             // Use the URL to download the file or display it in your application
+    //             console.log(url);
+    //         })
+    //         .catch((error) => {
+    //             // Handle any errors
+    //         });
+    // });
     const clearFilter = () => {
         setFilterProduct({ ...filterProduct, [name]: '' });
         setFilterProduct({ ...filterProduct, [category_id]: '' });
         searchFilter();
     };
-    const hendleChange = (event) => {
-        setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
-    };
     const [selectedImage, setSelectedImage] = useState(null);
+    const [stateUplaod, setUpload] = useState(false);
 
-    const handleFileInputChange = (event) => {
-        setSelectedImage(event.target.files[0]);
+    const handleFileInputChange = async (event) => {
+        const data = event.target.files[0];
+        // const res = await axios.post('https://api.cloudinary.com/v1_1/dn3cgnwcy/image/uplaod', {
+        //     body: data
+        // });
+        // console.log(res);
+
+        if (data == null) return;
+        console.log(data);
+        const imageRef = ref(storage, `images/${data.name + v4()}`);
+        uploadBytes(imageRef, data).then(async (res) => {
+            setUpload(true);
+
+            const fileRef = ref(storage, `images/${res.metadata.name}`);
+            try {
+                const url = await getDownloadURL(fileRef);
+
+                setParamData({ ...paramData, ['image']: url });
+            } catch (error) {
+                console.log(error);
+                return null;
+            }
+        });
+
+        // downloadTokens
+    };
+    const hendleChange = (event) => {
+        console.log(selectedImage);
+
+        console.log('this', event.target.id, event.target.value);
+        setParamData({ ...paramData, [event.target.id]: event.target.value });
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = async () => {
         // handle form submit here
+
+        try {
+            await axios
+                .post('http://localhost:5000/api/create_products', {
+                    name: paramData.name,
+                    description: paramData.description,
+                    image: paramData.image,
+                    CO2: paramData.CO2,
+                    // type_products: [],
+                    category_id: paramData.category_id
+                })
+                .then((response) => {
+                    // console.log(response.data);
+                    console.log('success', response.data.message);
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
     const searchFilter = async (event) => {
         try {
             await axios.get('http://localhost:5000/api/categories').then((response) => {
-                // console.log(response.data);
                 setListProductCetagory(response.data.data);
             });
         } catch (error) {
@@ -71,7 +139,6 @@ export default function HeaderBanner(props) {
         // searchFilter();
     }, [filterProduct.name]);
     // console.log(setFilter_Product);
-
     return (
         <div>
             <div className={styles.x_banner_header}>
@@ -149,10 +216,11 @@ export default function HeaderBanner(props) {
                                                             position: 'relative'
                                                         }}>
                                                         <Image
+                                                            // src={URL.createObjectURL(selectedImage)}
                                                             src={URL.createObjectURL(selectedImage)}
                                                             alt="Selected Image"
-                                                            width="400px"
-                                                            height="300px"
+                                                            // width="400px"
+                                                            // height="300px"
                                                             layout="fill"
                                                             objectFit="cover"
                                                         />
@@ -166,8 +234,8 @@ export default function HeaderBanner(props) {
                                                         }}>
                                                         <Image
                                                             src={STORE.cart}
-                                                            width="300px"
-                                                            height="300px"
+                                                            // width="300px"
+                                                            // height="300px"
                                                             alt="Picture of the author"
                                                             layout="fill"
                                                             // objectFit="cover"
@@ -181,7 +249,7 @@ export default function HeaderBanner(props) {
                                                     justifyContent: 'center'
                                                 }}>
                                                 <label
-                                                    for="inputField"
+                                                    htmlFor="image"
                                                     style={{
                                                         color: '#FFF',
                                                         background: '#008000',
@@ -192,11 +260,15 @@ export default function HeaderBanner(props) {
                                                 </label>
 
                                                 <input
-                                                    id="inputField"
+                                                    id="image"
+                                                    // name='image'
                                                     type="file"
                                                     style={{ display: 'none' }}
                                                     accept="image/*"
-                                                    onChange={handleFileInputChange}
+                                                    onChange={(event) => {
+                                                        setSelectedImage(event.target.files[0]);
+                                                        handleFileInputChange(event);
+                                                    }}
                                                 />
                                             </div>
 
@@ -207,33 +279,67 @@ export default function HeaderBanner(props) {
                                         <Form>
                                             <Form.Group
                                                 className="mb-3"
-                                                controlId="exampleForm.ControlInput1">
+                                                name="name"
+                                                id="name"
+                                                value="name"
+                                                onChange={hendleChange}>
                                                 <Form.Label>ชื่อ ผลิตภัณฑ์</Form.Label>
-                                                <Form.Control type="text" />
+                                                <Form.Control
+                                                    type="text"
+                                                    aria-autocomplete="false"
+                                                    name="name"
+                                                    id="name"
+                                                />
                                             </Form.Group>
                                             <Form.Group
                                                 className="mb-3"
-                                                controlId="exampleForm.ControlTextarea1">
+                                                name="description"
+                                                id="description"
+                                                value="description"
+                                                onChange={hendleChange}>
                                                 <Form.Label>รายละเอียด ผลิตภัณฑ์</Form.Label>
-                                                <Form.Control as="textarea" rows={3} />
+                                                <Form.Control
+                                                    as="textarea"
+                                                    rows={3}
+                                                    aria-autocomplete="false"
+                                                    name="description"
+                                                    id="description"
+                                                />
                                             </Form.Group>
                                             <Form.Group
                                                 className="mb-3"
-                                                controlId="exampleForm.ControlInput1">
+                                                name="CO2"
+                                                value="CO2"
+                                                id="CO2"
+                                                onChange={hendleChange}>
                                                 <Form.Label>ค่า CO2Kg</Form.Label>
-                                                <Form.Control type="number" />
+                                                <Form.Control
+                                                    type="number"
+                                                    aria-autocomplete="false"
+                                                    name="CO2"
+                                                    id="CO2"
+                                                />
                                             </Form.Group>
                                             <Form.Group
                                                 className="mb-3"
-                                                controlId="exampleForm.ControlInput1">
-                                                <Form.Select aria-label="Default select example">
+                                                name="category_id"
+                                                value="category_id"
+                                                id="category_id"
+                                                onChange={hendleChange}>
+                                                <Form.Select
+                                                    aria-label="Default select example"
+                                                    aria-autocomplete="false"
+                                                    name="category_id"
+                                                    id="category_id">
                                                     <option key={-1} value={-1}>
                                                         ประเภทอุตสาหกรรม
                                                     </option>
                                                     {listProductCetagory &&
                                                         listProductCetagory.map((data, index) => {
                                                             return (
-                                                                <option key={index} value={data.id}>
+                                                                <option
+                                                                    key={index}
+                                                                    value={Number(data.id)}>
                                                                     {data.name}
                                                                 </option>
                                                             );
@@ -260,7 +366,27 @@ export default function HeaderBanner(props) {
                                                 alignItems: 'center'
                                             }}
                                             onClick={() => {
-                                                router.push('/createStore');
+                                                if (stateUplaod) {
+                                                    handleSubmit;
+                                                } else {
+
+                                                    Swal.fire({
+                                                        title: 'คุณไม่ได้อัปโหลดรูป ต้องการ<br/>ทำรายการต่อ ใช่หรือไม่',
+                                                        showCloseButton: true,
+                                                        icon: 'info',
+                                                        reverseButtons: true,
+                                                        showCancelButton: true,
+                                                        confirmButtonText: `ยืนยัน`,
+                                                        cancelButtonColor: '#d33',
+                                                        cancelButtonText: 'ยกเลิก'
+                                                    }).then(async (result) => {
+                                                        if (result.isConfirmed) {
+                                                            if (result.isConfirmed) {
+                                                                handleSubmit;
+                                                            }
+                                                        }
+                                                    });
+                                                }
                                             }}>
                                             {/* <MdAdd fontSize={'25px'} /> */}
                                             สร้าง
@@ -278,7 +404,7 @@ export default function HeaderBanner(props) {
                                                 marginLeft: '15px'
                                             }}
                                             onClick={() => {
-                                                router.push('/createStore');
+                                                router.push('/productList');
                                             }}>
                                             {/* <MdAdd fontSize={'25px'} /> */}
                                             ย้อนกลับ
