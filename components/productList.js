@@ -1,6 +1,16 @@
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Container, Row, Col, Button, Card, Form, Pagination, InputGroup,Spinner } from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Button,
+    Card,
+    Form,
+    Pagination,
+    InputGroup,
+    Spinner
+} from 'react-bootstrap';
 import styles from '../styles/headerBanner.module.scss';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -11,15 +21,15 @@ import data from './product.json';
 import MydModalWithGrid from './modal';
 import axios from 'axios';
 import Top_Products from './TopProducts';
-import { FaSearch, FaSync, FaFilter, FaRegClipboard } from 'react-icons/fa';
+import { FaSearch, FaSync, FaFilter, FaRegClipboard, FaTimes } from 'react-icons/fa';
 import Table from 'react-bootstrap/Table';
 import { MdAdd } from 'react-icons/md';
 import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../libs/firebase';
 import firebase from '../libs/firebase';
 import { fill } from '@cloudinary/url-gen/actions/resize';
-import Swal from 'sweetalert2'
-
+import Swal from 'sweetalert2';
+import PaginationCustom from './pagination';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -33,25 +43,81 @@ export default function HeaderBanner(props) {
         AOS.init();
         // fetchLink();
     }, []);
-    const [listProduct, setListProduct] = useState();
+    const [listProduct, setListProduct] = useState([]);
+
     const [filterProduct, setFilterProduct] = useState({
-        name: '',
-        category_id: null
+        name: null,
+        category_id: null,
+        page: 1,
+        per_page: 10
     });
+    const [totalPages, setTotalPages] = useState(0);
+    const [page, setPage] = useState(0);
+
+    const [listProductCetagory, setListProductCetagory] = useState();
+
     // const handleChangeInputSearchFilter = (event) => {
     //     setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
     // };
+
+    // const hendleChange = (event) => {
+    //     setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
+    // };
+
     const clearFilter = () => {
-        setFilterProduct({ ...filterProduct, [name]: '' });
-        setFilterProduct({ ...filterProduct, [category_id]: '' });
+        setFilterProduct({ ...filterProduct, ['name']: '' });
+        setFilterProduct({ ...filterProduct, ['category_id']: null });
+        // router.push('/')
+
+        // location.reload();
+        getCategories();
+
         searchFilter();
     };
     const hendleChange = (event) => {
-        setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
+        if (event.target.id == 'category_id' && event.target.value == -1) {
+            console.log(filterProduct);
+
+            setFilterProduct({ ...filterProduct, [event.target.id]: null });
+        } else {
+            setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
+        }
     };
-  const [isLoading,setLoading] = useState(false)
+    const getCategories = async (event) => {
+        try {
+            await axios.get('http://localhost:5000/api/categories').then((response) => {
+                console.log(response.data.data);
+                setListProductCetagory(response.data.data);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const [isLoading, setLoading] = useState(false);
+    const handlePageChange = async (pageNumber) => {
+        setLoading(true);
+        try {
+            const response = await axios.get('http://localhost:5000/api/products_list', {
+                params: {
+                    category_id: filterProduct.category_id,
+                    name: filterProduct.name,
+                    page: pageNumber,
+                    perPage: filterProduct.per_page
+                }
+            });
+            setListProduct(response.data.data);
+            console.log('thissssss', response.data.data);
+            setPage(response.data.currentPage);
+
+            setTotalPages(response.data.totalPages);
+
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const searchFilter = async (event) => {
-        setLoading(true)
+        setLoading(true);
         if (event) {
             event.preventDefault();
             try {
@@ -59,34 +125,48 @@ export default function HeaderBanner(props) {
                     .get('http://localhost:5000/api/products_list', {
                         params: {
                             category_id: filterProduct.category_id,
-                            name: filterProduct.name
+                            name: filterProduct.name,
+                            page: filterProduct.page,
+                            perPage: filterProduct.per_page
                         }
                     })
                     .then((response) => {
                         // console.log(response.data);
                         setListProduct(response.data.data);
-                        setLoading(false)
+                        setTotalPages(response.data.totalPages);
+                        setPage(response.data.currentPage);
 
+                        // setFilterProduct
+                        setLoading(false);
                     });
             } catch (error) {
                 console.log(error);
             }
         } else {
             try {
-                await axios.get('http://localhost:5000/api/products_list').then((response) => {
+                await axios.get('http://localhost:5000/api/products_list', {
+                    params: {
+                        category_id: filterProduct.category_id,
+                        name: filterProduct.name,
+                        page: filterProduct.page,
+                        perPage: filterProduct.per_page
+                    }
+                }).then((response) => {
                     // console.log(response.data);
                     setListProduct(response.data.data);
-                    setLoading(false)
-
+                    setTotalPages(response.data.totalPages);
+                    setPage(response.data.currentPage);
+                    setLoading(false);
                 });
             } catch (error) {
                 console.log(error);
             }
         }
     };
-
+    useEffect(() => {
+        getCategories();
+    }, []);
     const deleteProduct = async (id) => {
-
         Swal.fire({
             title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
             showCloseButton: true,
@@ -110,11 +190,12 @@ export default function HeaderBanner(props) {
                     } catch (error) {
                         console.log(error);
                     }
+                }
             }
-        }});
+        });
     };
     useEffect(() => {
-        if (filterProduct.name == '') {
+        if (filterProduct.name == '' || filterProduct.name == null) {
             searchFilter();
         }
         // searchFilter();
@@ -161,18 +242,32 @@ export default function HeaderBanner(props) {
                                                             name={filterProduct.category_id}
                                                             id="category_id"
                                                             onChange={hendleChange}>
-                                                            <option> ประเภทสินค้า</option>
-                                                            <option value={1}>ของใช้</option>
-                                                            <option value={2}>อาหาร</option>
+                                                            <option key={-1} value={-1}>
+                                                                ประเภทอุตสาหกรรม
+                                                            </option>
+                                                            {listProductCetagory &&
+                                                                listProductCetagory.map(
+                                                                    (data, index) => {
+                                                                        return (
+                                                                            <>
+                                                                                <option
+                                                                                    key={index}
+                                                                                    value={data.id}>
+                                                                                    {data.name}
+                                                                                </option>
+                                                                            </>
+                                                                        );
+                                                                    }
+                                                                )}
                                                         </Form.Select>
                                                     </InputGroup>
                                                 </Col>
-                                                <Col md={2} xs={12} style={{ padding: '5px' }}>
+                                                {/* <Col md={2} xs={12} style={{ padding: '5px' }}>
                                                     <Form.Select>
                                                         <option>จังหวัด</option>
                                                     </Form.Select>
-                                                </Col>
-                                                <Col xs={12} md={8} style={{ padding: '5px' }}>
+                                                </Col> */}
+                                                <Col xs={12} md={10} style={{ padding: '5px' }}>
                                                     <InputGroup>
                                                         <Form.Control
                                                             placeholder="Search..."
@@ -245,7 +340,7 @@ export default function HeaderBanner(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            { listProduct && !isLoading ?
+                                            {listProduct && !isLoading ? (
                                                 listProduct.map((data, index) => {
                                                     return (
                                                         <tr
@@ -261,7 +356,7 @@ export default function HeaderBanner(props) {
                                                             </td>
                                                             <td align="center">
                                                                 <Image
-                                                                    src={data.image}
+                                                                    src={data.image ? data.image :STORE.cart}
                                                                     alt="My Image"
                                                                     width={50}
                                                                     height={50}
@@ -289,8 +384,9 @@ export default function HeaderBanner(props) {
                                                             </td>
                                                             <td
                                                                 align="center"
-                                                                style={{ paddingTop: '20px' }}>
-                                                                {/* <Button size='sm' style={{ backgroundColor: '#ac2bac' ,borderRadius:'50%'}} href='#'> */}
+                                                                style={{ paddingTop: '15px' }}
+                                                                // style={{ paddingTop: '15px' }}
+                                                            >
                                                                 <Button
                                                                     variant="link"
                                                                     onClick={() => {
@@ -298,31 +394,36 @@ export default function HeaderBanner(props) {
                                                                             Productid(data);
                                                                     }}>
                                                                     {' '}
-                                                                    <FaRegClipboard fontSize={18} />
+                                                                    <FaRegClipboard fontSize={15} />
                                                                 </Button>
-
                                                                 <Button
                                                                     variant="link"
                                                                     onClick={() => {
                                                                         deleteProduct(data.id);
                                                                     }}>
                                                                     {' '}
-                                                                    <FaRegClipboard fontSize={18} />
-                                                                </Button>
+                                                                    <FaTimes fontSize={15} />
+                                                                </Button>{' '}
+                                                                {/* <Button size='sm' style={{ backgroundColor: '#ac2bac' ,borderRadius:'50%'}} href='#'> */}
                                                                 {/* </Button> */}
                                                             </td>
                                                         </tr>
                                                     );
-                                                }): 
+                                                })
+                                            ) : (
                                                 <tr>
-                                                <td colSpan="16" style={{ textAlign: 'center' }}>
-                                                  <div style={{ display: 'inline-block' }}>
-                                                  <Spinner animation="border" variant="success" />
-
-                                                  </div>
-                                                </td>
-                                              </tr>
-                                                }
+                                                    <td
+                                                        colSpan="16"
+                                                        style={{ textAlign: 'center' }}>
+                                                        <div style={{ display: 'inline-block' }}>
+                                                            <Spinner
+                                                                animation="border"
+                                                                variant="success"
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
                                         </tbody>
                                     </Table>
                                     <MydModalWithGrid
@@ -332,23 +433,8 @@ export default function HeaderBanner(props) {
                                     />
                                 </Row>
                                 <div style={{ float: 'right' }}>
-                                    <Pagination>
-                                        <Pagination.First />
-                                        <Pagination.Prev />
-                                        <Pagination.Item>{1}</Pagination.Item>
-                                        <Pagination.Ellipsis />
-
-                                        <Pagination.Item>{10}</Pagination.Item>
-                                        <Pagination.Item>{11}</Pagination.Item>
-                                        <Pagination.Item active>{12}</Pagination.Item>
-                                        <Pagination.Item>{13}</Pagination.Item>
-                                        <Pagination.Item disabled>{14}</Pagination.Item>
-
-                                        <Pagination.Ellipsis />
-                                        <Pagination.Item>{20}</Pagination.Item>
-                                        <Pagination.Next />
-                                        <Pagination.Last />
-                                    </Pagination>
+                                    <PaginationCustom  handlePageChange={handlePageChange} currentPage={page} totalPages={totalPages}/>
+                                   
                                     <br />
                                     <br />
                                     <br />

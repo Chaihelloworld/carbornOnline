@@ -66,7 +66,7 @@ function MydModalWithGrid(props) {
                                                 }}>
                                                 {/* {console.log(i.img)} */}
                                                 <Image
-                                                    src={data.image}
+                                                    src={data.image ? data.image:STORE.cart}
                                                     // src='/newimg/img1.jpg'
                                                     // src={props.data ? props.data.img : ''}
                                                     alt="cart"

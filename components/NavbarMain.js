@@ -110,9 +110,9 @@ function NavbarMain(props) {
                         </Navbar.Toggle>
                         <Navbar.Brand
                             href="/"
-                            className={styles.img_logo}
+                            // className={styles.img_logo}
                             style={{ marginRight: '0' }}>
-                            <Image src={STORE.logo} alt="newufa logo" />
+                            <Image src={STORE.logo} alt="newufa logo" width={90} height={40} />
                         </Navbar.Brand>
                         {/*-------------- sidebar --------------*/}
                         <Navbar.Offcanvas
@@ -130,7 +130,7 @@ function NavbarMain(props) {
                                     </Offcanvas.Header>
                                     {/* <FontAwesomeIcon icon={faTimes} color="#FFEA93" pull="left" className={styles.close_btn_1}/> */}
                                 </Offcanvas.Header>
-                                {cookie.newufa_phone ? (
+                                {/* {cookie.newufa_phone ? (
                                     <>
                                         <div
                                             className={'text-white mb-0 mt-3'}
@@ -138,27 +138,21 @@ function NavbarMain(props) {
                                             <p className={'mb-2'}> Username : tharadon</p>
                                         </div>
                                     </>
-                                ) : (
-                                    <div className={styles.text_center}>
-                                        <Offcanvas.Title
-                                            href="/"
-                                            className={styles.img_logo_sidebar}>
-                                            <Image src={STORE.logo} alt="newufa logo" />
-                                        </Offcanvas.Title>
-                                        <p>คุณยังไม่ได้เข้าสู่ระบบ?</p>
-                                        {/* <BtnLogin styles={{width: "100%"}}/> */}
+                                ) : ( */}
+                                <div className={styles.text_center}>
+                                    <Offcanvas.Title href="/" className={styles.img_logo_sidebar}>
+                                        <Image src={STORE.logo} alt="newufa logo" />
+                                    </Offcanvas.Title>
+                                </div>
+                                {/*  <p>คุณยังไม่ได้เข้าสู่ระบบ?</p>
                                         <Button
                                             className={[stylesINDEX.btn_login]}
-                                            // onClick={openModalLogin}
                                             size="md">
                                             เข้าสู่ระบบ
                                         </Button>
-                                        {/* <Modal_login
-                                            show={modalLogin}
-                                            onHide={() => setModalLogin(false)}
-                                        /> */}
-                                    </div>
-                                )}
+                                 
+                                    </div> */}
+                                {/* )} */}
 
                                 <Nav className="justify-content-end flex-grow-1 mt-3">
                                     <hr className={styles.line_yellow} />
@@ -195,7 +189,7 @@ function NavbarMain(props) {
                                             </span>
                                         </Nav.Link>
                                         <Nav.Link
-                                            href="/#1"
+                                            href="/"
                                             className={[
                                                 styles.text_gray,
                                                 styles.text_nav,
@@ -217,7 +211,6 @@ function NavbarMain(props) {
                                                 สินค้าลดคาร์บอน
                                             </span>
                                         </Nav.Link>
-                                       
                                     </Nav>
                                 </Offcanvas.Body>
                             </div>
@@ -278,11 +271,11 @@ function NavbarMain(props) {
                                     </div>
                                 </Nav.Link>
                                 <Nav.Link
-                                    href="/#1"
+                                    href="/"
                                     className={[
                                         styles.text_white,
                                         styles.text_nav,
-                                        router.pathname == '/#1' ? styles.active_text : ''
+                                        router.pathname == '/' ? styles.active_text : ''
                                     ].join(' ')}>
                                     <div
                                         style={{

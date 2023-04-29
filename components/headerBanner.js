@@ -12,6 +12,7 @@ import MydModalWithGrid from './modal';
 import axios from 'axios';
 import Top_Products from './TopProducts';
 import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
+import PaginationCustom from './pagination';
 
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -29,12 +30,17 @@ export default function HeaderBanner(props) {
     const [listProduct, setListProduct] = useState();
     const [filterProduct, setFilterProduct] = useState({
         name: null,
-        category_id: null
+        category_id: null,
+        page: 1,
+        per_page: 5
     });
+    const [totalPages, setTotalPages] = useState(0);
+    const [page, setPage] = useState(0);
     // const handleChangeInputSearchFilter = (event) => {
     //     setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
     // };
     const [listProductCetagory, setListProductCetagory] = useState();
+    const [isLoading, setLoading] = useState(false);
 
     const clearFilter = () => {
         setFilterProduct({ ...filterProduct, ['name']: '' });
@@ -44,16 +50,34 @@ export default function HeaderBanner(props) {
         // location.reload();
         searchFilter();
     };
+    const handlePageChange = async (pageNumber) => {
+        setLoading(true);
+        try {
+            const response = await axios.get('http://localhost:5000/api/products_list', {
+                params: {
+                    category_id: filterProduct.category_id,
+                    name: filterProduct.name,
+                    page: pageNumber,
+                    perPage: filterProduct.per_page
+                }
+            });
+            setListProduct(response.data.data);
+            setPage(response.data.currentPage);
+            setTotalPages(response.data.totalPages);
+
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const hendleChange = (event) => {
-        if(event.target.id == 'category_id' && event.target.value == -1){
+        if (event.target.id == 'category_id' && event.target.value == -1) {
             console.log(filterProduct);
 
             setFilterProduct({ ...filterProduct, [event.target.id]: null });
-
-        }else{
+        } else {
             setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
         }
-       
     };
     const getCategories = async (event) => {
         try {
@@ -73,22 +97,37 @@ export default function HeaderBanner(props) {
                     .get('http://localhost:5000/api/products_list', {
                         params: {
                             category_id: filterProduct.category_id,
-                            name: filterProduct.name
+                            name: filterProduct.name,
+                            page: filterProduct.page,
+                            perPage: filterProduct.per_page
                         }
                     })
                     .then((response) => {
                         // console.log(response.data);
                         setListProduct(response.data.data);
+                        setPage(response.data.currentPage);
+                        setTotalPages(response.data.totalPages);
                     });
             } catch (error) {
                 console.log(error);
             }
         } else {
             try {
-                await axios.get('http://localhost:5000/api/products_list').then((response) => {
-                    // console.log(response.data);
-                    setListProduct(response.data.data);
-                });
+                await axios
+                    .get('http://localhost:5000/api/products_list', {
+                        params: {
+                            category_id: filterProduct.category_id,
+                            name: filterProduct.name,
+                            page: filterProduct.page,
+                            perPage: filterProduct.per_page
+                        }
+                    })
+                    .then((response) => {
+                        // console.log(response.data);
+                        setListProduct(response.data.data);
+                        setPage(response.data.currentPage);
+                        setTotalPages(response.data.totalPages);
+                    });
             } catch (error) {
                 console.log(error);
             }
@@ -146,9 +185,6 @@ export default function HeaderBanner(props) {
                                                             name={filterProduct.category_id}
                                                             id="category_id"
                                                             onChange={hendleChange}>
-                                                            {/* <option> ประเภทสินค้า</option>
-                                                            <option value={1}>ของใช้</option>
-                                                            <option value={2}>อาหาร</option> */}
                                                             <option key={-1} value={-1}>
                                                                 ประเภทอุตสาหกรรม
                                                             </option>
@@ -169,12 +205,12 @@ export default function HeaderBanner(props) {
                                                         </Form.Select>
                                                     </InputGroup>
                                                 </Col>
-                                                <Col md={2} xs={12} style={{ padding: '5px' }}>
+                                                {/* <Col md={2} xs={12} style={{ padding: '5px' }}>
                                                     <Form.Select>
                                                         <option>จังหวัด</option>
                                                     </Form.Select>
-                                                </Col>
-                                                <Col xs={12} md={8} style={{ padding: '5px' }}>
+                                                </Col> */}
+                                                <Col xs={12} md={10} style={{ padding: '5px' }}>
                                                     <InputGroup>
                                                         <Form.Control
                                                             placeholder="Search..."
@@ -237,7 +273,11 @@ export default function HeaderBanner(props) {
                                                                 <div style={{ margin: 'auto' }}>
                                                                     <Image
                                                                         // src={STORE.cart}
-                                                                        src={`${data.image}`}
+                                                                        src={
+                                                                            data.image
+                                                                                ? data.image
+                                                                                : STORE.cart
+                                                                        }
                                                                         alt="cart"
                                                                         width={120}
                                                                         height={120}
@@ -268,24 +308,12 @@ export default function HeaderBanner(props) {
                                         onHide={() => setModalShow(false)}
                                     />
                                 </Row>
-                                <div style={{ float: 'right' }}>
-                                    <Pagination>
-                                        <Pagination.First />
-                                        <Pagination.Prev />
-                                        <Pagination.Item>{1}</Pagination.Item>
-                                        <Pagination.Ellipsis />
-
-                                        <Pagination.Item>{10}</Pagination.Item>
-                                        <Pagination.Item>{11}</Pagination.Item>
-                                        <Pagination.Item active>{12}</Pagination.Item>
-                                        <Pagination.Item>{13}</Pagination.Item>
-                                        <Pagination.Item disabled>{14}</Pagination.Item>
-
-                                        <Pagination.Ellipsis />
-                                        <Pagination.Item>{20}</Pagination.Item>
-                                        <Pagination.Next />
-                                        <Pagination.Last />
-                                    </Pagination>
+                                <div>
+                                    <PaginationCustom
+                                        handlePageChange={handlePageChange}
+                                        currentPage={page}
+                                        totalPages={totalPages}
+                                    />
                                     <br />
                                     <br />
                                     <br />

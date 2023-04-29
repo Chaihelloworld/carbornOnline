@@ -85,7 +85,7 @@ function ActionBottom(props) {
             <div className={'d-lg-none d-block' + ' ' + styles.zone_button_bottom}>
                 <div className={'container' + ' ' + styles.menu_fix}>
                     <div className={styles.list_tab_menu}>
-                        <Link href="https://lin.ee/bs1V7UI" passHref>
+                        <Link href="https://" passHref>
                             <a target="_blank">
                                 <div className={styles.menu__item}>
                                     <Image
@@ -111,14 +111,14 @@ function ActionBottom(props) {
                         <div className={styles.list_tab_menu}>
                                 <button
                                     className={styles.menu__item}
-                                    // onClick={onClickButtonDeposit}
+                                    onClick={()=>{router.push('/')}}
                                     >
                                     <Image
                                         src={STORE.menu3}
                                         alt="logo"
                                         loading="lazy"
                                     />
-                                    <p style={{ marginTop: '-10px' }}>สืนค้า</p>
+                                    <p style={{ marginTop: '-10px' }}>สินค้า</p>
                                 </button>
                             </div>
                             <div className={styles.list_tab_menu}>
