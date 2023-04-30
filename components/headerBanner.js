@@ -32,7 +32,7 @@ export default function HeaderBanner(props) {
         name: null,
         category_id: null,
         page: 1,
-        per_page: 5
+        per_page: 16
     });
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(0);

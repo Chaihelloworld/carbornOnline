@@ -235,14 +235,14 @@ option:active{
   background: linear-gradient(#fff1b5 0%, #b58d00 100%);
   border: 1px solid #ffeb80 !important;
 }
-input:-webkit-autofill {
+/* input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 50px #2d2d2d inset !important;
   -webkit-text-fill-color: #DDD;
 }
 input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 50px #111 inset !important;
   -webkit-text-fill-color: #FFF3D3;
-}
+} */
 /* input[type='password'] {
   -webkit-box-shadow: 0 0 0 50px #111 inset !important;
   -webkit-text-fill-color: #FFF3D3;

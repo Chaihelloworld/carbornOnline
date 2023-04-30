@@ -79,11 +79,11 @@ export default function HeaderBanner(props) {
         console.log(data);
         const imageRef = ref(storage, `images/${data.name + v4()}`);
         uploadBytes(imageRef, data).then(async (res) => {
-            setUpload(true);
 
             const fileRef = ref(storage, `images/${res.metadata.name}`);
             try {
                 const url = await getDownloadURL(fileRef);
+                setUpload(true);
 
                 setParamData({ ...paramData, ['image']: url });
             } catch (error) {
@@ -103,7 +103,7 @@ export default function HeaderBanner(props) {
 
     const handleSubmit = async () => {
         // handle form submit here
-
+        console.log('submit is now!')
         try {
             await axios
                 .post('http://localhost:5000/api/create_products', {
@@ -117,6 +117,7 @@ export default function HeaderBanner(props) {
                 .then((response) => {
                     // console.log(response.data);
                     console.log('success', response.data.message);
+                    router.reload('/createStore')
                 });
         } catch (error) {
             console.log(error);
@@ -131,7 +132,7 @@ export default function HeaderBanner(props) {
             console.log(error);
         }
     };
-
+console.log(stateUplaod)
     useEffect(() => {
         if (filterProduct.name == '') {
             searchFilter();
@@ -358,6 +359,7 @@ export default function HeaderBanner(props) {
                                         <Button
                                             variant="primary"
                                             size="md"
+                                            type='submit'
                                             style={{
                                                 // float: 'right',
                                                 width: '150px',
@@ -365,30 +367,8 @@ export default function HeaderBanner(props) {
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}
-                                            onClick={() => {
-                                                if (stateUplaod) {
-                                                    handleSubmit;
-                                                } else {
-
-                                                    Swal.fire({
-                                                        title: 'คุณไม่ได้อัปโหลดรูป ต้องการ<br/>ทำรายการต่อ ใช่หรือไม่',
-                                                        showCloseButton: true,
-                                                        icon: 'info',
-                                                        reverseButtons: true,
-                                                        showCancelButton: true,
-                                                        confirmButtonText: `ยืนยัน`,
-                                                        cancelButtonColor: '#d33',
-                                                        cancelButtonText: 'ยกเลิก'
-                                                    }).then(async (result) => {
-                                                        if (result.isConfirmed) {
-                                                            if (result.isConfirmed) {
-                                                                handleSubmit;
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }}>
-                                            {/* <MdAdd fontSize={'25px'} /> */}
+                                            onClick={handleSubmit}>
+                        
                                             สร้าง
                                         </Button>{' '}
                                         <Button

@@ -10,25 +10,14 @@ import Link from 'next/link';
 import STORE from '../libs/store.image';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Cookie from 'js-cookie';
+
 function NavbarMain(props) {
     const [isCheck, setIsCheck] = useState(false);
     const [modalLogin, setModalLogin] = useState(false);
-
-    const [cookie, setCookie, removeCookie] = useCookies(
-        ['newufa_phone', 'newufa_api_token'],
-        ['newufa_status']
-    );
-    const [cookieToken, setCookieToken, removeCookiesToken] = useCookies(
-        ['newufa_api_token'],
-        ['newufa_login']
-    );
+    const accessToken = Cookie.get('token');
 
     const router = useRouter();
-
-    const openModalLogin = () => {
-        setModalLogin(true);
-        check_maintanence();
-    };
 
     const [checkScroll, setCheckScroll] = useState(false);
     const [BGcolor, setBGcolor] = useState('transparent');
@@ -90,8 +79,15 @@ function NavbarMain(props) {
 
         window.addEventListener('scroll', windowScrollPage);
         AOS.init();
-    }, [cookieToken.newufa_api_token]);
+    }, []);
 
+    const logout = () => {
+        Cookie.remove('token');
+        Cookie.remove('name');
+        // router.reload();
+        router.push('/');
+
+    };
     return (
         <>
             <Navbar
@@ -211,6 +207,33 @@ function NavbarMain(props) {
                                                 สินค้าลดคาร์บอน
                                             </span>
                                         </Nav.Link>
+
+
+                                        {accessToken && (
+                                           <Nav.Link
+                                           href="/productList"
+                                           className={[
+                                               styles.text_gray,
+                                               styles.text_nav,
+                                               styles.text_sideNav
+                                           ].join(' ')}>
+                                           <div
+                                               className={[styles.img_icon_in_nav]}
+                                               style={{
+                                                   display: 'flex',
+                                                   justifyContent: 'center',
+                                                   alignItems: 'center'
+                                               }}>
+                                               {/* <Image
+                                                   src={STORE.ic_document_hover}
+                                                   alt="ic_navbar_article"
+                                               /> */}
+                                           </div>
+                                           <span className={styles.text_white}>
+                                               STORE
+                                           </span>
+                                       </Nav.Link>
+                                )}
                                     </Nav>
                                 </Offcanvas.Body>
                             </div>
@@ -303,55 +326,84 @@ function NavbarMain(props) {
                                         <span style={{ marginLeft: '.2rem' }}>สินค้าลดคาร์บอน</span>
                                     </div>
                                 </Nav.Link>
-                                <Nav.Link
-                                    href="/productList"
-                                    className={[
-                                        styles.text_white,
-                                        styles.text_nav,
-                                        router.pathname == '/productList' ? styles.active_text : ''
-                                    ].join(' ')}>
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
+                                {accessToken && (
+                                    <Nav.Link
+                                        href="/productList"
+                                        className={[
+                                            styles.text_white,
+                                            styles.text_nav,
+                                            router.pathname == '/productList'
+                                                ? styles.active_text
+                                                : ''
+                                        ].join(' ')}>
                                         <div
-                                            className={[styles.img_icon]}
                                             style={{
                                                 display: 'flex',
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}>
-                                            <div className={styles.none_hover}>
-                                                {/* <Image src={STORE.ic_settings} alt="ic_settings" /> */}
+                                            <div
+                                                className={[styles.img_icon]}
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
+                                                <div className={styles.none_hover}>
+                                                    {/* <Image src={STORE.ic_settings} alt="ic_settings" /> */}
+                                                </div>
+                                                <div className={styles.ic_hover}>
+                                                    {/* <Image
+                  src={STORE.ic_settings_hover}
+                  alt="ic_settings"
+              /> */}
+                                                </div>
                                             </div>
-                                            <div className={styles.ic_hover}>
-                                                {/* <Image
-                                                    src={STORE.ic_settings_hover}
-                                                    alt="ic_settings"
-                                                /> */}
-                                            </div>
+                                            <span style={{ marginLeft: '.2rem' }}>STORE</span>
                                         </div>
-                                        <span style={{ marginLeft: '.2rem' }}>STORE</span>
-                                    </div>
-                                </Nav.Link>
+                                    </Nav.Link>
+                                )}
                             </Nav>
                         </Navbar.Collapse>
                     </div>
-                    {!cookie.newufa_phone && isCheck && (
+                    {accessToken ? (
+                        <div
+                            style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
+                            <a style={{ color: 'white', fontSize: '16px' }}>
+                                ยินดีต้อนรับ : {Cookie.get('name')}
+                            </a>
+                            &ensp; &ensp;
+                            <Button
+                                style={{
+                                    background: '#FFF',
+                                    width: '150px',
+                                    color: 'green',
+                                    fontWeight: 600,
+                                    borderRadius: '12px',
+                                    border: 'none'
+                                }}
+                                onClick={logout}
+                                size="md">
+                                ออกจากระบบ
+                            </Button>
+                        </div>
+                    ) : (
                         <Button
-                            className={[stylesINDEX.btn_login, stylesINDEX.btn_register_bar]}
-                            onClick={openModalLogin}
+                            style={{
+                                background: '#FFF',
+                                width: '150px',
+                                color: 'green',
+                                fontWeight: 600,
+                                borderRadius: '12px',
+                                border: 'none'
+                            }}
+                            onClick={() => {
+                                router.push('/login');
+                            }}
                             size="md">
                             เข้าสู่ระบบ
                         </Button>
                     )}
-                    {/* <Modal_login
-                        show={modalLogin}
-                        isCheck={setIsCheck}
-                        onHide={() => setModalLogin(false)}
-                    /> */}
                 </Container>
             </Navbar>
         </>
