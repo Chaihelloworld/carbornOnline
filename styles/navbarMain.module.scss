@@ -235,6 +235,9 @@
     margin-top: -28px;
     z-index: 1;
 }
+.menulogin {
+    display: block;
+}
 
 @media (min-width: 1199px) {
     .offcanvas {
@@ -242,6 +245,9 @@
     }
 }
 @media (max-width: 575.98px) {
+    .menulogin {
+        display: none;
+    }
     .img_logo {
         span{
             width: 130px !important;

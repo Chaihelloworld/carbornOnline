@@ -86,7 +86,6 @@ function NavbarMain(props) {
         Cookie.remove('name');
         // router.reload();
         router.push('/');
-
     };
     return (
         <>
@@ -162,7 +161,7 @@ function NavbarMain(props) {
                                 <Offcanvas.Body className={'pt-1 mt-2'}>
                                     <Nav className="justify-content-end flex-grow-1">
                                         <Nav.Link
-                                            href="/manual"
+                                            href="/map"
                                             className={[
                                                 styles.text_gray,
                                                 styles.text_nav,
@@ -208,32 +207,29 @@ function NavbarMain(props) {
                                             </span>
                                         </Nav.Link>
 
-
                                         {accessToken && (
-                                           <Nav.Link
-                                           href="/productList"
-                                           className={[
-                                               styles.text_gray,
-                                               styles.text_nav,
-                                               styles.text_sideNav
-                                           ].join(' ')}>
-                                           <div
-                                               className={[styles.img_icon_in_nav]}
-                                               style={{
-                                                   display: 'flex',
-                                                   justifyContent: 'center',
-                                                   alignItems: 'center'
-                                               }}>
-                                               {/* <Image
+                                            <Nav.Link
+                                                href="/productList"
+                                                className={[
+                                                    styles.text_gray,
+                                                    styles.text_nav,
+                                                    styles.text_sideNav
+                                                ].join(' ')}>
+                                                <div
+                                                    className={[styles.img_icon_in_nav]}
+                                                    style={{
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                    {/* <Image
                                                    src={STORE.ic_document_hover}
                                                    alt="ic_navbar_article"
                                                /> */}
-                                           </div>
-                                           <span className={styles.text_white}>
-                                               STORE
-                                           </span>
-                                       </Nav.Link>
-                                )}
+                                                </div>
+                                                <span className={styles.text_white}>STORE</span>
+                                            </Nav.Link>
+                                        )}
                                     </Nav>
                                 </Offcanvas.Body>
                             </div>
@@ -259,7 +255,7 @@ function NavbarMain(props) {
                             className={[styles.collapse, styles.navCollapse].join(' ')}>
                             <Nav style={{ marginLeft: '1rem' }}>
                                 <Nav.Link
-                                    href="/#"
+                                    href="/map"
                                     className={[
                                         styles.text_white,
                                         styles.text_nav,
@@ -366,13 +362,33 @@ function NavbarMain(props) {
                             </Nav>
                         </Navbar.Collapse>
                     </div>
-                    {accessToken ? (
-                        <div
-                            style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                            <a style={{ color: 'white', fontSize: '16px' }}>
-                                ยินดีต้อนรับ : {Cookie.get('name')}
-                            </a>
-                            &ensp; &ensp;
+                    <div className={styles.menulogin}>
+                        {accessToken ? (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
+                                }}>
+                                <a style={{ color: 'white', fontSize: '16px' }}>
+                                    ยินดีต้อนรับ : {Cookie.get('name')}
+                                </a>
+                                &ensp; &ensp;
+                                <Button
+                                    style={{
+                                        background: '#FFF',
+                                        width: '150px',
+                                        color: 'green',
+                                        fontWeight: 600,
+                                        borderRadius: '12px',
+                                        border: 'none'
+                                    }}
+                                    onClick={logout}
+                                    size="md">
+                                    ออกจากระบบ
+                                </Button>
+                            </div>
+                        ) : (
                             <Button
                                 style={{
                                     background: '#FFF',
@@ -382,28 +398,14 @@ function NavbarMain(props) {
                                     borderRadius: '12px',
                                     border: 'none'
                                 }}
-                                onClick={logout}
+                                onClick={() => {
+                                    router.push('/login');
+                                }}
                                 size="md">
-                                ออกจากระบบ
+                                เข้าสู่ระบบ
                             </Button>
-                        </div>
-                    ) : (
-                        <Button
-                            style={{
-                                background: '#FFF',
-                                width: '150px',
-                                color: 'green',
-                                fontWeight: 600,
-                                borderRadius: '12px',
-                                border: 'none'
-                            }}
-                            onClick={() => {
-                                router.push('/login');
-                            }}
-                            size="md">
-                            เข้าสู่ระบบ
-                        </Button>
-                    )}
+                        )}{' '}
+                    </div>
                 </Container>
             </Navbar>
         </>

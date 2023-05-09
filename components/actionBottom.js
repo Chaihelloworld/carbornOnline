@@ -124,6 +124,7 @@ function ActionBottom(props) {
                             <div className={styles.list_tab_menu}>
                                 <button
                                     className={styles.menu__item}
+                                    onClick={()=>{router.push('/map')}}
                                     // onClick={onClickButtonDeposit}
                                     >
                                     <Image

@@ -114,7 +114,7 @@ export default function HeaderBanner(props) {
 
                         <Col xs={12} md={12}>
                             <Container>
-                                <Row xs={12} md={12} style={{ padding: '5px', paddingTop: '15%' }}>
+                                <Row xs={12} md={12} style={{ padding: '5px', paddingTop: '10%' }}>
                                     <div
                                         className="Destop_side"
                                         style={{

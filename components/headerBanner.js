@@ -13,10 +13,12 @@ import axios from 'axios';
 import Top_Products from './TopProducts';
 import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
 import PaginationCustom from './pagination';
+import { Border } from '@cloudinary/url-gen/actions';
 
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
+    // const [modalShow, setModalShow] = useState(false);
 
     const router = useRouter();
     const [modalRegister, setModalResgister] = useState(false);
@@ -29,7 +31,7 @@ export default function HeaderBanner(props) {
     }, []);
     const [listProduct, setListProduct] = useState();
     const [filterProduct, setFilterProduct] = useState({
-        name: null,
+        name: '',
         category_id: null,
         page: 1,
         per_page: 16
@@ -49,6 +51,10 @@ export default function HeaderBanner(props) {
 
         // location.reload();
         searchFilter();
+    };
+
+    const submitmodal = (e) => {
+        // console.log('is submit ->', e);
     };
     const handlePageChange = async (pageNumber) => {
         setLoading(true);
@@ -72,7 +78,7 @@ export default function HeaderBanner(props) {
     };
     const hendleChange = (event) => {
         if (event.target.id == 'category_id' && event.target.value == -1) {
-            console.log(filterProduct);
+            // console.log(filterProduct);
 
             setFilterProduct({ ...filterProduct, [event.target.id]: null });
         } else {
@@ -140,10 +146,45 @@ export default function HeaderBanner(props) {
         }
         // searchFilter();
     }, [filterProduct.name]);
+    const [toggle,setToggle] =useState(localStorage.getItem('toggle') == 'true'? true:false)
+    const [listcart,setCart] = useState(JSON.parse(localStorage.getItem('json')))
+
+    const Enumclass =()=>{
+        if(!JSON.parse(localStorage.getItem('json'))){
+            return JSON.parse(localStorage.getItem('json')) ? num : 0
+
+            return;
+        }
+        console.log('length ->',JSON.parse(localStorage.getItem('json')) ? JSON.parse(localStorage.getItem('json')).length:0)
+        console.log('listcart ->',listcart)
+            let d = JSON.parse(localStorage.getItem('json'))
+            let num =0 
+            for (let index = 0; index < d.length; index++) {
+                const element = d[index];
+                num =num +d[index].quantity
+                console.log('-----------',element,num)
+
+            }
+            console.log('-----------',num)
+
+        return JSON.parse(localStorage.getItem('json')) ? num : 0
+     }
     useEffect(() => {
+        if (listcart == null) {
+            getCategories();
+            // Enumclass();
+            return;
+        }
         getCategories();
-    }, []);
+        if(toggle == false){
+            return;
+        }
+        localStorage.setItem('toggle','false')
+    }, [listcart]);
     // console.log(setFilter_Product);
+useEffect(()=>{
+    Enumclass();
+})
     return (
         <div>
             <div className={styles.x_banner_header}>
@@ -172,8 +213,37 @@ export default function HeaderBanner(props) {
                                 border-color: #007a06;
                             }
                         `}</style>
-
-                        <Col xs={12} md={12}>
+                        <div
+                            className={styles.btncart_content}
+                        >
+                            <Button
+                                className={styles.btncart}
+                                onClick={()=> router.push('/calculateCO2')}
+                            >
+                                <div
+                                    style={{
+                                        height: '25px',
+                                        width: '25px',
+                                        backgroundColor: 'red',
+                                        borderRadius: '50%',
+                                        position: 'absolute',
+                                        display: 'inline-block',
+                                        transform: 'translate(50px, 40px)',
+                                        zIndex: 999
+                                    }}>
+                                        {Enumclass()}
+                                    
+                                </div>
+                                <Image
+                                    // src={STORE.cart}
+                                    src={STORE.IconCal}
+                                    alt="cart"
+                                    width={70}
+                                    height={70}
+                                />
+                            </Button>
+                        </div>
+                        <Col xs={12} md={12} style={{marginTop:'-100px'}}>
                             <Container>
                                 <Row xs={12} md={12} style={{ padding: '5px' }}>
                                     <div className="Destop_side">
