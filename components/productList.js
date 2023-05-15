@@ -46,7 +46,7 @@ export default function HeaderBanner(props) {
     const [listProduct, setListProduct] = useState([]);
 
     const [filterProduct, setFilterProduct] = useState({
-        name: null,
+        name: '',
         category_id: null,
         page: 1,
         per_page: 10
@@ -55,6 +55,7 @@ export default function HeaderBanner(props) {
     const [page, setPage] = useState(0);
 
     const [listProductCetagory, setListProductCetagory] = useState();
+    const [tigger, setTigger] = useState(false);
 
     // const handleChangeInputSearchFilter = (event) => {
     //     setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
@@ -65,14 +66,23 @@ export default function HeaderBanner(props) {
     // };
 
     const clearFilter = () => {
-        setFilterProduct({ ...filterProduct, ['name']: '' });
-        setFilterProduct({ ...filterProduct, ['category_id']: null });
+        setFilterProduct({
+            ...filterProduct,
+            name: "",
+            category_id: null,
+            page: 1,
+            per_page:10
+        });
+        console.log('cear',filterProduct)
+
         // router.push('/')
 
         // location.reload();
-        getCategories();
+        router.push('/productList');
+        setTigger(!tigger);
 
-        searchFilter();
+        // getCategories();
+        // searchFilter();
     };
     const hendleChange = (event) => {
         if (event.target.id == 'category_id' && event.target.value == -1) {
@@ -118,54 +128,68 @@ export default function HeaderBanner(props) {
     };
     const searchFilter = async (event) => {
         setLoading(true);
-        if (event) {
-            event.preventDefault();
-            try {
-                await axios
-                    .get('http://localhost:5000/api/products_list', {
-                        params: {
-                            category_id: filterProduct.category_id,
-                            name: filterProduct.name,
-                            page: filterProduct.page,
-                            perPage: filterProduct.per_page
-                        }
-                    })
-                    .then((response) => {
-                        // console.log(response.data);
-                        setListProduct(response.data.data);
-                        setTotalPages(response.data.totalPages);
-                        setPage(response.data.currentPage);
+        // if (event) {
+        //     event.preventDefault();
 
-                        // setFilterProduct
-                        setLoading(false);
-                    });
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            try {
-                await axios.get('http://localhost:5000/api/products_list', {
-                    params: {
-                        category_id: filterProduct.category_id,
-                        name: filterProduct.name,
-                        page: filterProduct.page,
-                        perPage: filterProduct.per_page
-                    }
-                }).then((response) => {
+        const params = {
+            category_id: filterProduct.category_id,
+            name: filterProduct.name,
+            page: filterProduct.page,
+            perPage: filterProduct.per_page
+        };
+        try {
+            await axios
+                .get('http://localhost:5000/api/products_list', {
+                    params
+                })
+                .then((response) => {
                     // console.log(response.data);
                     setListProduct(response.data.data);
                     setTotalPages(response.data.totalPages);
                     setPage(response.data.currentPage);
+
+                    // setFilterProduct
                     setLoading(false);
                 });
-            } catch (error) {
-                console.log(error);
-            }
+        } catch (error) {
+            console.log(error);
         }
+        // }
+        //  else {
+        //     try {
+        //         await axios.get('http://localhost:5000/api/products_list', {
+        //             params: {
+        //                 category_id: filterProduct.category_id,
+        //                 name: filterProduct.name,
+        //                 page: filterProduct.page,
+        //                 perPage: filterProduct.per_page
+        //             }
+        //         }).then((response) => {
+        //             // console.log(response.data);
+        //             setListProduct(response.data.data);
+        //             setTotalPages(response.data.totalPages);
+        //             setPage(response.data.currentPage);
+        //             setLoading(false);
+        //         });
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
     };
+    // useEffect(() => {
+    //     getCategories();
+    //     searchFilter();
+    // }, []);
+
     useEffect(() => {
         getCategories();
-    }, []);
+        searchFilter();
+    }, [
+        filterProduct.page,
+        filterProduct.perPage,
+        tigger,
+ 
+    ]);
     const deleteProduct = async (id) => {
         Swal.fire({
             title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
@@ -194,12 +218,13 @@ export default function HeaderBanner(props) {
             }
         });
     };
-    useEffect(() => {
-        if (filterProduct.name == '' || filterProduct.name == null) {
-            searchFilter();
-        }
-        // searchFilter();
-    }, [filterProduct.name]);
+    // useEffect(() => {
+    //     if (filterProduct.name == '' || filterProduct.name == null) {
+    //         searchFilter();
+    //     }
+    //     // searchFilter();
+    // }, [filterProduct.name]);
+
     // console.log(setFilter_Product);
     return (
         <div>
@@ -239,7 +264,8 @@ export default function HeaderBanner(props) {
                                                 <Col md={2} xs={12} style={{ padding: '5px' }}>
                                                     <InputGroup>
                                                         <Form.Select
-                                                            name={filterProduct.category_id}
+                                                            name='category_id'
+                                                            value={filterProduct.category_id}
                                                             id="category_id"
                                                             onChange={hendleChange}>
                                                             <option key={-1} value={-1}>
@@ -273,13 +299,25 @@ export default function HeaderBanner(props) {
                                                             placeholder="Search..."
                                                             aria-label="Search"
                                                             enterKeyHint=""
-                                                            name={filterProduct.name}
+                                                            name="name"
                                                             id="name"
+                                                            value={filterProduct.name}
+                                                            autoComplete="off"
+                                                            onKeyPress={(ev) => {
+                                                                if (ev.key === 'Enter') {
+                                                                    ev.preventDefault();
+                                                                    searchFilter();
+                                                                }
+                                                            }}
                                                             onChange={hendleChange}
                                                         />
                                                         <Button
                                                             variant="outline-secondary"
-                                                            type="submit">
+                                                            // type="submit"
+                                                            disableElevation
+                                                            onClick={() => {
+                                                                searchFilter();
+                                                            }}>
                                                             <FaSearch />
                                                         </Button>
                                                         <Button
@@ -356,7 +394,11 @@ export default function HeaderBanner(props) {
                                                             </td>
                                                             <td align="center">
                                                                 <Image
-                                                                    src={data.image ? data.image :STORE.cart}
+                                                                    src={
+                                                                        data.image
+                                                                            ? data.image
+                                                                            : STORE.cart
+                                                                    }
                                                                     alt="My Image"
                                                                     width={50}
                                                                     height={50}
@@ -433,8 +475,12 @@ export default function HeaderBanner(props) {
                                     />
                                 </Row>
                                 <div style={{ float: 'right' }}>
-                                    <PaginationCustom  handlePageChange={handlePageChange} currentPage={page} totalPages={totalPages}/>
-                                   
+                                    <PaginationCustom
+                                        handlePageChange={handlePageChange}
+                                        currentPage={page}
+                                        totalPages={totalPages}
+                                    />
+
                                     <br />
                                     <br />
                                     <br />

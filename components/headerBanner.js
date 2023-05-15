@@ -43,14 +43,26 @@ export default function HeaderBanner(props) {
     // };
     const [listProductCetagory, setListProductCetagory] = useState();
     const [isLoading, setLoading] = useState(false);
+    const [tigger, setTigger] = useState(false);
 
     const clearFilter = () => {
-        setFilterProduct({ ...filterProduct, ['name']: '' });
-        setFilterProduct({ ...filterProduct, ['category_id']: null });
+        setFilterProduct({
+            ...filterProduct,
+            name: "",
+            category_id: null,
+            page: 1,
+            per_page:16
+        });
+        console.log('cear',filterProduct)
+
         // router.push('/')
 
         // location.reload();
-        searchFilter();
+        router.push('/');
+        setTigger(!tigger);
+
+        // getCategories();
+        // searchFilter();
     };
 
     const submitmodal = (e) => {
@@ -141,11 +153,14 @@ export default function HeaderBanner(props) {
     };
 
     useEffect(() => {
-        if (filterProduct.name == '' || filterProduct.name == null) {
-            searchFilter();
-        }
-        // searchFilter();
-    }, [filterProduct.name]);
+        getCategories();
+        searchFilter();
+    }, [
+        filterProduct.page,
+        filterProduct.perPage,
+        tigger,
+ 
+    ]);
     const [toggle,setToggle] =useState(localStorage.getItem('toggle') == 'true'? true:false)
     const [listcart,setCart] = useState(JSON.parse(localStorage.getItem('json')))
 
@@ -285,9 +300,9 @@ useEffect(()=>{
                                                         <Form.Control
                                                             placeholder="Search..."
                                                             aria-label="Search"
-                                                            enterKeyHint=""
                                                             name={filterProduct.name}
                                                             id="name"
+                                                            value={filterProduct.name}
                                                             onChange={hendleChange}
                                                         />
                                                         <Button

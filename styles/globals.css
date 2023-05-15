@@ -161,6 +161,10 @@ padding: 0 !important;
   outline: 0;
   box-shadow: 0 0 0 0.25rem #ffffff00 !important;
 }
+.swal2-popup {
+  font-size: 1.3rem !important;
+  font-family: Georgia, serif;
+}
 
 .btn:focus+.btn, .btn:focus {
   outline: 0;

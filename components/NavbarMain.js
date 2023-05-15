@@ -13,6 +13,8 @@ import { useRouter } from 'next/router';
 import Cookie from 'js-cookie';
 
 function NavbarMain(props) {
+    const [profile, setProfile] = useState({});
+
     const [isCheck, setIsCheck] = useState(false);
     const [modalLogin, setModalLogin] = useState(false);
     const accessToken = Cookie.get('token');
@@ -22,6 +24,17 @@ function NavbarMain(props) {
     const [checkScroll, setCheckScroll] = useState(false);
     const [BGcolor, setBGcolor] = useState('transparent');
 
+    const [pictureUrl, setPictureUrl] = useState(null);
+    const [idToken, setIdToken] = useState('');
+    const [displayName, setDisplayName] = useState('');
+    const [statusMessage, setStatusMessage] = useState('');
+    const [userId, setUserId] = useState('');
+    // useEffect(async () => {
+    //     const liff = (await import('@line/liff')).default;
+    //     await liff.ready;
+    //     const profile = await liff.getProfile();
+    //     setProfile(profile);
+    // }, [profile.userId]);
     useEffect(() => {
         const windowScrollPage = (event) => {
             const scroll = window.pageYOffset;
@@ -107,7 +120,7 @@ function NavbarMain(props) {
                             href="/"
                             // className={styles.img_logo}
                             style={{ marginRight: '0' }}>
-                            <Image src={STORE.logo} alt="newufa logo" width={90} height={40} />
+                            <Image src={STORE.logo} alt="logo" width={90} height={40} />
                         </Navbar.Brand>
                         {/*-------------- sidebar --------------*/}
                         <Navbar.Offcanvas
@@ -125,7 +138,7 @@ function NavbarMain(props) {
                                     </Offcanvas.Header>
                                     {/* <FontAwesomeIcon icon={faTimes} color="#FFEA93" pull="left" className={styles.close_btn_1}/> */}
                                 </Offcanvas.Header>
-                                {/* {cookie.newufa_phone ? (
+                                {/* {cookie. ? (
                                     <>
                                         <div
                                             className={'text-white mb-0 mt-3'}
@@ -136,15 +149,34 @@ function NavbarMain(props) {
                                 ) : ( */}
                                 <div className={styles.text_center}>
                                     <Offcanvas.Title href="/" className={styles.img_logo_sidebar}>
-                                        <Image src={STORE.logo} alt="newufa logo" />
+                                        <Image src={STORE.logo} alt=" logo" />
                                     </Offcanvas.Title>
                                 </div>
+                                {profile.pictureUrl && (
+                                    <div>
+                                        {profile.pictureUrl && (
+                                            <Image
+                                                src={profile.pictureUrl}
+                                                alt={profile.displayName}
+                                                width={500}
+                                                height={500}
+                                            />
+                                        )}
+                                        <div>Name: {profile.displayName}</div>
+                                    </div>
+                                )}
+
+                                {idToken && (
+                                    <Button
+                                        className={[stylesINDEX.btn_login]}
+                                        size="md"
+                                        onClick={() => logoutLine()}>
+                                        logout
+                                    </Button>
+                                )}
+
                                 {/*  <p>คุณยังไม่ได้เข้าสู่ระบบ?</p>
-                                        <Button
-                                            className={[stylesINDEX.btn_login]}
-                                            size="md">
-                                            เข้าสู่ระบบ
-                                        </Button>
+                                   
                                  
                                     </div> */}
                                 {/* )} */}

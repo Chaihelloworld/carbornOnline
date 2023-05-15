@@ -14,25 +14,15 @@ import {
 import styles from '../styles/headerBanner.module.scss';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
 import STORE from '../libs/store.image';
 import Image from 'next/image';
-import data from './product.json';
 import MydModalWithGrid from './modal';
 import axios from 'axios';
-import Top_Products from './TopProducts';
-import { FaSearch, FaSync, FaFilter, FaRegClipboard, FaTimes } from 'react-icons/fa';
-import Table from 'react-bootstrap/Table';
-import { MdAdd } from 'react-icons/md';
-import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from '../libs/firebase';
-import firebase from '../libs/firebase';
+
 import CardGroup from 'react-bootstrap/CardGroup';
 
-import { fill } from '@cloudinary/url-gen/actions/resize';
 import Swal from 'sweetalert2';
-import PaginationCustom from './pagination';
-import { CloudinaryImage } from '@cloudinary/url-gen';
+
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
@@ -52,6 +42,11 @@ export default function HeaderBanner(props) {
         category_id: null,
         page: 1,
         per_page: 10
+    });
+    const [Auth_user, setAuth] = useState({
+        userId: null,
+        product_id: null,
+
     });
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(0);
@@ -147,31 +142,40 @@ export default function HeaderBanner(props) {
         selectProduct(arr);
         setNulldat(false);
     }, []);
-    const deleteProduct = async (id) => {
+    const submitCal = async (id) => {
+        // Swal.fire({
+        //     title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
+        //     showCloseButton: true,
+        //     icon: 'error',
+        //     reverseButtons: true,
+        //     showCancelButton: true,
+        //     confirmButtonText: `ยืนยัน`,
+        //     cancelButtonColor: '#d33',
+        //     cancelButtonText: 'ยกเลิก'
+        // })
         Swal.fire({
-            title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
-            showCloseButton: true,
-            icon: 'error',
-            reverseButtons: true,
-            showCancelButton: true,
-            confirmButtonText: `ยืนยัน`,
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'ยกเลิก'
+            icon: 'success',
+            title: 'บันทึกกิจกรรมแล้ว',
+            text: 'การเตรียมตัวของคุณ ลด CO2 ได้ถึง 000',
+            //     confirmButtonText: `ยืนยัน`,
+
+            showConfirmButton: false,
+            timer: 5000
         }).then(async (result) => {
-            if (result.isConfirmed) {
-                if (result.isConfirmed) {
-                    try {
-                        console.log(id);
-                        await axios
-                            .delete(`http://localhost:5000/api/delete_product?id=${id}`)
-                            .then((response) => {
-                                console.log(response);
-                                searchFilter();
-                            });
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
+            try {
+                await axios
+                    .post('http://localhost:5000/api/create_listitem', {
+                        userId: paramData.name,
+                        product_id: paramData.description,
+                        // type_products: [],
+                    })
+                    .then((response) => {
+                        // console.log(response.data);
+                        console.log('success', response.data.message);
+                        router.reload('/createStore');
+                    });
+            } catch (error) {
+                console.log(error);
             }
         });
     };
@@ -243,7 +247,7 @@ export default function HeaderBanner(props) {
                                         </Col>
                                         <br />
                                     </div>
-                                    
+
                                     <CardGroup>
                                         {/* <Table striped>
                                         <thead>
@@ -264,9 +268,7 @@ export default function HeaderBanner(props) {
                                                                   align="center"
                                                                   variant="top"
                                                                   src={
-                                                                      data
-                                                                          ? data.image
-                                                                          : STORE.cart
+                                                                      data ? data.image : STORE.cart
                                                                   }
                                                                   style={{
                                                                       width: '200px',
@@ -298,9 +300,10 @@ export default function HeaderBanner(props) {
                                                                       color: 'white',
                                                                       textAlign: 'center'
                                                                   }}>
-                                                                  <a  style={{
-                                                                      color: 'white',
-                                                                  }}>
+                                                                  <a
+                                                                      style={{
+                                                                          color: 'white'
+                                                                      }}>
                                                                       จำนวน {q[index]} ชิ้น
                                                                   </a>
                                                               </Card.Footer>
@@ -343,8 +346,7 @@ export default function HeaderBanner(props) {
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}
-                                            // onClick={handleSubmit}
-                                        >
+                                            onClick={submitCal}>
                                             ยืนยัน
                                         </Button>{' '}
                                     </Col>
