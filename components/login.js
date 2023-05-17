@@ -66,7 +66,7 @@ export default function HeaderBanner(props) {
         setLoading(true);
         try {
             await axios
-                .post(`http://localhost:5000/api/login`, {
+                .post(`http://188.166.232.11:5000/api/login`, {
                     email: getLogin.email,
                     password: getLogin.password
                 })

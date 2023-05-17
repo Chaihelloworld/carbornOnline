@@ -71,7 +71,7 @@ export default function HeaderBanner(props) {
     const handlePageChange = async (pageNumber) => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:5000/api/products_list', {
+            const response = await axios.get('http://188.166.232.11:5000/api/products_list', {
                 params: {
                     category_id: filterProduct.category_id,
                     name: filterProduct.name,
@@ -99,7 +99,7 @@ export default function HeaderBanner(props) {
     };
     const getCategories = async (event) => {
         try {
-            await axios.get('http://localhost:5000/api/categories').then((response) => {
+            await axios.get('http://188.166.232.11:5000/api/categories').then((response) => {
                 console.log(response.data.data);
                 setListProductCetagory(response.data.data);
             });
@@ -112,7 +112,7 @@ export default function HeaderBanner(props) {
             event.preventDefault();
             try {
                 await axios
-                    .get('http://localhost:5000/api/products_list', {
+                    .get('http://188.166.232.11:5000/api/products_list', {
                         params: {
                             category_id: filterProduct.category_id,
                             name: filterProduct.name,
@@ -132,7 +132,7 @@ export default function HeaderBanner(props) {
         } else {
             try {
                 await axios
-                    .get('http://localhost:5000/api/products_list', {
+                    .get('http://188.166.232.11:5000/api/products_list', {
                         params: {
                             category_id: filterProduct.category_id,
                             name: filterProduct.name,

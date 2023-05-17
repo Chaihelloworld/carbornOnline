@@ -28,7 +28,7 @@ function MydModalWithGrid(props) {
     const searchFilter = async () => {
         try {
             await axios
-                .get(`http://localhost:5000/api/info_product?id=${props.data.id}`)
+                .get(`http://188.166.232.11:5000/api/info_product?id=${props.data.id}`)
                 .then((response) => {
                     setDetail(response.data.data);
                     setName(response.data.data[0].name);
@@ -55,7 +55,7 @@ function MydModalWithGrid(props) {
         try {
             await axios
                 .get(
-                    `http://localhost:5000/api/check_product?value_co2=${props.data.CO2}&type=${props.data.category_id}&id=${props.data.id}`
+                    `http://188.166.232.11:5000/api/check_product?value_co2=${props.data.CO2}&type=${props.data.category_id}&id=${props.data.id}`
                 )
                 .then((response) => {
                     if (response.data.success) {

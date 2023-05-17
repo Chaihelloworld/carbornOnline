@@ -106,7 +106,7 @@ export default function HeaderBanner(props) {
         console.log('submit is now!')
         try {
             await axios
-                .post('http://localhost:5000/api/create_products', {
+                .post('http://188.166.232.11:5000/api/create_products', {
                     name: paramData.name,
                     description: paramData.description,
                     image: paramData.image,
@@ -125,7 +125,7 @@ export default function HeaderBanner(props) {
     };
     const searchFilter = async (event) => {
         try {
-            await axios.get('http://localhost:5000/api/categories').then((response) => {
+            await axios.get('http://188.166.232.11:5000/api/categories').then((response) => {
                 setListProductCetagory(response.data.data);
             });
         } catch (error) {
