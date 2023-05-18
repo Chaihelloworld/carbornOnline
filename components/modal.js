@@ -276,7 +276,7 @@ function MydModalWithGrid(props) {
                                                                 }}>
                                                                 {data ? (
                                                                     <Image
-                                                                        src={data.image}
+                                                                        src={data.image?data.image:STORE.cart}
                                                                         alt="cart"
                                                                         margin={'auto'}
                                                                         width={120}

@@ -33,8 +33,6 @@ function MyApp({ Component, pageProps }) {
                     name="viewport"
                     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta> */}
                           <link rel="shortcut icon" href="/favicon.png" />
-                          <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"

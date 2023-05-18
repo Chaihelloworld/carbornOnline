@@ -262,7 +262,7 @@ export default function HeaderBanner(props) {
                                         {listProduct && !isLoading
                                             ? listProduct.map((data, index) => {
                                                   return (
-                                                      <div style={{ padding: '5px' }}>
+                                                      <div key={data.id} style={{ padding: '5px' }}>
                                                           <Card key={data.id}>
                                                               <Card.Img
                                                                   align="center"
