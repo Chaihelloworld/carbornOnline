@@ -24,12 +24,12 @@
     "hoist-non-react-statics": "^3.3.2",
     "js-cookie": "^3.0.1",
     "next": "^12.2.2",
-    "react": "^18.2.0",
+    "react": "^17.0.2",
     "react-bootstrap": "^2.0.2",
     "react-cookie": "^4.1.1",
     "react-countdown": "^2.3.2",
     "react-currency-format": "^1.1.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^17.0.2",
     "react-firebase-hooks": "^3.0.4",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.8.0",
@@ -66,6 +66,6 @@
   },
   "engines": {
     "node": "16.17.1",
-    "npm": "8.15.0"
+    "npm": "9.8.1"
   }
 }
