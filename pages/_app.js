@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
                     
                 />
             
-                <title>COMPANY NAME</title>
+                <title>ZERO CARBON</title>
             </Helmet>
             <CookiesProvider>
                 <Component {...pageProps} />

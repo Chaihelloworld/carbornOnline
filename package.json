@@ -4,8 +4,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start -p SPORT",
+    "lint": "next lint",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@cloudinary/react": "^1.11.2",
@@ -63,5 +64,9 @@
     "prettier": "^2.3.1",
     "typescript": "^4.3.4",
     "url-loader": "^4.1.1"
+  },
+  "engines": {
+    "node": "16.17.1",
+    "npm": "8.15.0"
   }
 }

@@ -8,8 +8,8 @@
 }
 
 .text_gray {
-    color: #DDDDDD ;
-    -webkit-text-fill-color: #DDDDDD;
+    color: #434343 ;
+    -webkit-text-fill-color: #7e7e7e;
 }
 .navCollapse{
     .move_navIC{
@@ -32,13 +32,14 @@
     width: 17px;
 }
 .navbar {
-    background-color: #007a06 !important;
+    
+    background-color: #fdfdfd !important;
     // height: 70px;
     transition: .4s all !important;
-    position: fixed;
+    // position: fixed;
     z-index: 10;
     width: 100%;
-    height: 69px;
+    height: 66px;
     padding-top: 1rem;
     padding-bottom: 1rem;
     transition: all .4s ease;
@@ -83,37 +84,38 @@
 .text_nav {
     display: flex;
     align-items: baseline;
-    // .none_hover{
-    //     display: block !important;
-    // }
+    .none_hover{
+        display: block !important;
+    }
     
     .ic_hover{
         display: none !important;
     }
     &:hover{
-        background: -webkit-linear-gradient(#ffee00, #ffee00);
+        // background:red;
+        color: #4d8b37;
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: bold;
-        .none_hover{
-            display: none !important;
-        }
-        .ic_hover{
-            display: block !important;
-        }
+        -webkit-text-fill-color: #9f9d9d;
+        // font-weight: bold;
+        // .none_hover{
+        //     display: none !important;
+        // }
+        // .ic_hover{
+        //     display: block !important;
+        // }
     }
 }
 .active_text{
-    background: -webkit-linear-gradient(#ffee00, #ffee00) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    font-weight: bold !important;
-    .none_hover{
-        display: none !important;
-    }
-    .ic_hover{
-        display: block !important;
-    }
+    // background: -webkit-linear-gradient(#ffee00, #ffee00) !important;
+    // -webkit-background-clip: text !important;
+    // -webkit-text-fill-color: transparent !important;
+    // font-weight: bold !important;
+    // .none_hover{
+    //     display: none !important;
+    // }
+    // .ic_hover{
+    //     display: block !important;
+    // }
 }
 .text_nav span {
     padding-left: 5px;
@@ -147,10 +149,9 @@
 // --------------------------- sidebar ---------------------------------
 
 .offcanvas {
-    background-color: #4d8b37 !important;
+    background-color: #ffffff !important;
     width: 280px !important;
     height: 100%;
-    border-radius: 0px 14px 14px 0px;
 }
 
 .navside_scroll {
@@ -229,9 +230,9 @@
 }
 
 .menu_additional {
-    color: #FFF;
+    color: #494949;
     font-size: 17px;
-    background-color: #4d8b37;
+    background-color: #ffffff;
     margin-top: -28px;
     z-index: 1;
 }
@@ -314,3 +315,7 @@
 
     }
 }
+.menuCard {
+    // margin-top: 8px;
+}
+

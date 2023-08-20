@@ -11,6 +11,14 @@ import STORE from '../libs/store.image';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Cookie from 'js-cookie';
+import { Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+
+import Logo_main1 from '../public/newimg/logo_main1.png';
+import Logo_main2 from '../public/newimg/logo_main2.png';
+import Logo_main3 from '../public/newimg/logo_main3.png';
+import Logo_main4 from '../public/newimg/logo_main4.png';
+import Logo_main5 from '../public/newimg/logo_main5.webp';
 
 function NavbarMain(props) {
     const [profile, setProfile] = useState({});
@@ -116,12 +124,12 @@ function NavbarMain(props) {
                                 <span></span>
                             </div>
                         </Navbar.Toggle>
-                        <Navbar.Brand
+                        {/* <Navbar.Brand
                             href="/"
                             // className={styles.img_logo}
                             style={{ marginRight: '0' }}>
                             <Image src={STORE.logo} alt="logo" width={90} height={40} />
-                        </Navbar.Brand>
+                        </Navbar.Brand> */}
                         {/*-------------- sidebar --------------*/}
                         <Navbar.Offcanvas
                             id="offcanvasNavbar"
@@ -205,13 +213,8 @@ function NavbarMain(props) {
                                                     display: 'flex',
                                                     justifyContent: 'center',
                                                     alignItems: 'center'
-                                                }}>
-                                                {/* <Image
-                                                    src={STORE.ic_navbar_recommend}
-                                                    alt="STORE.ic_navbar_recommend"
-                                                /> */}
-                                            </div>
-                                            <span className={styles.text_white}>
+                                                }}></div>
+                                            <span className={styles.text_gray}>
                                                 แผนที่จุดขายสินค้า ลดคาร์บอน
                                             </span>
                                         </Nav.Link>
@@ -228,13 +231,8 @@ function NavbarMain(props) {
                                                     display: 'flex',
                                                     justifyContent: 'center',
                                                     alignItems: 'center'
-                                                }}>
-                                                {/* <Image
-                                                    src={STORE.ic_document_hover}
-                                                    alt="ic_navbar_article"
-                                                /> */}
-                                            </div>
-                                            <span className={styles.text_white}>
+                                                }}></div>
+                                            <span className={styles.text_gray}>
                                                 สินค้าลดคาร์บอน
                                             </span>
                                         </Nav.Link>
@@ -253,13 +251,8 @@ function NavbarMain(props) {
                                                         display: 'flex',
                                                         justifyContent: 'center',
                                                         alignItems: 'center'
-                                                    }}>
-                                                    {/* <Image
-                                                   src={STORE.ic_document_hover}
-                                                   alt="ic_navbar_article"
-                                               /> */}
-                                                </div>
-                                                <span className={styles.text_white}>STORE</span>
+                                                    }}></div>
+                                                <span className={styles.text_gray}>STORE</span>
                                             </Nav.Link>
                                         )}
                                     </Nav>
@@ -287,9 +280,42 @@ function NavbarMain(props) {
                             className={[styles.collapse, styles.navCollapse].join(' ')}>
                             <Nav style={{ marginLeft: '1rem' }}>
                                 <Nav.Link
+                                    href="/"
+                                    className={[
+                                        styles.text_gray,
+                                        styles.text_nav,
+                                        router.pathname == '/' ? styles.active_text : ''
+                                    ].join(' ')}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                        <div
+                                            className={[styles.img_icon]}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
+                                            <div className={styles.none_hover}>
+                                                {/* <Image src={STORE.ic_settings} alt="ic_settings" /> */}
+                                            </div>
+                                            <div className={styles.ic_hover}>
+                                                {/* <Image
+                                                    src={STORE.ic_settings_hover}
+                                                    alt="ic_settings"
+                                                /> */}
+                                            </div>
+                                        </div>
+                                        <span style={{ marginLeft: '.2rem' }}>Home</span>
+                                    </div>
+                                </Nav.Link>
+                                <Nav.Link
                                     href="/map"
                                     className={[
-                                        styles.text_white,
+                                        styles.text_gray,
                                         styles.text_nav,
                                         router.pathname == '/#' ? styles.active_text : ''
                                     ].join(' ')}>
@@ -322,11 +348,11 @@ function NavbarMain(props) {
                                     </div>
                                 </Nav.Link>
                                 <Nav.Link
-                                    href="/"
+                                    href="/products"
                                     className={[
-                                        styles.text_white,
+                                        styles.text_gray,
                                         styles.text_nav,
-                                        router.pathname == '/' ? styles.active_text : ''
+                                        router.pathname == '/products' ? styles.active_text : ''
                                     ].join(' ')}>
                                     <div
                                         style={{
@@ -358,7 +384,7 @@ function NavbarMain(props) {
                                     <Nav.Link
                                         href="/productList"
                                         className={[
-                                            styles.text_white,
+                                            styles.text_gray,
                                             styles.text_nav,
                                             router.pathname == '/productList'
                                                 ? styles.active_text
@@ -395,13 +421,31 @@ function NavbarMain(props) {
                         </Navbar.Collapse>
                     </div>
                     <div className={styles.menulogin}>
-                        {accessToken ? (
+                        <Row style={{paddingTop:'15px'}}>
+                            <Col>
+                                <img src={Logo_main1.src} alt="logoMain" width={50} />
+                            </Col>
+                            <Col>
+                                <img src={Logo_main2.src} alt="logoMain" width={120} />
+                            </Col>
+                            <Col>
+                                <img src={Logo_main3.src} alt="logoMain" width={60} />
+                            </Col>
+                            <Col>
+                                <img src={Logo_main4.src} alt="logoMain" width={60} />
+                            </Col>
+                            <Col>
+                                <img src={Logo_main5.src} alt="logoMain" width={75} />
+                            </Col>
+                        </Row>
+                        {/* {accessToken ? (
                             <div
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     flexDirection: 'row'
                                 }}>
+                                    
                                 <a style={{ color: 'white', fontSize: '16px' }}>
                                     ยินดีต้อนรับ : {Cookie.get('name')}
                                 </a>
@@ -421,22 +465,36 @@ function NavbarMain(props) {
                                 </Button>
                             </div>
                         ) : (
-                            <Button
+                            <Nav.Link
+                            href="/login"
+                            className={[
+                                styles.text_gray,
+                                styles.text_nav,
+                                router.pathname == '/login' ? styles.active_text : ''
+                            ].join(' ')}>
+                            <div
                                 style={{
-                                    background: '#FFF',
-                                    width: '150px',
-                                    color: 'green',
-                                    fontWeight: 600,
-                                    borderRadius: '12px',
-                                    border: 'none'
-                                }}
-                                onClick={() => {
-                                    router.push('/login');
-                                }}
-                                size="md">
-                                เข้าสู่ระบบ
-                            </Button>
-                        )}{' '}
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                <div
+                                    className={[styles.img_icon]}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <div className={styles.none_hover}>
+                                    </div>
+                                    <div className={styles.ic_hover}>
+                                    </div>
+                                </div>
+                                <span style={{ marginLeft: '.2rem' }}>เข้าสู่ระบบ</span>
+                            </div>
+                        </Nav.Link>
+
+                        )}{' '} */}
                     </div>
                 </Container>
             </Navbar>

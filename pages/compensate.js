@@ -1,4 +1,4 @@
-import Banner from '../components/home'
+import Banner from '../components/compensate'
 import Navbar from '../components/NavbarMain';
 import Footer from '../components/footer';
 
@@ -20,7 +20,6 @@ export default function Home() {
         <>
             {/* <Navbar /> */}
             <Banner />
-            <Footer/>   
 
             {/* <ActionBottom /> */}
         </>

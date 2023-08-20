@@ -70,12 +70,12 @@ iframe::-webkit-scrollbar-track {
 }
 
 iframe::-webkit-scrollbar-thumb {
-  background-color: #18bd20;
+  background-color: #515251;
   border-radius: 8px;
 }
 
 iframe::-webkit-scrollbar-thumb:hover {
-  background-color: #16a316;
+  background-color: #515251;
 }
 
 
@@ -89,7 +89,7 @@ iframe::-webkit-scrollbar-thumb:hover {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #18bd20;
+  background: #515251;
   border-radius: 15px;
 }
 @media (max-width: 459px) {
@@ -194,10 +194,9 @@ option:active{
 .modal-title{
   text-align: center;
   /* color: #18bd20; */
-  background: -webkit-linear-gradient(#faf5f5, #454645);
+  background: #454645;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: bold !important;
   font-size: 25px !important;
 }
 .modal-header {
@@ -450,7 +449,7 @@ input {
 }
 @media (min-width: 1200px){
   .container{
-    max-width: 1440px !important;
+    max-width: 1350px !important;
   }
 }
 @media (min-width: 576px) and (max-width: 991px){
@@ -633,7 +632,7 @@ input {
 }
 
 .bg_bottom{
-  background: url(../public/webp/bg_bottom.png);
+  /* background: url(../public/webp/bg_bottom.png); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: -100px;
