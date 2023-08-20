@@ -13,7 +13,7 @@ import axios from 'axios';
 import Top_Products from './TopProducts';
 import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
 import PaginationCustom from './pagination';
-import { Border } from '@cloudinary/url-gen/actions';
+// import { Border } from '@cloudinary/url-gen/actions';
 import Side1 from '../public/newimg/side_1.jpg';
 
 export default function HeaderBanner(props) {
