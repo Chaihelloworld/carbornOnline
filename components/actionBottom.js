@@ -8,10 +8,7 @@ import { useCookies } from 'react-cookie';
 // import Modal_login from './modal_login';
 
 import axios from 'axios';
-import {
-    faCheck,
-    faCircleX
-} from '@fortawesome/free-solid-svg-icons';
+
 import { useRouter } from 'next/router';
 
 function ActionBottom(props) {
