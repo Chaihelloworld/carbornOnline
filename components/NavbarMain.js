@@ -421,21 +421,21 @@ function NavbarMain(props) {
                         </Navbar.Collapse>
                     </div>
                     <div className={styles.menulogin}>
-                        <Row style={{paddingTop:'15px'}}>
+                        <Row style={{paddingTop:'11px'}}>
                             <Col>
-                                <img src={Logo_main1.src} alt="logoMain" width={50} />
+                                <img src={Logo_main1.src} alt="logoMain" width={40} />
                             </Col>
                             <Col>
-                                <img src={Logo_main2.src} alt="logoMain" width={120} />
+                                <img src={Logo_main2.src} alt="logoMain" width={100} />
                             </Col>
                             <Col>
-                                <img src={Logo_main3.src} alt="logoMain" width={60} />
+                                <img src={Logo_main3.src} alt="logoMain" width={50} />
                             </Col>
                             <Col>
-                                <img src={Logo_main4.src} alt="logoMain" width={60} />
+                                <img src={Logo_main4.src} alt="logoMain" width={50} />
                             </Col>
                             <Col>
-                                <img src={Logo_main5.src} alt="logoMain" width={75} />
+                                <img src={Logo_main5.src} alt="logoMain" width={65} />
                             </Col>
                         </Row>
                         {/* {accessToken ? (
