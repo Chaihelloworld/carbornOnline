@@ -27,10 +27,10 @@ import { MdAdd } from 'react-icons/md';
 import { getStorage, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../libs/firebase';
 import firebase from '../libs/firebase';
-import { fill } from '@cloudinary/url-gen/actions/resize';
+// import { fill } from '@cloudinary/url-gen/actions/resize';
 import Swal from 'sweetalert2';
 import PaginationCustom from './pagination';
-import { CloudinaryImage } from '@cloudinary/url-gen';
+// import { CloudinaryImage } from '@cloudinary/url-gen';
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
