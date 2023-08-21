@@ -1,9 +1,16 @@
 
+// import Logo_main1 from '../public/newimg/logo_main1.png';
+// import Logo_main2 from '../public/newimg/logo_main2.png';
+// import Logo_main3 from '../public/newimg/logo_main3.png';
+// import Logo_main4 from '../public/newimg/logo_main4.png';
+// import Logo_main5 from '../public/newimg/logo_main5.webp';
+
 import Logo_main1 from '../public/newimg/logo_main1.png';
 import Logo_main2 from '../public/newimg/logo_main2.png';
 import Logo_main3 from '../public/newimg/logo_main3.png';
 import Logo_main4 from '../public/newimg/logo_main4.png';
-import Logo_main5 from '../public/newimg/logo_main5.webp';
+import Logo_main5 from '../public/newimg/logo_main5.png';
+
 import { Col } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 export default function Home() {
@@ -26,22 +33,18 @@ export default function Home() {
         พื้นที่ภาคเหนือตอนบนมุ่งสู่การท่องเที่ยวคาร์บอนสุทธิเป็นศูนย์ (2566)
         <Row style={{padding:'5px'}}>
                             <Col >
-                                <img src={Logo_main1.src} alt="logoMain" width={35} style={{padding:'2px'}}/>
-                            {/* </Col>
-                            <Col> */}
-                                <img src={Logo_main2.src} alt="logoMain" width={85} style={{padding:'2px'}}/>
-                            {/* </Col>
-                            <Col> */}
-                                <img src={Logo_main3.src} alt="logoMain" width={45} style={{padding:'2px'}}/>
-                            {/* </Col>
-                            <Col> */}
-                                <img src={Logo_main4.src} alt="logoMain" width={45} style={{padding:'2px'}}/>
-                            {/* </Col>
-                            <Col> */}
-                                <img src={Logo_main5.src} alt="logoMain" width={65} style={{padding:'2px'}}/>
+                                <img src={Logo_main2.src} alt="logoMain" width={92} style={{padding:'2px'}}/>
+                          
+                                <img src={Logo_main1.src} alt="logoMain" width={45} style={{padding:'2px'}}/>
+           
+                                <img src={Logo_main5.src} alt="logoMain" width={70} style={{padding:'2px'}}/>
+                    
+                                <img src={Logo_main3.src} alt="logoMain" width={65} style={{padding:'2px'}}/>
+                        
+                                <img src={Logo_main4.src} alt="logoMain" width={55} style={{padding:'2px'}}/>
                             </Col>
+                            
                         </Row>
-
         </div>
         <div>
           Copyright 2023 All Rights Reserved. By Develop

@@ -18,7 +18,7 @@ import Logo_main1 from '../public/newimg/logo_main1.png';
 import Logo_main2 from '../public/newimg/logo_main2.png';
 import Logo_main3 from '../public/newimg/logo_main3.png';
 import Logo_main4 from '../public/newimg/logo_main4.png';
-import Logo_main5 from '../public/newimg/logo_main5.webp';
+import Logo_main5 from '../public/newimg/logo_main5.png';
 
 function NavbarMain(props) {
     const [profile, setProfile] = useState({});
@@ -200,6 +200,24 @@ function NavbarMain(props) {
                                 </Nav>
                                 <Offcanvas.Body className={'pt-1 mt-2'}>
                                     <Nav className="justify-content-end flex-grow-1">
+                                    <Nav.Link
+                                            href="/"
+                                            className={[
+                                                styles.text_gray,
+                                                styles.text_nav,
+                                                styles.text_sideNav
+                                            ].join(' ')}>
+                                            <div
+                                                className={[styles.img_icon_in_nav]}
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}></div>
+                                            <span className={styles.text_gray}>
+                                                Home
+                                            </span>
+                                        </Nav.Link>
                                         <Nav.Link
                                             href="/map"
                                             className={[
@@ -215,7 +233,7 @@ function NavbarMain(props) {
                                                     alignItems: 'center'
                                                 }}></div>
                                             <span className={styles.text_gray}>
-                                                แผนที่จุดขายสินค้า ลดคาร์บอน
+                                                แผนที่จุดขายผลิตภัณฑ์ ลดคาร์บอน
                                             </span>
                                         </Nav.Link>
                                         <Nav.Link
@@ -233,7 +251,7 @@ function NavbarMain(props) {
                                                     alignItems: 'center'
                                                 }}></div>
                                             <span className={styles.text_gray}>
-                                                สินค้าลดคาร์บอน
+                                                ผลิตภัณฑ์ลดคาร์บอน
                                             </span>
                                         </Nav.Link>
 
@@ -343,7 +361,7 @@ function NavbarMain(props) {
                                             </div>
                                         </div>
                                         <span style={{ marginLeft: '.2rem' }}>
-                                            แผนที่จุดขายสินค้า ลดคาร์บอน
+                                            แผนที่จุดขายผลิตภัณฑ์ ลดคาร์บอน
                                         </span>
                                     </div>
                                 </Nav.Link>
@@ -377,7 +395,7 @@ function NavbarMain(props) {
                                                 /> */}
                                             </div>
                                         </div>
-                                        <span style={{ marginLeft: '.2rem' }}>สินค้าลดคาร์บอน</span>
+                                        <span style={{ marginLeft: '.2rem' }}>ผลิตภัณฑ์ลดคาร์บอน</span>
                                     </div>
                                 </Nav.Link>
                                 {accessToken && (
@@ -421,23 +439,23 @@ function NavbarMain(props) {
                         </Navbar.Collapse>
                     </div>
                     <div className={styles.menulogin}>
-                        <Row style={{paddingTop:'11px'}}>
-                            <Col>
-                                <img src={Logo_main1.src} alt="logoMain" width={40} />
-                            </Col>
-                            <Col>
-                                <img src={Logo_main2.src} alt="logoMain" width={100} />
-                            </Col>
-                            <Col>
-                                <img src={Logo_main3.src} alt="logoMain" width={50} />
-                            </Col>
-                            <Col>
-                                <img src={Logo_main4.src} alt="logoMain" width={50} />
-                            </Col>
-                            <Col>
-                                <img src={Logo_main5.src} alt="logoMain" width={65} />
-                            </Col>
-                        </Row>
+                        <ui style={{paddingTop:'3px'}}>
+                            <il style={{transform:'translate(0px,5px)',padding:'5px'}}>
+                                <img src={Logo_main2.src} alt="logoMain" width={92} />
+                            </il>
+                            <il  style={{padding:'5px'}}>
+                                <img src={Logo_main1.src} alt="logoMain" width={45} />
+                            </il>
+                            <il style={{padding:'5px'}}>
+                                <img src={Logo_main5.src} alt="logoMain" width={75} />
+                            </il>
+                            <il style={{padding:'3px'}}>
+                                <img src={Logo_main3.src} alt="logoMain" width={65} />
+                            </il>
+                            <il style={{padding:'3px'}}>
+                                <img src={Logo_main4.src} alt="logoMain" width={55} />
+                            </il>
+                        </ui>
                         {/* {accessToken ? (
                             <div
                                 style={{
