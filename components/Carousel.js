@@ -1,7 +1,8 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import Slides_1 from '../public/newimg/slide_3.jpg';
-import Slides_2 from '../public/newimg/slide_2.jpg';
+import Slides_1 from '../public/newimg/slide_1z1.png';
+import Slides_2 from '../public/newimg/slide_1z2.png';
+import Slides_3 from '../public/newimg/slide_1z3.png';
 
 import Image from 'next/image';
 const ImageCarousel = () => {
@@ -14,7 +15,10 @@ const ImageCarousel = () => {
                 <Image src={Banner} className="d-block w-100" alt="Picture of the author" />
             </Carousel.Item> */}
             <Carousel.Item>
-                <img className="d-block w-100" src={Slides_1.src} alt="Image 2" />
+                <img className="d-block w-100" src={Slides_2.src} alt="Image 2" />
+            </Carousel.Item>
+            <Carousel.Item>
+                <img className="d-block w-100" src={Slides_3.src} alt="Image 3" />
             </Carousel.Item>
             {/* <Carousel.Item>
                 <img
