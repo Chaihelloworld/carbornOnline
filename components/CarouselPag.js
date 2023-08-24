@@ -1,11 +1,11 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-// import Slides_1 from '../public/newimg/slide_1z1.png';
-// import Slides_2 from '../public/newimg/slide_1z2.png';
-// import Slides_3 from '../public/newimg/slide_1z3.png';
-import Slides_1 from '../public/newimg/slide_3.jpg';
-import Slides_2 from '../public/newimg/slide_3.jpg';
-import Slides_3 from '../public/newimg/slide_3.jpg';
+import Slides_1 from '../public/newimg/slide_1z1.png';
+import Slides_2 from '../public/newimg/slide_1z2.png';
+import Slides_3 from '../public/newimg/slide_1z3.png';
+// import Slides_1 from '../public/newimg/slide_3.jpg';
+// import Slides_2 from '../public/newimg/slide_3.jpg';
+// import Slides_3 from '../public/newimg/slide_3.jpg';
 
 import Image from 'next/image';
 const ImageCarousel = () => {

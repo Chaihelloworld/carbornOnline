@@ -199,7 +199,7 @@ function ActionBottom() {
                                     <Card style={{ borderRadius: '15px' }}>
                                         <Button
                                             onClick={() => {
-                                                router.push('/products');
+                                                router.push('/infopainning');
                                             }}
                                             style={{
                                                 background: 'transparent',
