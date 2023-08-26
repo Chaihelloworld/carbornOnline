@@ -1,4 +1,4 @@
-import Banner from '../components/pag'
+import Pag from '../components/pag'
 import Navbar from '../components/NavbarMain';
 import Footer from '../components/footer';
 
@@ -19,7 +19,7 @@ export default function Home() {
     return (
         <>
             {/* <Navbar /> */}
-            <Banner />
+            <Pag />
             <Footer />
             {/* <ActionBottom /> */}
         </>
