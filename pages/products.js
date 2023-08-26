@@ -1,8 +1,9 @@
 import Banner from '../components/headerBanner';
-import Navbar from '../components/NavbarMain';
+import Navbar from '../components/NavbarContent';
 import { Container, Row, Col, Button, Card, Form, Pagination, InputGroup } from 'react-bootstrap';
 
 import ActionBottom from '../components/actionBottom';
+import Footer from '../components/footer';
 
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/headerBanner.module.scss';
@@ -48,6 +49,7 @@ export default function Home() {
         <>
             <Navbar />
             <Banner />
+            <Footer />
             {/* <div
                             className={styles.btncart_content}
                         >

@@ -87,120 +87,127 @@ export default function HeaderBanner(props) {
         <div>
             <div className={styles.x_banner_header}>
                 <Container>
-                    <Row>
-                        <style jsx>{`
+                    {/* <Row> */}
+                    <style jsx>{`
+                        .paddingDestop {
+                            padding: 30px;
+                            display: none;
+                        }
+                        @media (min-width: 991.98px) {
                             .paddingDestop {
-                                padding: 30px;
+                                display: none;
+                                padding: 2px;
+                            }
+                        }
+                        @media (min-width: 791.98px) {
+                            .paddingDestop {
+                                padding: 0px;
                                 display: none;
                             }
-                            @media (min-width: 991.98px) {
-                                .paddingDestop {
-                                    display: none;
-                                    padding: 2px;
-                                }
-                            }
-                            @media (min-width: 791.98px) {
-                                .paddingDestop {
-                                    padding: 0px;
-                                    display: none;
-                                }
-                            }
-                            .btn-primary {
-                                color: #fff;
-                                background-color: #007a06;
-                                border-color: #007a06;
-                            }
-                        `}</style>
+                        }
+                        .btn-primary {
+                            color: #fff;
+                            background-color: #007a06;
+                            border-color: #007a06;
+                        }
+                    `}</style>
 
-                        <Col xs={12} md={12}>
-                            <Container>
-                                <Row xs={12} md={12} style={{ padding: '5px', paddingTop: '10%' }}>
-                                    <div
-                                        className="Destop_side"
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                        <Card
-                                            bg={'Success'}
-                                            text={'white'}
-                                            style={{
-                                                width: '25rem',
-                                                height: '100%',
-                                                background: '#007a06'
-                                            }}
-                                            className="mb-2">
-                                            <Card.Body style={{ margin: 'auto' }}>
-                                                <Image src={STORE.logo} width={250} alt="logo" />
-                                                <div
-                                                    style={{
-                                                        fontSize: '18px',
-                                                        display: 'flex',
-                                                        justifyContent: 'center',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                    {' '}
-                                                    <p>
-                                                        เข้าสู่ระบบ <br />
-                                                    </p>
-                                                    <p>Carbon Green Travel </p>
-                                                </div>
+                    {/* <Col xs={12} md={12}> */}
+                    {/* <Container> */}
+                    <Row xs={12} md={8}>
+                        <div className="Destop_side">
+                            <div
+                                style={{
+                                    fontSize: '18px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    flexDirection: 'column',
+                                    alignItems: 'center'
+                                }}>
+                                {' '}
+                                <p>
+                                    เข้าสู่ระบบ <br />
+                                </p>
+                                <p>Carbon Green Travel </p>
+                            </div>
+                            <Form
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                <Col xs={8} md={3}>
+                                    <Form.Group className="mb-3">
+                                        {/* <Form.Label>Username</Form.Label> */}
+                                        <Form.Control
+                                            placeholder="Username"
+                                            type="email"
+                                            aria-autocomplete="false"
+                                            key="email"
+                                            id="email"
+                                            value={getLogin.email}
+                                            name="email"
+                                            onChange={handleChange}
+                                        />
+                                    </Form.Group>
+                                </Col>
 
-                                                <Form>
-                                                    <Form.Group className="mb-1">
-                                                        <Form.Label>Username</Form.Label>
-                                                        <Form.Control
-                                                            type="email"
-                                                            placeholder="Enter email"
-                                                            aria-autocomplete="false"
-                                                            key="email"
-                                                            id="email"
-                                                            value={getLogin.email}
-                                                            name="email"
-                                                            onChange={handleChange}
-                                                        />
-                                                    </Form.Group>
+                                <br />
+                                <Col xs={8} md={3}>
+                                    <Form.Group className="mb-3" aria-autocomplete="false">
+                                        {/* <Form.Label>Password</Form.Label> */}
+                                        <Form.Control
+                                            key="password"
+                                            placeholder="Password"
+                                            id="password"
+                                            value={getLogin.password}
+                                            name="password"
+                                            onChange={handleChange}
+                                            aria-autocomplete="false"
+                                            type="password"
+                                        />
+                                    </Form.Group>
+                                </Col>
 
-                                                    <Form.Group
-                                                        className="mb-1"
-                                                        aria-autocomplete="false">
-                                                        <Form.Label>Password</Form.Label>
-                                                        <Form.Control
-                                                            key="password"
-                                                            id="password"
-                                                            value={getLogin.password}
-                                                            name="password"
-                                                            onChange={handleChange}
-                                                            aria-autocomplete="false"
-                                                            type="password"
-                                                            placeholder="Password"
-                                                        />
-                                                    </Form.Group>
-                                                    <br />
-                                                    <Button
-                                                        style={{ width: '-webkit-fill-available' }}
-                                                        variant="primary"
-                                                        onClick={Login}
-                                                        // type="submit"
-                                                    >
-                                                        ลงชื่อเข้าใช้
-                                                    </Button>
-                                                </Form>
-                                            </Card.Body>
-                                        </Card>
-                                        <br />
-                                    </div>
-                                </Row>
-                                <div style={{ float: 'right' }}>
-                                    <br />
-                                    <br />
-                                    <br />
-                                </div>
-                            </Container>
-                        </Col>
+                                <br />
+                                <Col xs={8} md={3}>
+                                    <Button
+                                        style={{ width: '-webkit-fill-available' }}
+                                        variant="primary"
+                                        onClick={Login}
+                                        // type="submit"
+                                    >
+                                        ลงชื่อเข้าใช้
+                                    </Button>
+                                    {/* <Button
+                                        style={{ width: '-webkit-fill-available' }}
+                                        variant="outlet"
+                                        onClick={Login}
+                                        // type="submit"
+                                    >
+                                        สมัครสมาชิก
+                                    </Button> */}
+                                    <Button
+                                        style={{ width: '-webkit-fill-available' ,color:'black',marginTop:'5px'}}
+                                        variant="outline-light" >
+                                        สมัครสมาชิก
+                                    </Button>{' '}
+                                </Col>
+                            </Form>
+                            {/* </Card.Body>
+                                        </Card> */}
+                            <br />
+                        </div>
                     </Row>
+                    <div style={{ float: 'right' }}>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    {/* </Container> */}
+                    {/* </Col> */}
+                    {/* </Row> */}
                 </Container>
             </div>
         </div>

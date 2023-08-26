@@ -85,16 +85,38 @@ function MydModalWithGrid(props) {
 
     const addToCart = (product) => {
         console.log(product)
-        setCartItems([...cartItems, product]);
-        let array = [...cartItems, product];
-        props.onHide();
-        localStorage.setItem('toggle', 'true');
-        localStorage.setItem('json', `${JSON.stringify(array)}`);
-        router.push('/products')
-        setQuantity(1)
+        // console.log(product)
+        // setCartItems([...cartItems, product]);
+        // let array = [...cartItems, product];
+        // props.onHide();
+        // localStorage.setItem('toggle', 'true');
+        // localStorage.setItem('json', `${JSON.stringify(array)}`);
+        // router.push('/products')
+        // setQuantity(1)
     };
 
+const addCartAPI =  async(id,count)=>{
+    console.log('id ==>', id ,count)
+    try {
+        await axios
+        .post('http://localhost:5000/api/create_cart', {
+            user_id: '1',
+            product_id: id,
+            count: count,
+            active: true,
+            // type_products: [],
+        })
+        .then((response) => {
+            // console.log(response.data);
+            console.log('success', response.data.message);
+            // router.reload('/createStore')
+            props.onHide()
+        });
+    } catch (error) {
+        console.log(error);
+    }
 
+}
     const handleSubmit = (event) => {
         event.preventDefault();
         onSubmit(quantity);
@@ -355,7 +377,10 @@ function MydModalWithGrid(props) {
                         variant="success"
                         style={{width:'150px'}}
                         onClick={() => {
-                            addToCart({ pdID ,quantity});
+                            // addToCart({ pdID ,quantity});
+                            addCartAPI(pdID,quantity)
+                         
+
                         }}>
                         เลือก
                     </Button>

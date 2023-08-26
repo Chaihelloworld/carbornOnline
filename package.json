@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p $PORT",
     "lint": "next lint",
-    "heroku-postbuild":"npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -30,6 +30,7 @@
     "react-firebase-hooks": "^3.0.4",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.8.0",
+    "react-image-lightbox": "^5.1.4",
     "react-loading": "^2.0.3",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.6",

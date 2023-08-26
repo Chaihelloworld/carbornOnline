@@ -228,7 +228,7 @@ export default function HeaderBanner(props) {
     // console.log(setFilter_Product);
     return (
         <div>
-            <div className={styles.x_banner_header}>
+            {/* <div className={styles.x_banner_header}> */}
                 <Container>
                     <Row>
                         <style jsx>{`
@@ -288,11 +288,6 @@ export default function HeaderBanner(props) {
                                                         </Form.Select>
                                                     </InputGroup>
                                                 </Col>
-                                                {/* <Col md={2} xs={12} style={{ padding: '5px' }}>
-                                                    <Form.Select>
-                                                        <option>จังหวัด</option>
-                                                    </Form.Select>
-                                                </Col> */}
                                                 <Col xs={12} md={10} style={{ padding: '5px' }}>
                                                     <InputGroup>
                                                         <Form.Control
@@ -489,7 +484,7 @@ export default function HeaderBanner(props) {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            {/* </div> */}
         </div>
     );
 }

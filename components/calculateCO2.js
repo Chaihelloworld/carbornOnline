@@ -45,8 +45,7 @@ export default function HeaderBanner(props) {
     });
     const [Auth_user, setAuth] = useState({
         userId: null,
-        product_id: null,
-
+        product_id: null
     });
     const [totalPages, setTotalPages] = useState(0);
     const [page, setPage] = useState(0);
@@ -118,31 +117,9 @@ export default function HeaderBanner(props) {
     const [q, setq] = useState([]);
     const [list, setlist] = useState([]);
     const [nulldat, setNulldat] = useState(false);
+    const [listCart, setListCart] = useState([]);
+    const [sumCO2, setSumCO2] = useState(0);
 
-    useEffect(() => {
-        if (!JSON.parse(localStorage.getItem('json'))) {
-            setNulldat(true);
-            return;
-        }
-        let all_id = JSON.parse(localStorage.getItem('json'));
-        console.log(all_id);
-        let ayy = [];
-        let q = [];
-        all_id.forEach((x_data) => {
-            ayy.push(x_data.pdID);
-            q.push(x_data.quantity);
-            console.log(x_data.quantity);
-        });
-        let arr = Array.from(new Set(ayy));
-        let arr_q = Array.from(new Set(q));
-        console.log('q',q);
-        console.log('arr_q',arr_q)
-
-        setq(q);
-        setlist(arr);
-        selectProduct(arr);
-        setNulldat(false);
-    }, []);
     const submitCal = async (id) => {
         // Swal.fire({
         //     title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
@@ -167,7 +144,7 @@ export default function HeaderBanner(props) {
                 await axios
                     .post('http://localhost:5000/api/create_listitem', {
                         userId: paramData.name,
-                        product_id: paramData.description,
+                        product_id: paramData.description
                         // type_products: [],
                     })
                     .then((response) => {
@@ -195,198 +172,220 @@ export default function HeaderBanner(props) {
     //     // searchFilter();
     // }, [filterProduct.name]);
     // // console.log(setFilter_Product);
+
+    useEffect(() => {
+        const Getlist_Cart = async () => {
+            try {
+                await axios
+                    .get('http://localhost:5000/api/cart_list', {
+                        params: {
+                            user_id: '1'
+                        }
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        setListCart(response.data.data);
+                        callcarbon(response.data.data);
+                    });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        Getlist_Cart();
+    }, []);
+    const callcarbon = (list) => {
+        let sum_CO2 = 0;
+        list.forEach((x) => {
+            sum_CO2 += x.total_CO2;
+        });
+        setSumCO2(sum_CO2);
+    };
     return (
         <div>
-            <div className={styles.x_banner_header}>
-                <Container>
-                    <Row>
-                        <style jsx>{`
+            <Container>
+                <Row>
+                    <style jsx>{`
+                        .paddingDestop {
+                            padding: 30px;
+                            display: none;
+                        }
+                        @media (min-width: 991.98px) {
                             .paddingDestop {
-                                padding: 30px;
+                                display: none;
+                                padding: 2px;
+                            }
+                        }
+                        @media (min-width: 791.98px) {
+                            .paddingDestop {
+                                padding: 0px;
                                 display: none;
                             }
-                            @media (min-width: 991.98px) {
-                                .paddingDestop {
-                                    display: none;
-                                    padding: 2px;
-                                }
-                            }
-                            @media (min-width: 791.98px) {
-                                .paddingDestop {
-                                    padding: 0px;
-                                    display: none;
-                                }
-                            }
-                            .btn-primary {
-                                color: #fff;
-                                background-color: #007a06;
-                                border-color: #007a06;
-                            }
-                        `}</style>
+                        }
+                        .btn-primary {
+                            color: #fff;
+                            background-color: #007a06;
+                            border-color: #007a06;
+                        }
+                    `}</style>
 
-                        <Col xs={12} md={12}>
-                            <Container>
-                                <Row
-                                    xs={12}
-                                    md={12}
-                                    style={{ padding: '5px', justifyContent: 'center' }}>
-                                    <div className="Destop_side">
-                                        <Col xs={12} md={12}>
-                                            <div
-                                                style={{
-                                                    width: '100%',
-                                                    // height: '150px'
+                    <Col xs={12} md={12}>
+                        <Container>
+                            <Row
+                                xs={12}
+                                md={12}
+                                style={{ padding: '5px', justifyContent: 'center' }}>
+                                <div className="Destop_side">
+                                    <Col xs={12} md={12}>
+                                        <div
+                                            style={{
+                                                width: '100%',
+                                                // height: '150px'
 
-                                                    position: 'relative'
-                                                }}>
-                                                <Image
-                                                    src={STORE.banner}
-                                                    alt="banner"
-                                                    objectFit="cover"
-                                                />
-                                            </div>
-                                        </Col>
-                                        <br />
-                                    </div>
+                                                position: 'relative'
+                                            }}>
+                                            <Image
+                                                src={STORE.banner}
+                                                alt="banner"
+                                                objectFit="cover"
+                                            />
+                                        </div>
+                                    </Col>
+                                    <br />
+                                </div>
 
-                                    <CardGroup>
-                                        {/* <Table striped>
-                                        <thead>
-                                            <tr align="center">
-                                                <th width={300}></th>
-                                                <th width={300}>ชื่อ Product</th>
-                                                <th width={300}>Carbon (CO2Kg)</th>
-                                                <th width={300}>จำนวน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody> */}
-                                        {listProduct && !isLoading
-                                            ? listProduct.map((data, index) => {
-                                                  return (
-                                                      <div key={data.id} style={{ padding: '5px' }}>
-                                                          <Card key={data.id}>
-                                                              <Card.Img
-                                                                  align="center"
-                                                                  variant="top"
-                                                                  src={
-                                                                      data ? data.image : STORE.cart
-                                                                  }
-                                                                  style={{
-                                                                      width: '200px',
-                                                                      height: '210px',
-                                                                      alignItems: 'center',
-                                                                      margin: 'auto'
-                                                                  }}
-                                                              />
-                                                              <Card.Body>
-                                                                  <Card.Title>
-                                                                      {data ? data.name : '-'}
-                                                                  </Card.Title>
-                                                                  <Card.Text></Card.Text>
-                                                              </Card.Body>
-                                                              <Card.Footer
-                                                                  style={{
-                                                                      backgroundColor: '#7a7a7a',
-                                                                      color: 'white',
-                                                                      textAlign: 'center'
-                                                                  }}>
-                                                                  <a style={{ color: 'white' }}>
-                                                                      {data ? data.CO2 : '0.00'}{' '}
-                                                                      KgCO2
-                                                                  </a>
-                                                              </Card.Footer>
-                                                              <Card.Footer
-                                                                  style={{
-                                                                      backgroundColor: '#007a06',
-                                                                      color: 'white',
-                                                                      textAlign: 'center'
-                                                                  }}>
-                                                                  <a
-                                                                      style={{
-                                                                          color: 'white'
-                                                                      }}>
-                                                                      จำนวน {q[index]} ชิ้น
-                                                                  </a>
-                                                              </Card.Footer>
-                                                          </Card>
+                                {/* <CardGroup> */}
 
-                                                          <br />
-                                                      </div>
-                                                  );
-                                              })
-                                            : 'ไม่พบข้อมูล'}
-                                    </CardGroup>
-                                    {/* </tbody>
+                                <Row xs={12} md={12}>
+                                    <Col
+                                        md={12}
+                                        xs={12}
+                                        style={{
+                                            padding: '5px',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center'
+                                        }}>
+                                        <h6 style={{ fontWeight: 'bold' }}>รายการ</h6>
+                                        <h6 style={{ textAlign: 'end', fontWeight: 'bold' }}>
+                                            ปริมาณคาร์บอน
+                                        </h6>
+                                    </Col>
+                                    {listCart && !isLoading
+                                        ? listCart.map((data, index) => {
+                                              return (
+                                                  <div key={data.id} style={{ padding: '5px' }}>
+                                                      <Col
+                                                          md={12}
+                                                          xs={12}
+                                                          style={{
+                                                              display: 'flex',
+                                                              justifyContent: 'space-between',
+                                                              alignItems: 'center'
+                                                          }}>
+                                                          <h6>
+                                                              {data
+                                                                  ? data.total_cart_count
+                                                                  : 'null'}
+                                                              x{' '}
+                                                              {data.product_name
+                                                                  ? data.product_name
+                                                                  : 'null'}
+                                                          </h6>
+                                                          <h6 style={{ textAlign: 'end' }}>
+                                                              {data ? data.total_CO2 : '0'}
+                                                          </h6>
+                                                      </Col>
+                                                  </div>
+                                              );
+                                          })
+                                        : 'ไม่พบข้อมูล'}
+                                        <hr/>
+                                    <Col
+                                        md={12}
+                                        xs={12}
+                                        style={{
+                                            padding: '5px',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center'
+                                        }}>
+                                        <h6>รวมปริมาณคาร์บอนทั้งหมด</h6>
+                                        <h6 style={{ textAlign: 'end', color: 'green' }}>
+                                            {sumCO2}
+                                        </h6>
+                                    </Col>
+                                </Row>
+                                {/* </CardGroup> */}
+                                {/* </tbody>
                                     </Table> */}
-                                    {/*                                    
+                                {/*                                    
                                                 <div style={{fontSize:"20px",float:'right'}}>
                                                     ลดคาร์บอน ทั้งหมด <a style={{color:'green' ,fontWeight:550}}>{calculateCO2()} </a>CO2Kg
                                                 </div> */}
 
-                                    <MydModalWithGrid
-                                        show={modalShow}
-                                        data={productid}
-                                        onHide={() => setModalShow(false)}
-                                    />
-                                    {nulldat && (
-                                        <Col md={12} sm={12} style={{ textAlign: 'center' }}>
-                                            <h3> ไม่พบข้อมูล</h3>
-                                        </Col>
-                                    )}
+                                <MydModalWithGrid
+                                    show={modalShow}
+                                    data={productid}
+                                    onHide={() => setModalShow(false)}
+                                />
+                                {nulldat && (
+                                    <Col md={12} sm={12} style={{ textAlign: 'center' }}>
+                                        <h3> ไม่พบข้อมูล</h3>
+                                    </Col>
+                                )}
 
-                                    <Col md={2} sm={12}>
-                                        <br />
-                                        <Button
-                                            size="md"
-                                            type="submit"
-                                            variant="success"
-                                            style={{
-                                                // float: 'right',
-                                                width: '100%',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
-                                            }}
-                                            onClick={submitCal}>
-                                            ยืนยัน
-                                        </Button>{' '}
-                                    </Col>
-                                    <Col md={2} sm={12}>
-                                        <br />
-                                        <Button
-                                            variant="danger"
-                                            size="md"
-                                            color="secondary"
-                                            style={{
-                                                // float: 'right',
-                                                width: '100%',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
-                                                // marginLeft: '15px'
-                                            }}
-                                            onClick={() => {
-                                                router.push('/');
-                                                localStorage.removeItem('json');
-                                            }}>
-                                            {/* <MdAdd fontSize={'25px'} /> */}
-                                            ยกเลิก
-                                        </Button>{' '}
-                                    </Col>
-                                </Row>
-                                {/* <div style={{ float: 'right' }}>
+                                <Col md={2} sm={12}>
+                                    <br />
+                                    <Button
+                                        size="md"
+                                        type="submit"
+                                        variant="success"
+                                        style={{
+                                            // float: 'right',
+                                            width: '100%',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}
+                                        onClick={submitCal}>
+                                        ยืนยัน
+                                    </Button>{' '}
+                                </Col>
+                                <Col md={2} sm={12}>
+                                    <br />
+                                    <Button
+                                        variant="danger"
+                                        size="md"
+                                        color="secondary"
+                                        style={{
+                                            // float: 'right',
+                                            width: '100%',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                            // marginLeft: '15px'
+                                        }}
+                                        onClick={() => {
+                                            router.push('/');
+                                            localStorage.removeItem('json');
+                                        }}>
+                                        {/* <MdAdd fontSize={'25px'} /> */}
+                                        ยกเลิก
+                                    </Button>{' '}
+                                </Col>
+                            </Row>
+                            {/* <div style={{ float: 'right' }}>
                                     <PaginationCustom  handlePageChange={handlePageChange} currentPage={page} totalPages={totalPages}/>
                                    
                                     <br />
                                     <br />
                                     <br />
                                 </div> */}
-                            </Container>
-                            <br /> <br />
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+                        </Container>
+                        <br /> <br />
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 }

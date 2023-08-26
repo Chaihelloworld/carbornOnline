@@ -160,7 +160,7 @@ function ActionBottom() {
                                     <Card style={{ borderRadius: '15px' }}>
                                         <Button
                                             onClick={() => {
-                                                router.push('/plan');
+                                                router.push('/infopainning');
                                             }}
                                             style={{
                                                 background: 'transparent',
@@ -199,7 +199,7 @@ function ActionBottom() {
                                     <Card style={{ borderRadius: '15px' }}>
                                         <Button
                                             onClick={() => {
-                                                router.push('/infopainning');
+                                                router.push('/products');
                                             }}
                                             style={{
                                                 background: 'transparent',

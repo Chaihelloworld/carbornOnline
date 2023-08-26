@@ -159,31 +159,8 @@ export default function HeaderBanner(props) {
     }, [filterProduct.page, filterProduct.perPage, tigger]);
     const [toggle, setToggle] = useState(localStorage.getItem('toggle') == 'true' ? true : false);
     const [listcart, setCart] = useState(JSON.parse(localStorage.getItem('json')));
-
-    const Enumclass = () => {
-        if (!JSON.parse(localStorage.getItem('json'))) {
-            return JSON.parse(localStorage.getItem('json')) ? num : 0;
-
-            return;
-        }
-        console.log(
-            'length ->',
-            JSON.parse(localStorage.getItem('json'))
-                ? JSON.parse(localStorage.getItem('json')).length
-                : 0
-        );
-        console.log('listcart ->', listcart);
-        let d = JSON.parse(localStorage.getItem('json'));
-        let num = 0;
-        for (let index = 0; index < d.length; index++) {
-            const element = d[index];
-            num = num + d[index].quantity;
-            console.log('-----------', element, num);
-        }
-        console.log('-----------', num);
-
-        return JSON.parse(localStorage.getItem('json')) ? num : 0;
-    };
+    const [totalCount,setTotal_count] = useState(0)
+ 
     useEffect(() => {
         if (listcart == null) {
             getCategories();
@@ -198,65 +175,81 @@ export default function HeaderBanner(props) {
     }, [listcart]);
     // console.log(setFilter_Product);
     useEffect(() => {
+        const Enumclass = async () => {
+            try {
+                await axios
+                    .get('http://localhost:5000/api/cart_count', {
+                        params: {
+                            user_id: '1'
+                        }
+                    })
+                    .then((response) => {
+                        console.log(response)
+                        setTotal_count(response.data.data[0].total_count);
+                    });
+            } catch (error) {
+                console.log(error);
+            }
+        };
         Enumclass();
+
     });
     return (
         <>
-        {/* // <div> */}
-        <Container fluid={'true'} style={{ alignContent: 'center' }}>
-        {/* <Row>
+            {/* // <div> */}
+            <Container fluid={'true'} style={{ alignContent: 'center' }}>
+                {/* <Row>
 
             <br />
             </Row> */}
-            </Container >
+            </Container>
 
             <Container fluid={'sm'} style={{ alignContent: 'center' }}>
-
-            <Row style={{paddingTop:'25px'}}>
-            <Col md={12} xs={12}>
-                {/* <h1 style={{textAlign:'center'}}>รู้ก่อนเที่ยว</h1>
+                {/* style={{paddingTop:'25px'}} */}
+                <Row>
+                    <Col md={12} xs={12}>
+                        {/* <h1 style={{textAlign:'center'}}>รู้ก่อนเที่ยว</h1>
                 <div style={{padding:'15px'}}>
                 <h5>CIRCULAR นำของเสียจากอุตสหากรรมสิ่งทอมาใช้เป็นวัตถุดิบในการผลิต เช่น ของเสียจากภาคการผลิตอุตสาหกรรมแฟชั่น หรือ เศษผ้าจากการตัดเย็บ และ ขยะสิ่งทอแฟชั่น ต่างๆ</h5>
                 <h5>CIRCULAR คัดแยกของเสียจากอุตสาหกรรมสิ่งทอตามเฉดสี และ นำมาแปรสภาพเป็นผ้าหลากสี หรือ เสื้อผ้าใหม่ โดยไม่ผ่านกระบวนการฟอกย้อม เพื่อนำกลับมาใช้เป็นสินค้าที่ยั่งยืน และ สร้างผลกระทบที่ดีต่อโลกใบนี้</h5>
                 <h5>สิ่งที่ CIRCULAR ทำ ถือเป็นส่วนหนึ่งในการแก้ไขปัญหาสำหรับอนาคตร่วมกันของทุกคนที่เป็นส่วนหนึ่งของโลกใบนี้</h5>
                 </div> */}
-                
 
-                <br />
-                {/* <Row style={{ marginBottom: '15px' }}>
+                        <br />
+                        {/* <Row style={{ marginBottom: '15px' }}>
                     <ImageCarousel />
                 </Row> */}
-            </Col>
-        </Row>
-    </Container>
-        <Container fluid={'true'} style={{ backgroundColor: '#f0f0f0' }}>
-            <div className={styles.x_banner_header}>
-                <Container>
-                    <Row>
-                        <style jsx>{`
-                            .paddingDestop {
-                                padding: 30px;
-                                display: none;
-                            }
-                            @media (min-width: 991.98px) {
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid={'true'} style={{ backgroundColor: '#f0f0f0' }}>
+                <div className={styles.x_banner_header}>
+                    <Container>
+                        <Row>
+                            <style jsx>{`
                                 .paddingDestop {
-                                    display: none;
-                                    padding: 2px;
-                                }
-                            }
-                            @media (min-width: 791.98px) {
-                                .paddingDestop {
-                                    padding: 0px;
+                                    padding: 30px;
                                     display: none;
                                 }
-                            }
-                            .btn-primary {
-                                color: #fff;
-                                background-color: #007a06;
-                                border-color: #007a06;
-                            }
-                        `}</style>
-                        {/* <div
+                                @media (min-width: 991.98px) {
+                                    .paddingDestop {
+                                        display: none;
+                                        padding: 2px;
+                                    }
+                                }
+                                @media (min-width: 791.98px) {
+                                    .paddingDestop {
+                                        padding: 0px;
+                                        display: none;
+                                    }
+                                }
+                                .btn-primary {
+                                    color: #fff;
+                                    background-color: #007a06;
+                                    border-color: #007a06;
+                                }
+                            `}</style>
+                            {/* <div
                             className={styles.btncart_content}
                         >
                             <Button
@@ -286,174 +279,77 @@ export default function HeaderBanner(props) {
                                 />
                             </Button>
                         </div> */}
-                        <Col xs={12} md={12} style={{ marginTop: '-100px' }}>
-                            <Container >
-                                <Row xs={12} md={12} style={{ padding: '5px' }}>
-                                    <div className="Destop_side">
-                                        <br/>
-                                        <h2>PRODUCT</h2>
-
-                                        {/* <Form autoComplete="off" onSubmit={searchFilter}>
-                                            <Row>
-                                                <Col md={2} xs={12} style={{ padding: '5px' }}>
-                                                    <InputGroup>
-                                                        <Form.Select
-                                                            name={filterProduct.category_id}
-                                                            id="category_id"
-                                                            onChange={hendleChange}>
-                                                            <option key={-1} value={-1}>
-                                                                ประเภทอุตสาหกรรม
-                                                            </option>
-                                                            {listProductCetagory &&
-                                                                listProductCetagory.map(
-                                                                    (data, index) => {
-                                                                        return (
-                                                                            <>
-                                                                                <option
-                                                                                    key={index}
-                                                                                    value={data.id}>
-                                                                                    {data.name}
-                                                                                </option>
-                                                                            </>
-                                                                        );
+                            <Col xs={12} md={12} style={{ marginTop: '-100px' }}>
+                                <Container>
+                                    <div>
+                                        <h2 className="text-center mt-3">PRODUCT</h2>
+                                        <Row
+                                            xs={1}
+                                            md={3}
+                                            className="g-4"
+                                            style={{ height: '650px', overflowX: 'auto',marginTop: '25px' }}>
+                                            {listProduct &&
+                                                listProduct.map((data, index) => (
+                                                    <Col key={index}>
+                                                        <Card>
+                                                            <div className="text-center">
+                                                                <Image
+                                                                    src={
+                                                                        data.image
+                                                                            ? data.image
+                                                                            : STORE.cart
                                                                     }
-                                                                )}
-                                                        </Form.Select>
-                                                    </InputGroup>
-                                                </Col>
-                                                <Col xs={12} md={10} style={{ padding: '5px' }}>
-                                                    <InputGroup>
-                                                        <Form.Control
-                                                            placeholder="Search..."
-                                                            aria-label="Search"
-                                                            name={filterProduct.name}
-                                                            id="name"
-                                                            value={filterProduct.name}
-                                                            onChange={hendleChange}
-                                                        />
-                                                        <Button
-                                                            variant="outline-secondary"
-                                                            type="submit">
-                                                            <FaSearch />
-                                                        </Button>
-                                                        <Button
-                                                            variant="outline-secondary"
-                                                            onClick={clearFilter}>
-                                                            <FaSync />
-                                                        </Button>
-                                                    </InputGroup>
-                                                </Col>
-                                            </Row>
-                                            <br />
-                                        </Form> */}
-                                        {/* 
-                                        <Col xs={12} md={12}>
-                                            <div
-                                                style={{
-                                                    width: '100%',
-                                                    // height: '150px'
-
-                                                    position: 'relative'
-                                                }}>
-                                                <Image
-                                                    src={STORE.banner}
-                                                    alt="banner"
-                                                    objectFit="cover"
-                                                />
-                                            </div>
-                                        </Col> */}
-                                        <br />
-                                    </div>
-                                    {listProduct &&
-                                        listProduct.map((data, index) => {
-                                            return (
-                                                <>
-                                                    <Col
-                                                        key={index}
-                                                        md={3}
-                                                        style={{ paddingBottom: '20px' }}>
-                                                        <Button
-                                                            style={{
-                                                                display: 'contents',
-                                                                position: 'absolute'
-                                                            }}
-                                                            // onClick={() => {
-                                                            //     setModalShow(true), Productid(data);
-                                                            // }}
-                                                            >
-                                                            <Card key={index}>
-                                                                <div style={{ margin: 'auto' }}>
-                                                                    <br/>
-                                                                    <Image
-                                                                        // src={STORE.cart}
-                                                                        src={
-                                                                            data.image
-                                                                                ? data.image
-                                                                                : STORE.cart
-                                                                        }
-                                                                        alt="cart"
-                                                                        width={120}
-                                                                        height={120}
-                                                                    />
-                                                                </div>
-                                                                <Card.Body
-                                                                    style={{ color: 'black' }}>
-                                                                    {/* <Card.Title>
-                                                                        {data.name}
-                                                                    </Card.Title> */}
-                                                                    
-                                                                    <br />{' '}
-                                                                    <Card.Text>
-                                                                        {/* สถานที่จำหน่าย : {i.marksell} */}
-                                                                    </Card.Text>
-                                                                    <Card.Title>
-                                                                    {data.name}
-                                                                    </Card.Title>
-                                                                    <Card.Text>
+                                                                    alt="cart"
+                                                                    width={120}
+                                                                    height={120}
+                                                                    className="mt-3"
+                                                                />
+                                                            </div>
+                                                            <Card.Body className="text-center">
+                                                                <Card.Title>{data.name}</Card.Title>
+                                                                <Card.Text>
                                                                     <div>
                                                                         ปริมาณ CF: {data.CO2} kgCO2e
                                                                     </div>
-                                                                        สินค้าคาร์บอนต่ำ
-                                                                    </Card.Text>
-                                                                    <Button variant="primary"
-                                                                      onClick={() => {
-                                                                        setModalShow(true), Productid(data);
+                                                                    สินค้าคาร์บอนต่ำ
+                                                                </Card.Text>
+                                                                <Button
+                                                                    variant="primary"
+                                                                    onClick={() => {
+                                                                        setModalShow(true);
+                                                                        Productid(data);
                                                                     }}>
-                                                                        รายละเอียด
-                                                                    </Button>
-                                                                </Card.Body>
-                                                            </Card>
-                                                        </Button>
+                                                                    รายละเอียด
+                                                                </Button>
+                                                            </Card.Body>
+                                                        </Card>
                                                     </Col>
-                                                </>
-                                            );
-                                        })}
-                                    <MydModalWithGrid
-                                        show={modalShow}
-                                        data={productid}
-                                        onHide={() => setModalShow(false)}
-                                    />
-                                </Row>
-                                <div>
-                                    <PaginationCustom
-                                        handlePageChange={handlePageChange}
-                                        currentPage={page}
-                                        totalPages={totalPages}
-                                    />
+                                                ))}
+                                        </Row>
+                                        <MydModalWithGrid
+                                            show={modalShow}
+                                            data={productid}
+                                            onHide={() => setModalShow(false)}
+                                        />
+                                    </div>
                                     <br />
-                                    <br />
-                                    <br />
-                                </div>
-                            </Container>
-                        </Col>
-                    </Row>
-                    <div
-                            className={styles.btncart_content}
-                        >
+                                    <div>
+                                        <PaginationCustom
+                                            handlePageChange={handlePageChange}
+                                            currentPage={page}
+                                            totalPages={totalPages}
+                                        />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </div>
+                                </Container>
+                            </Col>
+                        </Row>
+                        <div className={styles.btncart_content}>
                             <Button
                                 className={styles.btncart}
-                                onClick={()=> router.push('/calculateCO2')}
-                            >
+                                onClick={() => router.push('/calculateCO2')}>
                                 <div
                                     style={{
                                         height: '25px',
@@ -465,8 +361,7 @@ export default function HeaderBanner(props) {
                                         transform: 'translate(50px, 40px)',
                                         zIndex: 999
                                     }}>
-                                        {Enumclass()}
-                                    
+                                    {totalCount}
                                 </div>
                                 <Image
                                     // src={STORE.cart}
@@ -477,9 +372,9 @@ export default function HeaderBanner(props) {
                                 />
                             </Button>
                         </div>
-                </Container>
-            </div>
-        </Container>
+                    </Container>
+                </div>
+            </Container>
         </>
     );
 }

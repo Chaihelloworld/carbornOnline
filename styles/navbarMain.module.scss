@@ -31,6 +31,19 @@
 .img_icon_in_nav{
     width: 17px;
 }
+.navbars {
+    
+    background-color: #fdfdfd !important;
+    // height: 70px;
+    transition: .4s all !important;
+    // position: fixed;
+    z-index: 10;
+    width: 100%;
+    height: 40px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: all .4s ease;
+}
 .navbar {
     
     background-color: #fdfdfd !important;

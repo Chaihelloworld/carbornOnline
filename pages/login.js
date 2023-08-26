@@ -18,9 +18,9 @@ export default function Home() {
     return (
         <>
             <Navbar />
-            <div >
+            {/* <div > */}
             <Banner />
-            </div>
+            {/* </div> */}
 
             {/* <ActionBottom /> */}
         </>
