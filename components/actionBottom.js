@@ -115,7 +115,7 @@ function ActionBottom(props) {
                                         alt="logo"
                                         loading="lazy"
                                     />
-                                    <p style={{ marginTop: '-10px' }}>สินค้า</p>
+                                    <p style={{ marginTop: '-10px' }}>ผลิตภัณฑ์</p>
                                 </button>
                             </div>
                             <div className={styles.list_tab_menu}>

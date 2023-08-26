@@ -112,7 +112,7 @@ function NavbarMain(props) {
         <>
             <Navbar
                 id="main-navbar"
-                className={[styles.navbar, checkScroll == true ? styles.navbarHide : ' '].join(' ')}
+                className={[styles.navbars, checkScroll == true ? styles.navbarHide : ' '].join(' ')}
                 expand="xl"
                 style={{ backgroundColor: BGcolor }}>
                 <Container className={[styles.container, styles.navContainer].join(' ')}>
@@ -435,12 +435,11 @@ function NavbarMain(props) {
                                         </div>
                                     </Nav.Link>
                                 )}
-                                
                             </Nav>
                         </Navbar.Collapse>
                     </div>
-                    <div className={styles.menulogin}>
-                        <ui style={{paddingTop:'3px'}}>
+                <div>
+                <ui style={{paddingTop:'3px'}}>
                             <il style={{transform:'translate(0px,5px)',padding:'5px'}}>
                                 <img src={Logo_main2.src} alt="logoMain" width={92} />
                             </il>
@@ -457,64 +456,8 @@ function NavbarMain(props) {
                                 <img src={Logo_main4.src} alt="logoMain" width={55} />
                             </il>
                         </ui>
-                        {/* {accessToken ? (
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    flexDirection: 'row'
-                                }}>
-                                    
-                                <a style={{ color: 'white', fontSize: '16px' }}>
-                                    ยินดีต้อนรับ : {Cookie.get('name')}
-                                </a>
-                                &ensp; &ensp;
-                                <Button
-                                    style={{
-                                        background: '#FFF',
-                                        width: '150px',
-                                        color: 'green',
-                                        fontWeight: 600,
-                                        borderRadius: '12px',
-                                        border: 'none'
-                                    }}
-                                    onClick={logout}
-                                    size="md">
-                                    ออกจากระบบ
-                                </Button>
-                            </div>
-                        ) : (
-                            <Nav.Link
-                            href="/login"
-                            className={[
-                                styles.text_gray,
-                                styles.text_nav,
-                                router.pathname == '/login' ? styles.active_text : ''
-                            ].join(' ')}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                <div
-                                    className={[styles.img_icon]}
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <div className={styles.none_hover}>
-                                    </div>
-                                    <div className={styles.ic_hover}>
-                                    </div>
-                                </div>
-                                <span style={{ marginLeft: '.2rem' }}>เข้าสู่ระบบ</span>
-                            </div>
-                        </Nav.Link>
-
-                        )}{' '} */}
-                    </div>
+                </div>
+                  
                 </Container>
             </Navbar>
         </>

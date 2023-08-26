@@ -49,7 +49,7 @@ export default function Home() {
         <>
             <Navbar />
             <Banner />
-            <Footer />
+            {/* <Footer /> */}
             {/* <div
                             className={styles.btncart_content}
                         >
@@ -80,7 +80,7 @@ export default function Home() {
                                 />
                             </Button>
                         </div> */}
-            {/* <ActionBottom /> */}
+            <ActionBottom />
         </>
     );
 }

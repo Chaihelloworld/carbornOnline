@@ -19,7 +19,7 @@ import Navbars from './NavbarMain';
 import Navbar from 'react-bootstrap/Navbar';
 import Footer from './footer';
 import Card from 'react-bootstrap/Card';
-import Product from './headerBanner';
+import HomeProduct from './homeProduct';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 function ActionBottom() {
@@ -269,10 +269,7 @@ function ActionBottom() {
                     </Col>
                 </Row>
             </Container>
-            <br />
-            <br />
-            <br />
-            <Product />
+            <HomeProduct />
         </>
     );
 }

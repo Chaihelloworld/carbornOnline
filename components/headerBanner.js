@@ -159,8 +159,8 @@ export default function HeaderBanner(props) {
     }, [filterProduct.page, filterProduct.perPage, tigger]);
     const [toggle, setToggle] = useState(localStorage.getItem('toggle') == 'true' ? true : false);
     const [listcart, setCart] = useState(JSON.parse(localStorage.getItem('json')));
-    const [totalCount,setTotal_count] = useState(0)
- 
+    const [totalCount, setTotal_count] = useState(0);
+
     useEffect(() => {
         if (listcart == null) {
             getCategories();
@@ -184,7 +184,7 @@ export default function HeaderBanner(props) {
                         }
                     })
                     .then((response) => {
-                        console.log(response)
+                        console.log(response);
                         setTotal_count(response.data.data[0].total_count);
                     });
             } catch (error) {
@@ -192,38 +192,12 @@ export default function HeaderBanner(props) {
             }
         };
         Enumclass();
-
     });
     return (
         <>
             {/* // <div> */}
-            <Container fluid={'true'} style={{ alignContent: 'center' }}>
-                {/* <Row>
 
-            <br />
-            </Row> */}
-            </Container>
-
-            <Container fluid={'sm'} style={{ alignContent: 'center' }}>
-                {/* style={{paddingTop:'25px'}} */}
-                <Row>
-                    <Col md={12} xs={12}>
-                        {/* <h1 style={{textAlign:'center'}}>รู้ก่อนเที่ยว</h1>
-                <div style={{padding:'15px'}}>
-                <h5>CIRCULAR นำของเสียจากอุตสหากรรมสิ่งทอมาใช้เป็นวัตถุดิบในการผลิต เช่น ของเสียจากภาคการผลิตอุตสาหกรรมแฟชั่น หรือ เศษผ้าจากการตัดเย็บ และ ขยะสิ่งทอแฟชั่น ต่างๆ</h5>
-                <h5>CIRCULAR คัดแยกของเสียจากอุตสาหกรรมสิ่งทอตามเฉดสี และ นำมาแปรสภาพเป็นผ้าหลากสี หรือ เสื้อผ้าใหม่ โดยไม่ผ่านกระบวนการฟอกย้อม เพื่อนำกลับมาใช้เป็นสินค้าที่ยั่งยืน และ สร้างผลกระทบที่ดีต่อโลกใบนี้</h5>
-                <h5>สิ่งที่ CIRCULAR ทำ ถือเป็นส่วนหนึ่งในการแก้ไขปัญหาสำหรับอนาคตร่วมกันของทุกคนที่เป็นส่วนหนึ่งของโลกใบนี้</h5>
-                </div> */}
-
-                        <br />
-                        {/* <Row style={{ marginBottom: '15px' }}>
-                    <ImageCarousel />
-                </Row> */}
-                    </Col>
-                </Row>
-            </Container>
             <Container fluid={'true'} style={{ backgroundColor: '#f0f0f0' }}>
-                <div className={styles.x_banner_header}>
                     <Container>
                         <Row>
                             <style jsx>{`
@@ -249,6 +223,7 @@ export default function HeaderBanner(props) {
                                     border-color: #007a06;
                                 }
                             `}</style>
+
                             {/* <div
                             className={styles.btncart_content}
                         >
@@ -279,19 +254,92 @@ export default function HeaderBanner(props) {
                                 />
                             </Button>
                         </div> */}
-                            <Col xs={12} md={12} style={{ marginTop: '-100px' }}>
+                            <Col xs={12} md={12} style={{ marginTop: '0' }}>
                                 <Container>
+                                    <br/>
+                                    <div style={{zIndex:'9999',padding:'inherit',height:'120px'}}>
+                                    <Form autoComplete="off" onSubmit={searchFilter}>
+                                        <Row>
+                                            <Col md={2} xs={12} style={{ padding: '5px' }}>
+                                                <InputGroup>
+                                                    <Form.Select
+                                                        name="category_id"
+                                                        value={filterProduct.category_id}
+                                                        id="category_id"
+                                                        onChange={hendleChange}>
+                                                        <option key={-1} value={-1}>
+                                                            ประเภทอุตสาหกรรม
+                                                        </option>
+                                                        {listProductCetagory &&
+                                                            listProductCetagory.map(
+                                                                (data, index) => {
+                                                                    return (
+                                                                        <>
+                                                                            <option
+                                                                                key={index}
+                                                                                value={data.id}>
+                                                                                {data.name}
+                                                                            </option>
+                                                                        </>
+                                                                    );
+                                                                }
+                                                            )}
+                                                    </Form.Select>
+                                                </InputGroup>
+                                            </Col>
+                                            <Col xs={12} md={10} style={{ padding: '5px' }}>
+                                                <InputGroup>
+                                                    <Form.Control
+                                                        placeholder="Search..."
+                                                        aria-label="Search"
+                                                        enterKeyHint=""
+                                                        name="name"
+                                                        id="name"
+                                                        value={filterProduct.name}
+                                                        autoComplete="off"
+                                                        onKeyPress={(ev) => {
+                                                            if (ev.key === 'Enter') {
+                                                                ev.preventDefault();
+                                                                searchFilter();
+                                                            }
+                                                        }}
+                                                        onChange={hendleChange}
+                                                    />
+                                                    <Button
+                                                        variant="outline-secondary"
+                                                        // type="submit"
+                                                        disableElevation
+                                                        onClick={() => {
+                                                            searchFilter();
+                                                        }}>
+                                                        <FaSearch />
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline-secondary"
+                                                        onClick={clearFilter}>
+                                                        <FaSync />
+                                                    </Button>
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
+                                        <br />
+                                    </Form>
+                                    </div>
+                                  
                                     <div>
-                                        <h2 className="text-center mt-3">PRODUCT</h2>
                                         <Row
                                             xs={1}
                                             md={3}
-                                            className="g-4"
-                                            style={{ height: '650px', overflowX: 'auto',marginTop: '25px' }}>
+                                            className="g-2"
+                                            style={{
+                                                height: '650px',
+                                                overflowX: 'auto',
+                                                marginTop: '-25px'
+                                            }}>
                                             {listProduct &&
                                                 listProduct.map((data, index) => (
                                                     <Col key={index}>
-                                                        <Card>
+                                                        <Card style={{border:'none'}}>
                                                             <div className="text-center">
                                                                 <Image
                                                                     src={
@@ -373,7 +421,6 @@ export default function HeaderBanner(props) {
                             </Button>
                         </div>
                     </Container>
-                </div>
             </Container>
         </>
     );
