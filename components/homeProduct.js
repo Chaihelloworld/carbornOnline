@@ -267,7 +267,7 @@ export default function HeaderBanner(props) {
                                         md={3}
                                         className="g-1"
                                         style={{
-                                            height: '650px',
+                                            height: '550px',
                                             overflowX: 'auto',
                                             marginTop: '-25px'
                                         }}>
@@ -297,12 +297,14 @@ export default function HeaderBanner(props) {
                                                                 สินค้าคาร์บอนต่ำ
                                                             </Card.Text>
                                                             <Button
-                                                                variant="primary"
+                                                                variant="outline-light"
+                                                                style={{color:'black',fontSize:'14px'}}
                                                                 onClick={() => {
-                                                                    setModalShow(true);
-                                                                    Productid(data);
+                                                                    // setModalShow(true);
+                                                                    // Productid(data);
+                                                                    router.push('/products')
                                                                 }}>
-                                                                รายละเอียด
+                                                                ผลิตภัณฑ์ลดคาร์บอน
                                                             </Button>
                                                         </Card.Body>
                                                     </Card>
@@ -329,7 +331,7 @@ export default function HeaderBanner(props) {
                             </Container>
                         </Col>
                     </Row>
-                    <div className={styles.btncart_content}>
+                    {/* <div className={styles.btncart_content}>
                         <Button
                             className={styles.btncart}
                             onClick={() => router.push('/calculateCO2')}>
@@ -354,7 +356,7 @@ export default function HeaderBanner(props) {
                                 height={70}
                             />
                         </Button>
-                    </div>
+                    </div> */}
                 </Container>
             </Container>
         </>

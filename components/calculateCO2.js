@@ -18,6 +18,7 @@ import STORE from '../libs/store.image';
 import Image from 'next/image';
 import MydModalWithGrid from './modal';
 import axios from 'axios';
+import { BiPlus, BiMinus, BiDownArrow } from 'react-icons/bi';
 
 import CardGroup from 'react-bootstrap/CardGroup';
 
@@ -26,152 +27,142 @@ import Swal from 'sweetalert2';
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
-
-    const [modalRegister, setModalResgister] = useState(false);
-
-    const [trigger, setTrigger] = useState(false);
+    const [showButtons, setShowButtons] = useState(false);
     const router = useRouter();
-    useEffect(() => {
-        AOS.init();
-        // fetchLink();
-    }, []);
     const [listProduct, setListProduct] = useState([]);
-
     const [filterProduct, setFilterProduct] = useState({
         name: null,
         category_id: null,
         page: 1,
         per_page: 10
     });
-    const [Auth_user, setAuth] = useState({
-        userId: null,
-        product_id: null
-    });
-    const [totalPages, setTotalPages] = useState(0);
-    const [page, setPage] = useState(0);
 
-    const [listProductCetagory, setListProductCetagory] = useState();
-
-    // const handleChangeInputSearchFilter = (event) => {
-    //     setFilterSearch({ ...filterSearch, [event.target.name]: event.target.value });
-    // };
-
-    // const hendleChange = (event) => {
-    //     setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
-    // };
-
-    const clearFilter = () => {
-        setFilterProduct({ ...filterProduct, ['name']: '' });
-        setFilterProduct({ ...filterProduct, ['category_id']: null });
-        // router.push('/')
-
-        // location.reload();
-        getCategories();
-
-        searchFilter();
-    };
-    // const hendleChange = (event) => {
-    //     if (event.target.id == 'category_id' && event.target.value == -1) {
-    //         console.log(filterProduct);
-
-    //         setFilterProduct({ ...filterProduct, [event.target.id]: null });
-    //     } else {
-    //         setFilterProduct({ ...filterProduct, [event.target.id]: event.target.value });
-    //     }
-    // };
-    const selectProduct = async (in_id) => {
-        try {
-            await axios
-                .get(`http://localhost:5000/api/select_product?in_id=${in_id}`)
-                .then((response) => {
-                    console.log(response.data.data);
-                    setListProduct(response.data.data);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-    };
     const [isLoading, setLoading] = useState(false);
-    // const handlePageChange = async (pageNumber) => {
-    //     setLoading(true);
-    //     try {
-    //         const response = await axios.get('http://localhost:5000/api/products_list', {
-    //             params: {
-    //                 category_id: filterProduct.category_id,
-    //                 name: filterProduct.name,
-    //                 page: pageNumber,
-    //                 perPage: filterProduct.per_page
-    //             }
-    //         });
-    //         setListProduct(response.data.data);
-    //         console.log('thissssss', response.data.data);
-    //         setPage(response.data.currentPage);
-
-    //         setTotalPages(response.data.totalPages);
-
-    //         setLoading(false);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
     const [q, setq] = useState([]);
-    const [list, setlist] = useState([]);
     const [nulldat, setNulldat] = useState(false);
     const [listCart, setListCart] = useState([]);
+    const [defaultCal, setDefaultCal] = useState([]);
+
     const [sumCO2, setSumCO2] = useState(0);
+    const [buttonsVisibility, setButtonsVisibility] = useState(listCart.map(() => false));
 
     const submitCal = async (id) => {
-        // Swal.fire({
-        //     title: 'คุณต้องการลบรายการนี้ ใช่หรือไม่',
-        //     showCloseButton: true,
-        //     icon: 'error',
-        //     reverseButtons: true,
-        //     showCancelButton: true,
-        //     confirmButtonText: `ยืนยัน`,
-        //     cancelButtonColor: '#d33',
-        //     cancelButtonText: 'ยกเลิก'
-        // })
         Swal.fire({
             icon: 'success',
             title: 'บันทึกกิจกรรมแล้ว',
-            text: 'การเตรียมตัวของคุณ ลด CO2 ได้ถึง 000',
-            //     confirmButtonText: `ยืนยัน`,
-
-            showConfirmButton: false,
-            timer: 5000
+            text: 'กรอกชื่อกิจกรรม',
+            input: 'text',
+            confirmButtonText: `ยืนยัน`,
+            showConfirmButton: true
         }).then(async (result) => {
-            try {
-                await axios
-                    .post('http://localhost:5000/api/create_listitem', {
-                        userId: paramData.name,
-                        product_id: paramData.description
-                        // type_products: [],
-                    })
-                    .then((response) => {
-                        // console.log(response.data);
-                        console.log('success', response.data.message);
-                        router.reload('/createStore');
+            if (result.isConfirmed) {
+                console.log(result.value);
+                const apiSubmit = async () => {
+                    const updatedCartItems = listCart.map((item) => ({
+                        id: item.id,
+                        total_cart_count: item.total_cart_count,
+                        user_id: '1'
+                    }));
+                    try {
+                        await axios
+                            .post('http://localhost:5000/api/update_cart_active', {
+                                updatedCartItems
+                            })
+                            .then((response) => {
+                                console.log(response);
+                            });
+                        router.push('/products');
+                    } catch (error) {
+                        console.log(error);
+                    }
+                };
+                //
+
+                const apiSubmittoDB = async () => {
+                    let sumTotal = 0; // Initialize sumTotal variable
+                    const updatedCartItems = listCart.map((item) => {
+                        sumTotal += item.total_CO2; // Add total_cart_count to sumTotal
+                        return {
+                            ...item, // Include all properties from the original item
+                            sumTotal // Include the calculated sumTotal
+                        };
                     });
-            } catch (error) {
-                console.log(error);
+                    const param = {
+                        dataset: JSON.stringify(updatedCartItems),
+                        total_CO2: sumTotal,
+                        name: result.value,
+                        user_id: '1'
+                    };
+                    try {
+                        await axios
+                            .post('http://localhost:5000/api/historyCart', {
+                                param
+                            })
+                            .then((response) => {
+                                console.log(response);
+                            });
+                        apiSubmit();
+                    } catch (error) {
+                        console.log(error);
+                    }
+                };
+                apiSubmittoDB();
             }
         });
     };
-    const calculateCO2 = () => {
-        let sum = 0;
-        listProduct.map((data, index) => {
-            console.log(data);
-            sum += data.CO2 * q[index];
-        });
+    const calNums = (data, num) => {
+        let sum = data * num;
         return sum;
     };
-    // useEffect(() => {
-    //     if (filterProduct.name == '' || filterProduct.name == null) {
-    //         searchFilter();
-    //     }
-    //     // searchFilter();
-    // }, [filterProduct.name]);
-    // // console.log(setFilter_Product);
+    const handleInputChange = (event, index) => {
+        const { value } = event.target;
+        const updatedCart = listCart.map((item, i) =>
+            i === index ? { ...item, total_cart_count: parseInt(value) } : item
+        );
+        setListCart(updatedCart);
+        console.log(updatedCart);
+        callcarbon();
+
+    };
+
+    const handleDecrement = (index) => {
+        if (listCart[index].total_cart_count > 1) {
+            const updatedCart = listCart.map((item, i) =>
+                i === index
+                    ? {
+                          ...item,
+                          total_cart_count: item.total_cart_count - 1,
+                          total_CO2: defaultCal[index] / item.total_cart_count - 1
+                      }
+                    : item
+            );
+            setListCart(updatedCart);
+            callcarbon();
+
+        }
+    };
+
+    const handleIncrement = (index) => {
+        const updatedCart = listCart.map((item, i) =>
+            i === index
+                ? {
+                      ...item,
+                      total_cart_count: item.total_cart_count + 1,
+                      total_CO2: defaultCal[index] * (item.total_cart_count + 1)
+                  }
+                : item
+        );
+        setListCart(updatedCart);
+        callcarbon();
+
+        console.log(updatedCart);
+    };
+
+    const handleQuantityClick = (index) => {
+        const updatedVisibility = [...buttonsVisibility];
+        updatedVisibility[index] = !updatedVisibility[index];
+        setButtonsVisibility(updatedVisibility);
+    };
 
     useEffect(() => {
         const Getlist_Cart = async () => {
@@ -184,22 +175,29 @@ export default function HeaderBanner(props) {
                     })
                     .then((response) => {
                         console.log(response);
+
                         setListCart(response.data.data);
-                        callcarbon(response.data.data);
+                        response.data.data.forEach((data, i) => {
+                            defaultCal.push(data.total_CO2);
+                            // console.log(data.total_CO2,i)
+                        });
                     });
             } catch (error) {
                 console.log(error);
             }
         };
+
+        callcarbon();
         Getlist_Cart();
     }, []);
-    const callcarbon = (list) => {
-        let sum_CO2 = 0;
-        list.forEach((x) => {
-            sum_CO2 += x.total_CO2;
-        });
-        setSumCO2(sum_CO2);
+    console.log(defaultCal);
+
+    const callcarbon = () => {
+        let sum = 0;
+        listCart.map((data, i) => (sum += data.total_CO2));
+        setSumCO2(sum);
     };
+
     return (
         <div>
             <Container>
@@ -270,36 +268,115 @@ export default function HeaderBanner(props) {
                                             ปริมาณคาร์บอน
                                         </h6>
                                     </Col>
-                                    {listCart && !isLoading
-                                        ? listCart.map((data, index) => {
-                                              return (
-                                                  <div key={data.id} style={{ padding: '5px' }}>
-                                                      <Col
-                                                          md={12}
-                                                          xs={12}
-                                                          style={{
-                                                              display: 'flex',
-                                                              justifyContent: 'space-between',
-                                                              alignItems: 'center'
-                                                          }}>
-                                                          <h6>
-                                                              {data
-                                                                  ? data.total_cart_count
-                                                                  : 'null'}
-                                                              x{' '}
-                                                              {data.product_name
-                                                                  ? data.product_name
-                                                                  : 'null'}
-                                                          </h6>
-                                                          <h6 style={{ textAlign: 'end' }}>
-                                                              {data ? data.total_CO2 : '0'}
-                                                          </h6>
-                                                      </Col>
-                                                  </div>
-                                              );
-                                          })
-                                        : 'ไม่พบข้อมูล'}
-                                        <hr/>
+                                    <div>
+                                        {listCart && !isLoading ? (
+                                            listCart.map((data, index) => (
+                                                <div key={data.id} style={{ padding: '5px' }}>
+                                                    <Col
+                                                        md={12}
+                                                        xs={12}
+                                                        style={{
+                                                            display: 'flex',
+                                                            justifyContent: 'space-between',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <Form>
+                                                                <Form.Group
+                                                                    controlId="quantity"
+                                                                    style={{ width: '55px' }}>
+                                                                    <div
+                                                                        onClick={() =>
+                                                                            handleQuantityClick(
+                                                                                index
+                                                                            )
+                                                                        }
+                                                                        style={{
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            cursor: 'pointer',
+                                                                            position: 'relative'
+                                                                        }}>
+                                                                        <Form.Control
+                                                                            type="number"
+                                                                            min={1}
+                                                                            value={
+                                                                                data.total_cart_count
+                                                                            }
+                                                                            onChange={(event) =>
+                                                                                handleInputChange(
+                                                                                    event,
+                                                                                    index
+                                                                                )
+                                                                            }
+                                                                            onClick={(e) =>
+                                                                                e.stopPropagation()
+                                                                            }
+                                                                            style={{
+                                                                                paddingRight: '30px'
+                                                                            }}
+                                                                        />
+                                                                        <BiDownArrow
+                                                                            fontSize={10}
+                                                                            style={{
+                                                                                position:
+                                                                                    'absolute',
+                                                                                top: '50%',
+                                                                                right: '10px',
+                                                                                transform:
+                                                                                    'translateY(-50%)'
+                                                                            }}
+                                                                        />
+                                                                    </div>
+                                                                </Form.Group>
+                                                            </Form>
+                                                            <div
+                                                                style={{
+                                                                    display: buttonsVisibility[
+                                                                        index
+                                                                    ]
+                                                                        ? 'block'
+                                                                        : 'none'
+                                                                }}>
+                                                                <Button
+                                                                    variant="outline-light"
+                                                                    style={{
+                                                                        borderRadius:
+                                                                            '0px 0px 0px 0px',
+                                                                        color: 'gray'
+                                                                    }}
+                                                                    onClick={() =>
+                                                                        handleDecrement(index)
+                                                                    }>
+                                                                    <BiMinus fontSize={16} />
+                                                                </Button>
+                                                                <Button
+                                                                    variant="outline-light"
+                                                                    style={{
+                                                                        borderRadius:
+                                                                            '0px 0px 0px 0px',
+                                                                        color: 'gray'
+                                                                    }}
+                                                                    onClick={() =>
+                                                                        handleIncrement(index)
+                                                                    }>
+                                                                    <BiPlus fontSize={16} />
+                                                                </Button>
+                                                            </div>
+                                                            <h6>x {data.product_name}</h6>
+                                                        </div>
+                                                        <h6 style={{ textAlign: 'end' }}>
+                                                            {/* {calNums(data.total_CO2,data.total_cart_count)} */}
+                                                            {data.total_CO2}
+                                                        </h6>
+                                                    </Col>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>ไม่พบข้อมูล</p>
+                                        )}
+                                    </div>
+                                    <hr />
                                     <Col
                                         md={12}
                                         xs={12}

@@ -114,7 +114,7 @@ function NavbarMain(props) {
                 id="main-navbar"
                 className={[styles.navbars, checkScroll == true ? styles.navbarHide : ' '].join(' ')}
                 expand="xl"
-                style={{ backgroundColor: BGcolor }}>
+                style={{ backgroundColor: BGcolor ,position:'sticky' ,display:'flex',top:'0.1px'}}>
                 <Container className={[styles.container, styles.navContainer].join(' ')}>
                     <div className={styles.container}>
                         <Navbar.Toggle aria-controls="offcanvasNavbar" className={styles.hamburger}>

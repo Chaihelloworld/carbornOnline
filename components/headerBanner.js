@@ -256,8 +256,7 @@ export default function HeaderBanner(props) {
                         </div> */}
                             <Col xs={12} md={12} style={{ marginTop: '0' }}>
                                 <Container>
-                                    <br/>
-                                    <div style={{zIndex:'9999',padding:'inherit',height:'120px'}}>
+                                <div style={{zIndex:'9999',padding:'inherit'}}>
                                     <Form autoComplete="off" onSubmit={searchFilter}>
                                         <Row>
                                             <Col md={2} xs={12} style={{ padding: '5px' }}>
@@ -325,6 +324,8 @@ export default function HeaderBanner(props) {
                                         <br />
                                     </Form>
                                     </div>
+                                    <br/>
+                                    
                                   
                                     <div>
                                         <Row
@@ -332,7 +333,7 @@ export default function HeaderBanner(props) {
                                             md={3}
                                             className="g-2"
                                             style={{
-                                                height: '650px',
+                                                height: '560px',
                                                 overflowX: 'auto',
                                                 marginTop: '-25px'
                                             }}>
@@ -409,7 +410,7 @@ export default function HeaderBanner(props) {
                                         transform: 'translate(50px, 40px)',
                                         zIndex: 999
                                     }}>
-                                    {totalCount}
+                                    {totalCount ? totalCount : 0}
                                 </div>
                                 <Image
                                     // src={STORE.cart}
