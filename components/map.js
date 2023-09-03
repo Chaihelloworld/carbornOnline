@@ -142,7 +142,6 @@ console.log(stateUplaod)
     // console.log(setFilter_Product);
     return (
         <div>
-            <div className={styles.x_banner_header}>
                 <Container>
                     <Row>
                         <style jsx>{`
@@ -183,7 +182,6 @@ console.log(stateUplaod)
                         </Col>
                     </Row>
                 </Container>
-            </div>
         </div>
     );
 }
