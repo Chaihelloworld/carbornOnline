@@ -73,7 +73,7 @@ export default function HeaderBanner(props) {
             page: 1,
             per_page:10
         });
-        console.log('cear',filterProduct)
+        // console.log('cear',filterProduct)
 
         // router.push('/')
 
@@ -86,7 +86,7 @@ export default function HeaderBanner(props) {
     };
     const hendleChange = (event) => {
         if (event.target.id == 'category_id' && event.target.value == -1) {
-            console.log(filterProduct);
+            // console.log(filterProduct);
 
             setFilterProduct({ ...filterProduct, [event.target.id]: null });
         } else {
@@ -96,7 +96,7 @@ export default function HeaderBanner(props) {
     const getCategories = async (event) => {
         try {
             await axios.get('http://localhost:5000/api/categories').then((response) => {
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 setListProductCetagory(response.data.data);
             });
         } catch (error) {
@@ -116,7 +116,7 @@ export default function HeaderBanner(props) {
                 }
             });
             setListProduct(response.data.data);
-            console.log('thissssss', response.data.data);
+            // console.log('thissssss', response.data.data);
             setPage(response.data.currentPage);
 
             setTotalPages(response.data.totalPages);
@@ -204,11 +204,11 @@ export default function HeaderBanner(props) {
             if (result.isConfirmed) {
                 if (result.isConfirmed) {
                     try {
-                        console.log(id);
+                        // console.log(id);
                         await axios
                             .delete(`http://localhost:5000/api/delete_product?id=${id}`)
                             .then((response) => {
-                                console.log(response);
+                                // console.log(response);
                                 searchFilter();
                             });
                     } catch (error) {

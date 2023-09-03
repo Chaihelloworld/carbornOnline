@@ -19,7 +19,7 @@ import Logo_main2 from '../public/newimg/logo_main2.png';
 import Logo_main3 from '../public/newimg/logo_main3.png';
 import Logo_main4 from '../public/newimg/logo_main4.png';
 import Logo_main5 from '../public/newimg/logo_main5.png';
-
+import getUserData  from '../pages/api/Provider'
 function NavbarMain(props) {
     const [profile, setProfile] = useState({});
 
@@ -43,6 +43,16 @@ function NavbarMain(props) {
     //     const profile = await liff.getProfile();
     //     setProfile(profile);
     // }, [profile.userId]);
+    const [authUser_id,setAuthUser_id] = useState();
+    useEffect(() => {
+        getUserData()
+          .then((data) => {
+            setAuthUser_id(data.data.role);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, []);
     useEffect(() => {
         const windowScrollPage = (event) => {
             const scroll = window.pageYOffset;
@@ -237,7 +247,7 @@ function NavbarMain(props) {
                                             </span>
                                         </Nav.Link>
                                         <Nav.Link
-                                            href="/"
+                                            href="/products"
                                             className={[
                                                 styles.text_gray,
                                                 styles.text_nav,
@@ -254,8 +264,25 @@ function NavbarMain(props) {
                                                 ผลิตภัณฑ์ลดคาร์บอน
                                             </span>
                                         </Nav.Link>
-
-                                        {accessToken && (
+                                        <Nav.Link
+                                            href="/memberlist"
+                                            className={[
+                                                styles.text_gray,
+                                                styles.text_nav,
+                                                styles.text_sideNav
+                                            ].join(' ')}>
+                                            <div
+                                                className={[styles.img_icon_in_nav]}
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}></div>
+                                            <span className={styles.text_gray}>
+                                            รายชื่อผู้ร่วมกิจกรรม
+                                            </span>
+                                        </Nav.Link>
+                                        {authUser_id == 2 && (
                                             <Nav.Link
                                                 href="/productList"
                                                 className={[
@@ -398,7 +425,37 @@ function NavbarMain(props) {
                                         <span style={{ marginLeft: '.2rem' }}>ผลิตภัณฑ์ลดคาร์บอน</span>
                                     </div>
                                 </Nav.Link>
-                                {accessToken && (
+                                <Nav.Link
+                                        href="/memberlist"
+                                        className={[
+                                            styles.text_gray,
+                                            styles.text_nav,
+                                            router.pathname == '/memberlist'
+                                                ? styles.active_text
+                                                : ''
+                                        ].join(' ')}>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
+                                            <div
+                                                className={[styles.img_icon]}
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
+                                                <div className={styles.none_hover}>
+                                                </div>
+                                                <div className={styles.ic_hover}>
+                                                </div>
+                                            </div>
+                                            <span style={{ marginLeft: '.2rem' }}>รายชื่อผู้ร่วมกิจกรรม</span>
+                                        </div>
+                                    </Nav.Link>
+                                {authUser_id == 2 && (
                                     <Nav.Link
                                         href="/productList"
                                         className={[

@@ -19,6 +19,7 @@ import Logo_main2 from '../public/newimg/logo_main2.png';
 import Logo_main3 from '../public/newimg/logo_main3.png';
 import Logo_main4 from '../public/newimg/logo_main4.png';
 import Logo_main5 from '../public/newimg/logo_main5.png';
+import getUserData from '../pages/api/Provider';
 
 function NavbarMain(props) {
     const [profile, setProfile] = useState({});
@@ -43,6 +44,16 @@ function NavbarMain(props) {
     //     const profile = await liff.getProfile();
     //     setProfile(profile);
     // }, [profile.userId]);
+    const [authUser_id, setAuthUser_id] = useState();
+    useEffect(() => {
+        getUserData()
+            .then((data) => {
+                setAuthUser_id(data.data.role);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
     useEffect(() => {
         const windowScrollPage = (event) => {
             const scroll = window.pageYOffset;
@@ -105,6 +116,7 @@ function NavbarMain(props) {
     const logout = () => {
         Cookie.remove('token');
         Cookie.remove('name');
+        Cookie.remove('user_idCk')
         // router.reload();
         router.push('/');
     };
@@ -112,9 +124,16 @@ function NavbarMain(props) {
         <>
             <Navbar
                 id="main-navbar"
-                className={[styles.navbars, checkScroll == true ? styles.navbarHide : ' '].join(' ')}
+                className={[styles.navbars, checkScroll == true ? styles.navbarHide : ' '].join(
+                    ' '
+                )}
                 expand="xl"
-                style={{ backgroundColor: BGcolor ,position:'sticky' ,display:'flex',top:'0.1px'}}>
+                style={{
+                    backgroundColor: BGcolor,
+                    position: 'sticky',
+                    display: 'flex',
+                    top: '0.1px'
+                }}>
                 <Container className={[styles.container, styles.navContainer].join(' ')}>
                     <div className={styles.container}>
                         <Navbar.Toggle aria-controls="offcanvasNavbar" className={styles.hamburger}>
@@ -200,7 +219,7 @@ function NavbarMain(props) {
                                 </Nav>
                                 <Offcanvas.Body className={'pt-1 mt-2'}>
                                     <Nav className="justify-content-end flex-grow-1">
-                                    <Nav.Link
+                                        <Nav.Link
                                             href="/"
                                             className={[
                                                 styles.text_gray,
@@ -214,9 +233,7 @@ function NavbarMain(props) {
                                                     justifyContent: 'center',
                                                     alignItems: 'center'
                                                 }}></div>
-                                            <span className={styles.text_gray}>
-                                                Home
-                                            </span>
+                                            <span className={styles.text_gray}>Home</span>
                                         </Nav.Link>
                                         <Nav.Link
                                             href="/map"
@@ -237,7 +254,7 @@ function NavbarMain(props) {
                                             </span>
                                         </Nav.Link>
                                         <Nav.Link
-                                            href="/"
+                                            href="/products"
                                             className={[
                                                 styles.text_gray,
                                                 styles.text_nav,
@@ -254,8 +271,25 @@ function NavbarMain(props) {
                                                 ผลิตภัณฑ์ลดคาร์บอน
                                             </span>
                                         </Nav.Link>
-
-                                        {accessToken && (
+                                        <Nav.Link
+                                            href="/memberlist"
+                                            className={[
+                                                styles.text_gray,
+                                                styles.text_nav,
+                                                styles.text_sideNav
+                                            ].join(' ')}>
+                                            <div
+                                                className={[styles.img_icon_in_nav]}
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}></div>
+                                            <span className={styles.text_gray}>
+                                                รายชื่อผู้ร่วมกิจกรรม
+                                            </span>
+                                        </Nav.Link>
+                                        {authUser_id == 2 && (
                                             <Nav.Link
                                                 href="/productList"
                                                 className={[
@@ -395,10 +429,40 @@ function NavbarMain(props) {
                                                 /> */}
                                             </div>
                                         </div>
-                                        <span style={{ marginLeft: '.2rem' }}>ผลิตภัณฑ์ลดคาร์บอน</span>
+                                        <span style={{ marginLeft: '.2rem' }}>
+                                            ผลิตภัณฑ์ลดคาร์บอน
+                                        </span>
                                     </div>
                                 </Nav.Link>
-                                {accessToken && (
+                                <Nav.Link
+                                    href="/memberlist"
+                                    className={[
+                                        styles.text_gray,
+                                        styles.text_nav,
+                                        router.pathname == '/memberlist' ? styles.active_text : ''
+                                    ].join(' ')}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                        <div
+                                            className={[styles.img_icon]}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
+                                            <div className={styles.none_hover}></div>
+                                            <div className={styles.ic_hover}></div>
+                                        </div>
+                                        <span style={{ marginLeft: '.2rem' }}>
+                                            รายชื่อผู้ร่วมกิจกรรม
+                                        </span>
+                                    </div>
+                                </Nav.Link>
+                                {authUser_id == 2 && (
                                     <Nav.Link
                                         href="/productList"
                                         className={[
@@ -438,35 +502,31 @@ function NavbarMain(props) {
                             </Nav>
                         </Navbar.Collapse>
                     </div>
-               
-                        {accessToken ? (
-                            <div
+                    {accessToken ? (
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'row'
+                            }}>
+                            <a style={{ fontSize: '16px' }}>ยินดีต้อนรับ : {Cookie.get('name')}</a>
+                            &ensp; &ensp;
+                            <Button
                                 style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    flexDirection: 'row'
-                                }}>
-                                    
-                                <a style={{  fontSize: '16px' }}>
-                                    ยินดีต้อนรับ : {Cookie.get('name')}
-                                </a>
-                                &ensp; &ensp;
-                                <Button
-                                    style={{
-                                        background: '#FFF',
-                                        width: '150px',
-                                        color: 'green',
-                                        fontWeight: 600,
-                                        borderRadius: '12px',
-                                        border: 'none'
-                                    }}
-                                    onClick={logout}
-                                    size="md">
-                                    ออกจากระบบ
-                                </Button>
-                            </div>
-                        ) : (
-                            <Nav.Link
+                                    background: '#FFF',
+                                    width: '150px',
+                                    color: 'green',
+                                    fontWeight: 600,
+                                    borderRadius: '12px',
+                                    border: 'none'
+                                }}
+                                onClick={logout}
+                                size="md">
+                                ออกจากระบบ
+                            </Button>
+                        </div>
+                    ) : (
+                        <Nav.Link
                             href="/login"
                             className={[
                                 styles.text_gray,
@@ -486,16 +546,13 @@ function NavbarMain(props) {
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
-                                    <div className={styles.none_hover}>
-                                    </div>
-                                    <div className={styles.ic_hover}>
-                                    </div>
+                                    <div className={styles.none_hover}></div>
+                                    <div className={styles.ic_hover}></div>
                                 </div>
                                 <span style={{ marginLeft: '-6.5rem' }}>เข้าสู่ระบบ</span>
                             </div>
                         </Nav.Link>
-
-                        )}{' '}
+                    )}{' '}
                 </Container>
             </Navbar>
         </>

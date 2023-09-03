@@ -29,7 +29,7 @@ const PaginationComponent = ({
       </Pagination.Item>
     );
   }
-console.log('hello')
+// console.log('hello')
   return (
     <div className="d-flex justify-content-center">
       <Pagination>

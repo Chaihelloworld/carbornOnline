@@ -13,55 +13,6 @@ import { useRouter } from 'next/router';
 
 function ActionBottom(props) {
     const [showAll, setShowAll] = useState(false);
-    const [modalShow, setModalShow] = useState(false);
-    const [showAdjust, setShowAdjust] = useState(false);
-    const [modalLogin, setModalLogin] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(['newufa_phone', 'newufa_bank']);
-    const [cookieToken, setCookieToken, removeCookiesToken] = useCookies(['newufa_api_token']);
-    const [cookiePass, setCookiePass, removeCookiesPass] = useCookies(
-        ['newufa_password'],
-        ['newufa_newUser']
-    );
-    const [cookieDataUser, setCookieDataUser, removeCookieDataUser] = useCookies(
-        ['balance_user'],
-        ['check_rank'],
-        ['user_id'],
-        ['min_deposit'],
-        ['min_withdraw'],
-        ['limit_bet'],
-        ['ufa_username'],
-        ['ufa_password'],
-        ['acc_holdername'],
-        ['acc_numberbank'],
-        ['acc_namebank'],
-        ['acc_imgbank'],
-        ['acc_imgbankcode'],
-        ['acc_nameuser'],
-        ['pattern_bank']
-    );
-
-    // const [showModalDeposit3, setShowModalDeposit3] = useState(false);
-    const [showModalTransfer, setShowModalTransfer] = useState(false);
-    const [showModalWithdraw, setShowModalWithdraw] = useState(false);
-
-    const [patternBankId, setPatternBankId] = useState('###-#-#####-#');
-    const [statusPending, setStatusPending] = useState(null);
-    const [statusPendingWithdraw, setStatusPendingWithdraw] = useState(null);
-
-    const [statusConfirm, setStatusConfirm] = useState(false);
-    const [amount, setAmount] = useState(0);
-    const [holderNameBank, setHolderNameBank] = useState('');
-    const [systemBank, setSystemBank] = useState('');
-    const [systemBankId, setSystemBankId] = useState(0);
-    const [billNumber, setBillNumber] = useState(0);
-    const [redirectPage, setRedirectPage] = useState(false);
-    const [countdownDeposit, setCountdownDeposit] = useState();
-    const [timerStatus, setTimerStatus] = useState(false);
-    // const [modalLogin, setModalLogin] = useState(false);
-    const instance = axios.create({
-        baseURL: 'https://api.ufa-365.com',
-        headers: { Authorization: `Bearer ${cookieToken.newufa_api_token}` }
-    });
 
     const router = useRouter();
     const [hrefLinktest, setHrefLinktest] = useState('');
@@ -135,7 +86,9 @@ function ActionBottom(props) {
                             <div className={styles.list_tab_menu}>
                                 <button
                                     className={styles.menu__item}
-                                    // onClick={onClickButtonWithdraw}
+                                    onClick={()=>{
+                                        router.push('/profiles')
+                                    }}
                                     >
                                     <Image
                                         src={STORE.menu5}

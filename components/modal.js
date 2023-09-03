@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Tab from 'react-bootstrap/Tab';
 import Form from 'react-bootstrap/Form';
 import { BiPlus, BiMinus } from 'react-icons/bi';
+import Cookies from 'js-cookie';
 
 import Tabs from 'react-bootstrap/Tabs';
 import axios from 'axios';
@@ -96,11 +97,15 @@ function MydModalWithGrid(props) {
     };
 
 const addCartAPI =  async(id,count)=>{
+    if(Cookies.remove('token') == null){
+        router.push('/login')
+        return;
+    } 
     console.log('id ==>', id ,count)
     try {
         await axios
         .post('http://localhost:5000/api/create_cart', {
-            user_id: '1',
+            user_id: Cookies.get('user_idCk') ,
             product_id: id,
             count: count,
             active: true,
@@ -108,8 +113,9 @@ const addCartAPI =  async(id,count)=>{
         })
         .then((response) => {
             // console.log(response.data);
-            console.log('success', response.data.message);
+            // console.log('success', response.data.message);
             // router.reload('/createStore')
+            setQuantity(1)
             props.onHide()
         });
     } catch (error) {
@@ -125,16 +131,7 @@ const addCartAPI =  async(id,count)=>{
     // const handleQuantityChange = (event) => {
     //     setQuantity(parseInt(event.target.value));
     // };
-    const dld = (event) => {
-        if (parseInt(event.target.value) - 1 !== 0) {
-            setQuantity(parseInt(event.target.value) - 1);
-        } else {
-            setQuantity(1);
-        }
-    };
-    const add = (event) => {
-        setQuantity(parseInt(event.target.value) + 1);
-    };
+ 
     const handleIncrement = () => {
         setQuantity(quantity + 1);
       };
@@ -379,8 +376,6 @@ const addCartAPI =  async(id,count)=>{
                         onClick={() => {
                             // addToCart({ pdID ,quantity});
                             addCartAPI(pdID,quantity)
-                         
-
                         }}>
                         เลือก
                     </Button>

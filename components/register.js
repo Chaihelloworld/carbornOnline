@@ -46,11 +46,14 @@ export default function HeaderBanner(props) {
     }, []);
 
     const [getLogin, setGetLogin] = useState({
+        name: '',
         email: '',
-        password: ''
+        password: '',
+        CF_password: '',
+        role: '1'
     });
     const [totalPages, setTotalPages] = useState(0);
-    const [page, setPage] = useState(0);
+    const [text, setText] = useState('');
 
     const [listProductCetagory, setListProductCetagory] = useState();
 
@@ -62,13 +65,40 @@ export default function HeaderBanner(props) {
 
     const [isLoading, setLoading] = useState(false);
     const expirationDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000); // 7 days from now
-    const Login = async () => {
+    const register = async () => {
+        if (getLogin.CF_password !== getLogin.password) {
+            setText('**กรุณากรอก รหัสผ่านให้ตรงกัน');
+            return null;
+        }
+        setLoading(true);
+        try {
+            await axios
+                .post(`http://localhost:5000/api/register`, {
+                    name: getLogin.name,
+                    email: getLogin.email,
+                    password: getLogin.password,
+                    role: getLogin.role
+                })
+                .then((res) => {
+                    // console.log(res.data.token);
+                    login(getLogin.email, getLogin.password);
+                    setLoading(false);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const login = async (username, password) => {
+        if (getLogin.CF_password !== getLogin.password) {
+            setText('**กรุณากรอก รหัสผ่านให้ตรงกัน');
+            return null;
+        }
         setLoading(true);
         try {
             await axios
                 .post(`http://localhost:5000/api/login`, {
-                    email: getLogin.email,
-                    password: getLogin.password
+                    email: username,
+                    password: password
                 })
                 .then((res) => {
                     // console.log(res.data.token);
@@ -81,7 +111,12 @@ export default function HeaderBanner(props) {
             console.log(error);
         }
     };
-
+    useEffect(() => {
+        if (getLogin.CF_password !== getLogin.password) {
+            return;
+        }
+        setText('');
+    }, [text]);
     // console.log(setFilter_Product);
     return (
         <div>
@@ -126,9 +161,9 @@ export default function HeaderBanner(props) {
                                 }}>
                                 {' '}
                                 <p>
-                                    เข้าสู่ระบบ <br />
+                                    สมัครสมาชิก <br />
                                 </p>
-                                <p>Carbon Green Travel </p>
+                                {/* <p>Carbon Green Travel </p> */}
                             </div>
                             <Form
                                 style={{
@@ -139,11 +174,28 @@ export default function HeaderBanner(props) {
                                 }}>
                                 <Col xs={8} md={3}>
                                     <Form.Group className="mb-3">
+                                        {/* <Form.Label>Password</Form.Label> */}
+                                        <Form.Control
+                                            key="name"
+                                            placeholder="ชื่อผู้ใช้"
+                                            id="name"
+                                            value={getLogin.name}
+                                            name="name"
+                                            onChange={handleChange}
+                                            aria-autocomplete="off"
+                                            autoComplete="off"
+                                            type="text"
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col xs={8} md={3}>
+                                    <Form.Group className="mb-3">
                                         {/* <Form.Label>Username</Form.Label> */}
                                         <Form.Control
-                                            placeholder="Username"
+                                            placeholder="Email"
                                             type="email"
-                                            aria-autocomplete="false"
+                                            aria-autocomplete="off"
+                                            autoComplete="off"
                                             key="email"
                                             id="email"
                                             value={getLogin.email}
@@ -153,9 +205,8 @@ export default function HeaderBanner(props) {
                                     </Form.Group>
                                 </Col>
 
-                                <br />
                                 <Col xs={8} md={3}>
-                                    <Form.Group className="mb-3" aria-autocomplete="false">
+                                    <Form.Group className="mb-3" >
                                         {/* <Form.Label>Password</Form.Label> */}
                                         <Form.Control
                                             key="password"
@@ -164,21 +215,39 @@ export default function HeaderBanner(props) {
                                             value={getLogin.password}
                                             name="password"
                                             onChange={handleChange}
-                                            aria-autocomplete="false"
+                                            aria-autocomplete="off"
+                                            autoComplete="off"
                                             type="password"
                                         />
                                     </Form.Group>
                                 </Col>
 
-                                <br />
+                                <Col xs={8} md={3}>
+                                    <Form.Group className="mb-3" >
+                                        {/* <Form.Label>Password</Form.Label> */}
+                                        <Form.Control
+                                            key="CF_password"
+                                            placeholder="ยืนยัน Password"
+                                            id="CF_password"
+                                            value={getLogin.CF_password}
+                                            name="CF_password"
+                                            onChange={handleChange}
+                                            aria-autocomplete="off"
+                                            autoComplete="off"
+                                            type="password"
+                                            error={getLogin.CF_password !== getLogin.password}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <p style={{ color: 'red' }}>{text}</p>
                                 <Col xs={8} md={3}>
                                     <Button
                                         style={{ width: '-webkit-fill-available' }}
                                         variant="primary"
-                                        onClick={Login}
+                                        onClick={register}
                                         // type="submit"
                                     >
-                                        ลงชื่อเข้าใช้
+                                        ยืนยัน
                                     </Button>
                                     {/* <Button
                                         style={{ width: '-webkit-fill-available' }}
@@ -188,11 +257,11 @@ export default function HeaderBanner(props) {
                                     >
                                         สมัครสมาชิก
                                     </Button> */}
-                                    <Button
+                                    {/* <Button
                                         style={{ width: '-webkit-fill-available' ,color:'black',marginTop:'5px'}}
-                                        variant="outline-light"  onClick={()=>{router.push('/register')}}>
+                                        variant="outline-light" >
                                         สมัครสมาชิก
-                                    </Button>{' '}
+                                    </Button>{' '} */}
                                 </Col>
                             </Form>
                             {/* </Card.Body>

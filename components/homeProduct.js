@@ -15,6 +15,7 @@ import { FaSearch, FaSync, FaFilter } from 'react-icons/fa';
 import PaginationCustom from './pagination';
 // import { Border } from '@cloudinary/url-gen/actions';
 import Side1 from '../public/newimg/side_1.jpg';
+import Cookies from 'js-cookie';
 
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -54,7 +55,7 @@ export default function HeaderBanner(props) {
             page: 1,
             per_page: 16
         });
-        console.log('cear', filterProduct);
+        // console.log('cear', filterProduct);
 
         // router.push('/')
 
@@ -101,7 +102,7 @@ export default function HeaderBanner(props) {
     const getCategories = async (event) => {
         try {
             await axios.get('http://localhost:5000/api/categories').then((response) => {
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 setListProductCetagory(response.data.data);
             });
         } catch (error) {
@@ -180,11 +181,11 @@ export default function HeaderBanner(props) {
                 await axios
                     .get('http://localhost:5000/api/cart_count', {
                         params: {
-                            user_id: '1'
+                            user_id: Cookies.get('user_idCk')? Cookies.get('user_idCk'):0
                         }
                     })
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setTotal_count(response.data.data[0].total_count);
                     });
             } catch (error) {

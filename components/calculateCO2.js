@@ -19,11 +19,10 @@ import Image from 'next/image';
 import MydModalWithGrid from './modal';
 import axios from 'axios';
 import { BiPlus, BiMinus, BiDownArrow } from 'react-icons/bi';
-
+import Cookies from 'js-cookie';
 import CardGroup from 'react-bootstrap/CardGroup';
-
+import getUserData  from '../pages/api/Provider'
 import Swal from 'sweetalert2';
-
 export default function HeaderBanner(props) {
     const [modalShow, setModalShow] = useState(false);
     const [productid, Productid] = useState();
@@ -56,12 +55,12 @@ export default function HeaderBanner(props) {
             showConfirmButton: true
         }).then(async (result) => {
             if (result.isConfirmed) {
-                console.log(result.value);
+                // console.log(result.value);
                 const apiSubmit = async () => {
                     const updatedCartItems = listCart.map((item) => ({
                         id: item.id,
                         total_cart_count: item.total_cart_count,
-                        user_id: '1'
+                        user_id: Cookies.get('user_idCk') 
                     }));
                     try {
                         await axios
@@ -69,7 +68,7 @@ export default function HeaderBanner(props) {
                                 updatedCartItems
                             })
                             .then((response) => {
-                                console.log(response);
+                                // console.log(response);
                             });
                         router.push('/products');
                     } catch (error) {
@@ -91,7 +90,7 @@ export default function HeaderBanner(props) {
                         dataset: JSON.stringify(updatedCartItems),
                         total_CO2: sumTotal,
                         name: result.value,
-                        user_id: '1'
+                        user_id: Cookies.get('user_idCk') 
                     };
                     try {
                         await axios
@@ -99,7 +98,7 @@ export default function HeaderBanner(props) {
                                 param
                             })
                             .then((response) => {
-                                console.log(response);
+                                // console.log(response);
                             });
                         apiSubmit();
                     } catch (error) {
@@ -110,19 +109,30 @@ export default function HeaderBanner(props) {
             }
         });
     };
-    const calNums = (data, num) => {
-        let sum = data * num;
-        return sum;
+    const DeleteRow = async () => {
+        try {
+            await axios
+                .delete(`http://localhost:5000/api/delete_Cart?user_id=${Cookies.get('user_idCk') }`)
+                .then((response) => {
+                    // console.log(response);
+                    router.push('/');
+
+                });
+            apiSubmit();
+        } catch (error) {
+            console.log(error);
+        }
+
     };
+
     const handleInputChange = (event, index) => {
         const { value } = event.target;
         const updatedCart = listCart.map((item, i) =>
             i === index ? { ...item, total_cart_count: parseInt(value) } : item
         );
         setListCart(updatedCart);
-        console.log(updatedCart);
+        // console.log(updatedCart);
         callcarbon();
-
     };
 
     const handleDecrement = (index) => {
@@ -132,15 +142,49 @@ export default function HeaderBanner(props) {
                     ? {
                           ...item,
                           total_cart_count: item.total_cart_count - 1,
-                          total_CO2: defaultCal[index] / item.total_cart_count - 1
+                          total_CO2: (item.total_CO2 - defaultCal[index])
                       }
                     : item
+                    
             );
+            // console.log(updatedCart[index].total_CO2 , '-',defaultCal[index] );
+
             setListCart(updatedCart);
             callcarbon();
 
         }
     };
+    // const handleDecrement = (index) => {
+    //     if (listCart[index].total_cart_count > 1) {
+    //         // Decrement total_cart_count
+    //         const updatedCart = listCart.map((item, i) =>
+    //             i === index
+    //                 ? {
+    //                       ...item,
+    //                       total_cart_count: item.total_cart_count - 1
+    //                   }
+    //                 : item
+    //         );
+
+    //         // Calculate total_CO2 using a formula based on your specific requirements
+    //         // Adjust this formula as needed
+    //         updatedCart[index].total_CO2 = calculateTotalCO2(updatedCart[index], index);
+
+    //         // Update the state with the new cart data
+    //         setListCart(updatedCart);
+
+    //         // Call your 'callcarbon' function if needed
+    //         callcarbon();
+    //     }
+    // };
+
+    // // Example function to calculate total_CO2 based on your specific requirements
+    // const calculateTotalCO2 = (item, index) => {
+    //     let valuediff = item.total_CO2 / item.total_cart_count;
+    //     console.log(item.total_CO2, '/', item.total_cart_count, '=', valuediff);
+    //     // Replace this formula with your specific calculation logic
+    //     return item.total_CO2 - defaultCal[index];
+    // };
 
     const handleIncrement = (index) => {
         const updatedCart = listCart.map((item, i) =>
@@ -155,7 +199,7 @@ export default function HeaderBanner(props) {
         setListCart(updatedCart);
         callcarbon();
 
-        console.log(updatedCart);
+        // console.log(updatedCart);
     };
 
     const handleQuantityClick = (index) => {
@@ -164,21 +208,32 @@ export default function HeaderBanner(props) {
         setButtonsVisibility(updatedVisibility);
     };
 
+    const [authUser_id,setAuthUser_id] = useState();
     useEffect(() => {
+        getUserData()
+          .then((data) => {
+            setAuthUser_id(data.data.role);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, []);
+    useEffect(() => {
+
         const Getlist_Cart = async () => {
             try {
                 await axios
                     .get('http://localhost:5000/api/cart_list', {
                         params: {
-                            user_id: '1'
+                            user_id: Cookies.get('user_idCk') 
                         }
                     })
                     .then((response) => {
-                        console.log(response);
+                        // console.log(response);
 
                         setListCart(response.data.data);
                         response.data.data.forEach((data, i) => {
-                            defaultCal.push(data.total_CO2);
+                            defaultCal.push(data.total_CO2_def);
                             // console.log(data.total_CO2,i)
                         });
                     });
@@ -190,7 +245,7 @@ export default function HeaderBanner(props) {
         callcarbon();
         Getlist_Cart();
     }, []);
-    console.log(defaultCal);
+    // console.log(defaultCal);
 
     const callcarbon = () => {
         let sum = 0;
@@ -367,7 +422,7 @@ export default function HeaderBanner(props) {
                                                         </div>
                                                         <h6 style={{ textAlign: 'end' }}>
                                                             {/* {calNums(data.total_CO2,data.total_cart_count)} */}
-                                                            {data.total_CO2}
+                                                            {data.total_CO2.toFixed(2)}
                                                         </h6>
                                                     </Col>
                                                 </div>
@@ -388,7 +443,7 @@ export default function HeaderBanner(props) {
                                         }}>
                                         <h6>รวมปริมาณคาร์บอนทั้งหมด</h6>
                                         <h6 style={{ textAlign: 'end', color: 'green' }}>
-                                            {sumCO2}
+                                            {sumCO2.toFixed(2)}
                                         </h6>
                                     </Col>
                                 </Row>
@@ -443,8 +498,8 @@ export default function HeaderBanner(props) {
                                             // marginLeft: '15px'
                                         }}
                                         onClick={() => {
-                                            router.push('/');
-                                            localStorage.removeItem('json');
+                                            // router.push('/');
+                                            DeleteRow();
                                         }}>
                                         {/* <MdAdd fontSize={'25px'} /> */}
                                         ยกเลิก
