@@ -213,10 +213,8 @@ export default function HeaderBanner(props) {
     const callcarbon = () => {
         let sum = 0;
         listCart.map((data, i) => (Number(sum) += Number(data.total_CO2)));
-        var convertSum = Number(sum).toFixed(2)
-        console.log(' convertSum =>',convertSum);
-
-        setSumCO2(convertSum);
+        console.log('sumCO2=>',sumCO2);
+        setSumCO2(sum);
     };
 
     return (
