@@ -73,7 +73,7 @@ export default function HeaderBanner(props) {
     const handlePageChange = async (pageNumber) => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:5000/api/products_list', {
+            const response = await axios.get('https://api.carbon-greentravel.com/api/products_list', {
                 params: {
                     category_id: filterProduct.category_id,
                     name: filterProduct.name,
@@ -101,7 +101,7 @@ export default function HeaderBanner(props) {
     };
     const getCategories = async (event) => {
         try {
-            await axios.get('http://localhost:5000/api/categories').then((response) => {
+            await axios.get('https://api.carbon-greentravel.com/api/categories').then((response) => {
                 console.log(response.data.data);
                 setListProductCetagory(response.data.data);
             });
@@ -114,7 +114,7 @@ export default function HeaderBanner(props) {
             event.preventDefault();
             try {
                 await axios
-                    .get('http://localhost:5000/api/products_list', {
+                    .get('https://api.carbon-greentravel.com/api/products_list', {
                         params: {
                             category_id: filterProduct.category_id,
                             name: filterProduct.name,
@@ -134,7 +134,7 @@ export default function HeaderBanner(props) {
         } else {
             try {
                 await axios
-                    .get('http://localhost:5000/api/products_list', {
+                    .get('https://api.carbon-greentravel.com/api/products_list', {
                         params: {
                             category_id: filterProduct.category_id,
                             name: filterProduct.name,
@@ -179,7 +179,7 @@ export default function HeaderBanner(props) {
         const Enumclass = async () => {
             try {
                 await axios
-                    .get('http://localhost:5000/api/cart_count', {
+                    .get('https://api.carbon-greentravel.com/api/cart_count', {
                         params: {
                             user_id: Cookies.get('user_idCk')? Cookies.get('user_idCk'):0
                         }

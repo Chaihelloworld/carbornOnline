@@ -73,7 +73,7 @@ export default function HeaderBanner(props) {
         setLoading(true);
         try {
             await axios
-                .post(`http://localhost:5000/api/register`, {
+                .post(`https://api.carbon-greentravel.com/api/register`, {
                     name: getLogin.name,
                     email: getLogin.email,
                     password: getLogin.password,
@@ -96,7 +96,7 @@ export default function HeaderBanner(props) {
         setLoading(true);
         try {
             await axios
-                .post(`http://localhost:5000/api/login`, {
+                .post(`https://api.carbon-greentravel.com/api/login`, {
                     email: username,
                     password: password
                 })

@@ -6,7 +6,7 @@ const getUserData = async () => {
   const token = Cookies.get('token'); // Replace with your actual JWT token
 
   // Define the API URL
-  const apiUrl = 'http://localhost:5000/api/get-user'; // Make sure to include the full URL
+  const apiUrl = 'https://api.carbon-greentravel.com/api/get-user'; // Make sure to include the full URL
 
   // Set the headers for the request
   const headers = {

@@ -73,7 +73,7 @@ export default function HeaderBanner(props) {
         setLoading(true);
         try {
             await axios
-                .post(`http://localhost:5000/api/login`, {
+                .post(`https://api.carbon-greentravel.com/api/login`, {
                     email: getLogin.email,
                     password: getLogin.password
                 })
@@ -94,7 +94,7 @@ export default function HeaderBanner(props) {
             setLoading(true);
             try {
                 await axios
-                    .get(`http://localhost:5000/api/historycart?user_id=${Cookies.get('user_idCk')}`)
+                    .get(`https://api.carbon-greentravel.com/api/historycart?user_id=${Cookies.get('user_idCk')}`)
                     .then((res) => {
                         setListHistory(res.data.data);
                     });

@@ -64,7 +64,7 @@ export default function HeaderBanner(props) {
                     }));
                     try {
                         await axios
-                            .post('http://localhost:5000/api/update_cart_active', {
+                            .post('https://api.carbon-greentravel.com/api/update_cart_active', {
                                 updatedCartItems
                             })
                             .then((response) => {
@@ -94,7 +94,7 @@ export default function HeaderBanner(props) {
                     };
                     try {
                         await axios
-                            .post('http://localhost:5000/api/historyCart', {
+                            .post('https://api.carbon-greentravel.com/api/historyCart', {
                                 param
                             })
                             .then((response) => {
@@ -112,7 +112,7 @@ export default function HeaderBanner(props) {
     const DeleteRow = async () => {
         try {
             await axios
-                .delete(`http://localhost:5000/api/delete_Cart?user_id=${Cookies.get('user_idCk') }`)
+                .delete(`https://api.carbon-greentravel.com/api/delete_Cart?user_id=${Cookies.get('user_idCk') }`)
                 .then((response) => {
                     // console.log(response);
                     router.push('/');
@@ -223,7 +223,7 @@ export default function HeaderBanner(props) {
         const Getlist_Cart = async () => {
             try {
                 await axios
-                    .get('http://localhost:5000/api/cart_list', {
+                    .get('https://api.carbon-greentravel.com/api/cart_list', {
                         params: {
                             user_id: Cookies.get('user_idCk') 
                         }
