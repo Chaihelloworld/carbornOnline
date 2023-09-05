@@ -166,8 +166,9 @@ export default function HeaderBanner(props) {
         );
         setListCart(updatedCart);
         callcarbon();
+        console.log(defaultCal[index],'*',updatedCart[index].total_cart_count);
 
-        // console.log(updatedCart);
+        console.log(updatedCart);
     };
 
     const handleQuantityClick = (index) => {
