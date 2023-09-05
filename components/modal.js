@@ -97,7 +97,7 @@ function MydModalWithGrid(props) {
     };
 
 const addCartAPI =  async(id,count)=>{
-    if(Cookies.remove('token') == null){
+    if(Cookies.get('token') == null){
         router.push('/login')
         return;
     } 
