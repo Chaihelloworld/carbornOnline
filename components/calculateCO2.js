@@ -132,7 +132,7 @@ export default function HeaderBanner(props) {
             i === index ? { ...item, total_cart_count: parseInt(value) } : item
         );
         setListCart(updatedCart);
-        // console.log(updatedCart);
+        console.log('sumCO2=>',sumCO2);
         callcarbon();
     };
 
@@ -148,6 +148,8 @@ export default function HeaderBanner(props) {
                     : item
             );
             setListCart(updatedCart);
+            console.log('sumCO2=>',sumCO2);
+
             callcarbon();
         }
     };
@@ -163,8 +165,10 @@ export default function HeaderBanner(props) {
                 : item
         );
         setListCart(updatedCart);
+        console.log('sumCO2=>',sumCO2);
+
         callcarbon();
-        console.log(defaultCal[index],'*',updatedCart[index].total_cart_count);
+        // console.log(defaultCal[index],'*',updatedCart[index].total_cart_count);
 
         console.log(updatedCart);
     };
@@ -208,8 +212,10 @@ export default function HeaderBanner(props) {
 
     const callcarbon = () => {
         let sum = 0;
-        listCart.map((data, i) => (sum += data.total_CO2));
-        var convertSum = sum.toFixed(2)
+        listCart.map((data, i) => (Number(sum) += Number(data.total_CO2)));
+        var convertSum = Number(sum).toFixed(2)
+        console.log(' convertSum =>',convertSum);
+
         setSumCO2(convertSum);
     };
 
