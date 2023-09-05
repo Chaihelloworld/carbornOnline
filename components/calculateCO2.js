@@ -217,10 +217,11 @@ export default function HeaderBanner(props) {
         console.log(listCart)
         listCart.forEach((data,index) => {
             let val=0
-            val+= data.total_CO2
-            console.log('val[index]',index,val)
-            setSumCO2(val);
+            sum+= data.total_CO2
+            console.log('val[index]',index,val,'sum ==>',sum)
         });
+        setSumCO2(sum);
+
         // listCart.map((data, i) => (sum += data.total_CO2));
         // console.log('sumCO2=>', sumCO2);
         // console.log('sumCO2=>', typeof sumCO2);
