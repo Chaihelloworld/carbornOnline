@@ -174,6 +174,7 @@ export default function HeaderBanner(props) {
     };
 
     const handleQuantityClick = (index) => {
+        console.log('tiggle!')
         const updatedVisibility = [...buttonsVisibility];
         updatedVisibility[index] = !updatedVisibility[index];
         setButtonsVisibility(updatedVisibility);
@@ -354,6 +355,7 @@ export default function HeaderBanner(props) {
                                                                                     'absolute',
                                                                                 top: '50%',
                                                                                 right: '10px',
+                                                                                width:'20px',
                                                                                 transform:
                                                                                     'translateY(-50%)'
                                                                             }}
