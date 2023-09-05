@@ -200,18 +200,8 @@ export default function HeaderBanner(props) {
             console.log(error);
         }
     };
-    const getCategories = async (event) => {
-        try {
-            await axios.get('https://api.carbon-greentravel.com/api/categories').then((response) => {
-                console.log('response.data.data  >======< >>>',response.data.data);
-                // setListProductCetagory(response.data.data);
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+
     useEffect(() => {
-        getCategories();
         callcarbon();
         Getlist_Cart();
     }, []);
@@ -393,7 +383,7 @@ export default function HeaderBanner(props) {
                                                         <h6 style={{ textAlign: 'end' }}>
                                                             {/* {calNums(data.total_CO2,data.total_cart_count)} */}
                                                             {/* {data.total_CO2.toFixed(2)} */}
-                                                            {typeof data.total_CO2 === 'number' ? data.total_CO2.toFixed(2) : data.total_CO2}
+                                                            {data.total_CO2}
 
                                                         </h6>
                                                     </Col>
@@ -415,7 +405,7 @@ export default function HeaderBanner(props) {
                                         }}>
                                         <h6>รวมปริมาณคาร์บอนทั้งหมด</h6>
                                         <h6 style={{ textAlign: 'end', color: 'green' }}>
-                                            {sumCO2.toFixed(2)}
+                                            {sumCO2}
                                         </h6>
                                     </Col>
                                 </Row>
