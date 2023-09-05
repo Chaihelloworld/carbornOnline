@@ -132,7 +132,7 @@ export default function HeaderBanner(props) {
             i === index ? { ...item, total_cart_count: parseInt(value) } : item
         );
         setListCart(updatedCart);
-        console.log('sumCO2=>',sumCO2);
+        console.log('sumCO2=>', sumCO2);
         callcarbon();
     };
 
@@ -148,7 +148,7 @@ export default function HeaderBanner(props) {
                     : item
             );
             setListCart(updatedCart);
-            console.log('sumCO2=>',sumCO2);
+            console.log('sumCO2=>', sumCO2);
 
             callcarbon();
         }
@@ -165,7 +165,7 @@ export default function HeaderBanner(props) {
                 : item
         );
         setListCart(updatedCart);
-        console.log('sumCO2=>',sumCO2);
+        console.log('sumCO2=>', sumCO2);
 
         callcarbon();
         // console.log(defaultCal[index],'*',updatedCart[index].total_cart_count);
@@ -182,7 +182,6 @@ export default function HeaderBanner(props) {
     const [authUser_id, setAuthUser_id] = useState();
 
     const Getlist_Cart = async () => {
-
         const params = {
             user_id: Cookies.get('user_idCk')
         };
@@ -212,8 +211,10 @@ export default function HeaderBanner(props) {
 
     const callcarbon = () => {
         let sum = 0;
-        listCart.map((data, i) => (Number(sum) += Number(data.total_CO2)));
-        console.log('sumCO2=>',sumCO2);
+        listCart.map((data, i) => (sum += data.total_CO2));
+        console.log('sumCO2=>', sumCO2);
+        console.log('sumCO2=>', typeof sumCO2);
+
         setSumCO2(sum);
     };
 
@@ -388,7 +389,6 @@ export default function HeaderBanner(props) {
                                                             {/* {calNums(data.total_CO2,data.total_cart_count)} */}
                                                             {Number(data.total_CO2).toFixed(2)}
                                                             {/* {data.total_CO2} */}
-
                                                         </h6>
                                                     </Col>
                                                 </div>
