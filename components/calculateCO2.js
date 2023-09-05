@@ -147,8 +147,6 @@ export default function HeaderBanner(props) {
                       }
                     : item
             );
-            // console.log(updatedCart[index].total_CO2 , '-',defaultCal[index] );
-
             setListCart(updatedCart);
             callcarbon();
         }
@@ -383,8 +381,8 @@ export default function HeaderBanner(props) {
                                                         </div>
                                                         <h6 style={{ textAlign: 'end' }}>
                                                             {/* {calNums(data.total_CO2,data.total_cart_count)} */}
-                                                            {/* {data.total_CO2.toFixed(2)} */}
-                                                            {data.total_CO2}
+                                                            {Number(data.total_CO2).toFixed(2)}
+                                                            {/* {data.total_CO2} */}
 
                                                         </h6>
                                                     </Col>
@@ -406,7 +404,7 @@ export default function HeaderBanner(props) {
                                         }}>
                                         <h6>รวมปริมาณคาร์บอนทั้งหมด</h6>
                                         <h6 style={{ textAlign: 'end', color: 'green' }}>
-                                            {sumCO2}
+                                            {Number(sumCO2).toFixed(2)}
                                         </h6>
                                     </Col>
                                 </Row>
