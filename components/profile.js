@@ -146,7 +146,7 @@ export default function HeaderBanner(props) {
                             className={stylesPf.avatar__image}
                         />
                         <br />
-                        <p style={{ fontSize: '16px' }}>Hi , taradon</p>
+                        <p style={{ fontSize: '16px' }}>Hi , {Cookies.get('name')}</p>
                     </div>
                 </Row>
                 {/* <Row xs={12} md={12} className={stylesPf.body}> */}
