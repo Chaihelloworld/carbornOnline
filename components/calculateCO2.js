@@ -133,7 +133,7 @@ export default function HeaderBanner(props) {
         );
         setListCart(updatedCart);
         console.log('sumCO2=>', sumCO2);
-        callcarbon();
+        // callcarbon();
     };
 
     const handleDecrement = (index) => {
@@ -150,7 +150,7 @@ export default function HeaderBanner(props) {
             setListCart(updatedCart);
             console.log('sumCO2=>', sumCO2);
 
-            callcarbon();
+            // callcarbon();
         }
     };
 
@@ -167,7 +167,7 @@ export default function HeaderBanner(props) {
         setListCart(updatedCart);
         console.log('sumCO2=>', sumCO2);
 
-        callcarbon();
+        // callcarbon();
         // console.log(defaultCal[index],'*',updatedCart[index].total_cart_count);
 
         console.log(updatedCart);
@@ -204,19 +204,28 @@ export default function HeaderBanner(props) {
     };
 
     useEffect(() => {
-        callcarbon();
+        // callcarbon();
         Getlist_Cart();
     }, []);
     // console.log(defaultCal);
 
-    const callcarbon = () => {
+    // const callcarbon = () => {
+    
+    // };
+    useEffect(()=>{
         let sum = 0;
-        listCart.map((data, i) => (sum += data.total_CO2));
-        console.log('sumCO2=>', sumCO2);
-        console.log('sumCO2=>', typeof sumCO2);
+        console.log(listCart)
+        listCart.forEach((data,index) => {
+            let val=0
+            val+= data.total_CO2
+            console.log('val[index]',index,val)
+            setSumCO2(val);
+        });
+        // listCart.map((data, i) => (sum += data.total_CO2));
+        // console.log('sumCO2=>', sumCO2);
+        // console.log('sumCO2=>', typeof sumCO2);
 
-        setSumCO2(sum);
-    };
+    },[listCart])
 
     return (
         <div>
