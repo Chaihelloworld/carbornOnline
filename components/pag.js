@@ -48,7 +48,7 @@ const Pag = () => {
                     </Col>
                     <Col md={12} xs={12}>
                         {SideImages.map((src, index) => (
-                            <div key={index} style={{ display: 'flex' ,padding:'15px',paddingBottom:'35px'}}>
+                            <div key={index} style={{ display: 'flex' ,padding:'15px',paddingBottom:'25px'}}>
                                 <Image
                                     src={src}
                                     width={1400}

@@ -19,6 +19,7 @@ const getUserData = async () => {
 
     if (response.status === 200) {
         Cookies.set('user_idCk',response.data.data.id);
+        // console.log(response.data.data)
       return response.data;
     } else {
       throw new Error('Failed to fetch user data');

@@ -18,6 +18,7 @@ import STORE from '../libs/store.image';
 import Image from 'next/image';
 import data from './product.json';
 import Cookie from 'js-cookie';
+import getUserData  from '../pages/api/Provider'
 
 // import MydModalWithGrid from './modal';
 import axios from 'axios';
@@ -61,6 +62,16 @@ export default function HeaderBanner(props) {
     };
 
     const [isLoading, setLoading] = useState(false);
+    const [authUser_id,setAuthUser_id] = useState();
+    useEffect(() => {
+        getUserData()
+          .then((data) => {
+            setAuthUser_id(data.data.role);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, []);
     const expirationDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000); // 7 days from now
     const Login = async () => {
         setLoading(true);
@@ -74,7 +85,12 @@ export default function HeaderBanner(props) {
                     // console.log(res.data.token);
                     Cookie.set('name', res.data.user.name);
                     Cookie.set('token', res.data.token, { expires: expirationDate });
-                    router.push('/productList');
+                    if(authUser_id !== 2 ){
+                        router.push('/products');
+                    }else{
+                        router.push('/productList');
+                    }
+                    
                     setLoading(false);
                 });
         } catch (error) {

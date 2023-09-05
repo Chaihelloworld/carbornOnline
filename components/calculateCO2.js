@@ -314,7 +314,7 @@ export default function HeaderBanner(props) {
                                                             <Form>
                                                                 <Form.Group
                                                                     controlId="quantity"
-                                                                    style={{ width: '55px' }}>
+                                                                    style={{ width: '70px' }}>
                                                                     <div
                                                                         onClick={() =>
                                                                             handleQuantityClick(
@@ -330,6 +330,7 @@ export default function HeaderBanner(props) {
                                                                         <Form.Control
                                                                             type="number"
                                                                             min={1}
+                                                                            disabled={true}
                                                                             value={
                                                                                 data.total_cart_count
                                                                             }
