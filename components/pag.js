@@ -41,14 +41,14 @@ const Pag = () => {
                     <Col md={12} xs={12}>
                         <h1 style={{textAlign:'center'}}>รู้ก่อนเที่ยว</h1>
                         <div style={{padding:'15px'}}>
-                        <h5>COMMING SOON CONTENT ...</h5>
+                        {/* <h5>COMMING SOON CONTENT ...</h5> */}
                         {/* <h5>CIRCULAR คัดแยกของเสียจากอุตสาหกรรมสิ่งทอตามเฉดสี และ นำมาแปรสภาพเป็นผ้าหลากสี หรือ เสื้อผ้าใหม่ โดยไม่ผ่านกระบวนการฟอกย้อม เพื่อนำกลับมาใช้เป็นสินค้าที่ยั่งยืน และ สร้างผลกระทบที่ดีต่อโลกใบนี้</h5>
                         <h5>สิ่งที่ CIRCULAR ทำ ถือเป็นส่วนหนึ่งในการแก้ไขปัญหาสำหรับอนาคตร่วมกันของทุกคนที่เป็นส่วนหนึ่งของโลกใบนี้</h5> */}
                         </div>
                     </Col>
                     <Col md={12} xs={12}>
                         {SideImages.map((src, index) => (
-                            <div key={index} style={{ display: 'flex' }}>
+                            <div key={index} style={{ display: 'flex' ,padding:'15px',paddingBottom:'35px'}}>
                                 <Image
                                     src={src}
                                     width={1400}
@@ -57,6 +57,7 @@ const Pag = () => {
                                     onClick={() => openLightbox(index)}
                                 />
                             </div>
+                           
                         ))}
                     </Col>
                 </Row>

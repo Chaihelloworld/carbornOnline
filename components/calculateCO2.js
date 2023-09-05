@@ -209,7 +209,8 @@ export default function HeaderBanner(props) {
     const callcarbon = () => {
         let sum = 0;
         listCart.map((data, i) => (sum += data.total_CO2));
-        setSumCO2(sum);
+        var convertSum = sum.toFixed(2)
+        setSumCO2(convertSum);
     };
 
     return (
@@ -404,7 +405,7 @@ export default function HeaderBanner(props) {
                                         }}>
                                         <h6>รวมปริมาณคาร์บอนทั้งหมด</h6>
                                         <h6 style={{ textAlign: 'end', color: 'green' }}>
-                                            {Number(sumCO2).toFixed(2)}
+                                            {sumCO2}
                                         </h6>
                                     </Col>
                                 </Row>
