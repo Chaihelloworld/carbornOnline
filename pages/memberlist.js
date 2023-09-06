@@ -22,10 +22,10 @@ export default function Home() {
             {/* <div > */}
             <Banner />
             {/* </div> */}
-            <div style={{bottom:'1px'}}>
+            {/* <div style={{bottom:'1px'}}>
             <Footer/>   
 
-            </div>
+            </div> */}
 
             {/* <ActionBottom /> */}
         </>
