@@ -63,6 +63,9 @@ export default function HeaderBanner(props) {
 
     const [isLoading, setLoading] = useState(false);
     const [authUser_id,setAuthUser_id] = useState();
+    const [errorLog,setErrorLog] = useState('');
+
+    
     useEffect(() => {
         getUserData()
           .then((data) => {
@@ -82,6 +85,10 @@ export default function HeaderBanner(props) {
                     password: getLogin.password
                 })
                 .then((res) => {
+                    if(res.msg === "Email or password is incorrect!"){
+                        setErrorLog('Email or password is incorrect!')
+                    }
+                    //Email or password is incorrect!
                     // console.log(res.data.token);
                     Cookie.set('name', res.data.user.name);
                     Cookie.set('token', res.data.token, { expires: expirationDate });
@@ -185,7 +192,7 @@ export default function HeaderBanner(props) {
                                         />
                                     </Form.Group>
                                 </Col>
-
+                                <div><p style={{color:'red'}}>{errorLog ? errorLog : ''}</p></div>
                                 <br />
                                 <Col xs={8} md={3}>
                                     <Button
