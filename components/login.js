@@ -85,10 +85,7 @@ export default function HeaderBanner(props) {
                     password: getLogin.password
                 })
                 .then((res) => {
-                    console.log('res --->',res)
-                    if(res.msg === "Email or password is incorrect!"){
-                        setErrorLog('Email or password is incorrect!')
-                    }
+                    // console.log('res --->',res)
                     //Email or password is incorrect!
                     // console.log(res.data.token);
                     Cookie.set('name', res.data.user.name);
@@ -103,6 +100,7 @@ export default function HeaderBanner(props) {
                 });
         } catch (error) {
             console.log(error);
+            setErrorLog('Email or password is incorrect!')
         }
     };
 
