@@ -192,7 +192,7 @@ export default function HeaderBanner(props) {
                                     </Form.Group>
                                 </Col>
                                 <small><p style={{color:'red'}}>{errorLog ? errorLog : ''}</p></small>
-                                <br />
+                                {/* <br /> */}
                                 <Col xs={8} md={3}>
                                     <Button
                                         style={{ width: '-webkit-fill-available' }}
