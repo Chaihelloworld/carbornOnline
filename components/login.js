@@ -85,6 +85,7 @@ export default function HeaderBanner(props) {
                     password: getLogin.password
                 })
                 .then((res) => {
+                    console.log('res --->',res)
                     if(res.msg === "Email or password is incorrect!"){
                         setErrorLog('Email or password is incorrect!')
                     }
