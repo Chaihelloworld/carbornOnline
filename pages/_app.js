@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
                 
             </Helmet> */}
             <Head>
-                <link rel="shortcut icon" href="/favicon.png" />
+                <link rel="shortcut icon" href="/favicon.jpg" />
                 <title>
                     Zero Carbon การท่องเที่ยวคาร์บอนสุทธิเป็นศูนย์ กลุ่มอุทยานแห่งชาติสีเขียว
                 </title>
