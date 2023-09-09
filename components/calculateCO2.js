@@ -118,7 +118,7 @@ export default function HeaderBanner(props) {
                 )
                 .then((response) => {
                     // console.log(response);
-                    router.push('/');
+                    router.push('/products');
                 });
             apiSubmit();
         } catch (error) {

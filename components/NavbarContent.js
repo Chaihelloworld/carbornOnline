@@ -510,7 +510,6 @@ function NavbarMain(props) {
                                 flexDirection: 'row'
                             }}>
                             <a style={{ fontSize: '16px' }}>ยินดีต้อนรับ : {Cookie.get('name')}</a>
-                            &ensp; &ensp;
                             <Button
                                 style={{
                                     background: '#FFF',

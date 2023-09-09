@@ -50,6 +50,7 @@ function NavbarMain(props) {
             setAuthUser_id(data.data.role);
           })
           .catch((error) => {
+            localStorage.removeItem('token')
             console.error(error);
           });
       }, []);

@@ -102,25 +102,28 @@ const addCartAPI =  async(id,count)=>{
         return;
     } 
     console.log('id ==>', id ,count)
-    try {
-        await axios
-        .post('https://api.carbon-greentravel.com/api/create_cart', {
-            user_id: Cookies.get('user_idCk') ,
-            product_id: id,
-            count: count,
-            active: true,
-            // type_products: [],
-        })
-        .then((response) => {
-            // console.log(response.data);
-            // console.log('success', response.data.message);
-            // router.reload('/createStore')
-            setQuantity(1)
-            props.onHide()
-        });
-    } catch (error) {
-        console.log(error);
+    if(Cookies.get('user_idCk')){
+        try {
+            await axios
+            .post('https://api.carbon-greentravel.com/api/create_cart', {
+                user_id: Cookies.get('user_idCk') ,
+                product_id: id,
+                count: count,
+                active: true,
+                // type_products: [],
+            })
+            .then((response) => {
+                // console.log(response.data);
+                // console.log('success', response.data.message);
+                // router.reload('/createStore')
+                setQuantity(1)
+                props.onHide()
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
+ 
 
 }
     const handleSubmit = (event) => {
