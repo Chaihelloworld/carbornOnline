@@ -30,26 +30,26 @@ function ActionBottom() {
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
-    const [lgShow, setLgShow] = useState(false);
+    const [lgShow, setLgShow] = useState(true);
 
     // const [lgShow, setLgShow] = useState(localStorage.getItem('newShow') === 'false' ? false : true);
-    useEffect(() => {
-        // Check localStorage for the initial value
-        const localStorageValue = localStorage.getItem('newShow');
-        if (localStorageValue !== null) {
-          setLgShow(localStorageValue === 'true');
-        } else {
-          // If not found in localStorage, default to true
-          setTimeout(() => {
-            localStorage.removeItem('newShow');
-          }, 600000);
-          setLgShow(true);
-        }
-      }, []);
+    // useEffect(() => {
+    //     // Check localStorage for the initial value
+    //     const localStorageValue = localStorage.getItem('newShow');
+    //     if (localStorageValue !== null) {
+    //       setLgShow(localStorageValue === 'true');
+    //     } else {
+    //       // If not found in localStorage, default to true
+    //       setTimeout(() => {
+    //         localStorage.removeItem('newShow');
+    //       }, 600000);
+    //       setLgShow(true);
+    //     }
+    //   }, []);
     
       const handleClose = () => {
         setLgShow(false);
-        localStorage.setItem('newShow', 'false');
+        // localStorage.setItem('newShow', 'false');
       };
     
       useEffect(() => {
