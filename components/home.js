@@ -42,7 +42,7 @@ function ActionBottom() {
           // If not found in localStorage, default to true
           setTimeout(() => {
             localStorage.removeItem('newShow');
-          }, 1800000);
+          }, 600000);
           setLgShow(true);
         }
       }, []);
