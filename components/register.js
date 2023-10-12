@@ -104,7 +104,7 @@ export default function HeaderBanner(props) {
                     // console.log(res.data.token);
                     Cookie.set('name', res.data.user.name);
                     Cookie.set('token', res.data.token, { expires: expirationDate });
-                    router.push('/productList');
+                    router.push('/products');
                     setLoading(false);
                 });
         } catch (error) {
