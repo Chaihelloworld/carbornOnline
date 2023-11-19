@@ -313,7 +313,7 @@ console.log(stateUplaod)
                                                 value="CO2"
                                                 id="CO2"
                                                 onChange={hendleChange}>
-                                                <Form.Label>ค่า CO2Kg</Form.Label>
+                                                <Form.Label>ค่า KgCO2e</Form.Label>
                                                 <Form.Control
                                                     type="number"
                                                     aria-autocomplete="false"

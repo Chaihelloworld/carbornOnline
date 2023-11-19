@@ -431,7 +431,7 @@ export default function HeaderBanner(props) {
                                     </Table> */}
                                 {/*                                    
                                                 <div style={{fontSize:"20px",float:'right'}}>
-                                                    ลดคาร์บอน ทั้งหมด <a style={{color:'green' ,fontWeight:550}}>{calculateCO2()} </a>CO2Kg
+                                                    ลดคาร์บอน ทั้งหมด <a style={{color:'green' ,fontWeight:550}}>{calculateCO2()} </a>KgCO2e
                                                 </div> */}
 
                                 <MydModalWithGrid

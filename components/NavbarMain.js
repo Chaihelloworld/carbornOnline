@@ -499,11 +499,12 @@ function NavbarMain(props) {
                     </div>
                     <div className={styles.menulogin}>
                         <ui style={{paddingTop:'3px'}}>
-                            <il style={{transform:'translate(0px,5px)',padding:'5px'}}>
-                                <img src={Logo_main2.src} alt="logoMain" width={92} />
-                            </il>
+                          
                             <il  style={{padding:'5px'}}>
                                 <img src={Logo_main1.src} alt="logoMain" width={45} />
+                            </il>
+                            <il style={{transform:'translate(0px,5px)',padding:'5px'}}>
+                                <img src={Logo_main2.src} alt="logoMain" width={92} />
                             </il>
                             <il style={{padding:'5px'}}>
                                 <img src={Logo_main5.src} alt="logoMain" width={75} />

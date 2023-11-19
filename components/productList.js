@@ -367,7 +367,7 @@ export default function HeaderBanner(props) {
                                                 <th>#</th>
                                                 <th>รูป Product</th>
                                                 <th>ชื่อ Product</th>
-                                                <th>Carbon (CO2Kg)</th>
+                                                <th>Carbon (KgCO2e)</th>
                                                 <th>ประเภท</th>
                                                 <th>จัดการ</th>
                                             </tr>
