@@ -35,9 +35,9 @@ export default function Home() {
         พื้นที่ภาคเหนือตอนบนมุ่งสู่การท่องเที่ยวคาร์บอนสุทธิเป็นศูนย์ (2566)
         <Row style={{padding:'5px'}}>
                             <Col >
-                                <img src={Logo_main2.src} alt="logoMain" width={92} style={{padding:'2px'}}/>
-                          
                                 <img src={Logo_main1.src} alt="logoMain" width={45} style={{padding:'2px'}}/>
+
+                                <img src={Logo_main2.src} alt="logoMain" width={92} style={{padding:'2px'}}/>
            
                                 <img src={Logo_main5.src} alt="logoMain" width={70} style={{padding:'2px'}}/>
                     
