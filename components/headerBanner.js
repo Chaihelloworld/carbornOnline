@@ -31,7 +31,7 @@ export default function HeaderBanner(props) {
         AOS.init();
         // fetchLink();
     }, []);
-    const [listProduct, setListProduct] = useState();
+    const [listProduct, setListProduct] = useState([]);
     const [filterProduct, setFilterProduct] = useState({
         name: '',
         category_id: null,
@@ -73,14 +73,17 @@ export default function HeaderBanner(props) {
     const handlePageChange = async (pageNumber) => {
         setLoading(true);
         try {
-            const response = await axios.get('https://api.carbon-greentravel.com/api/products_list', {
-                params: {
-                    category_id: filterProduct.category_id,
-                    name: filterProduct.name,
-                    page: pageNumber,
-                    perPage: filterProduct.per_page
+            const response = await axios.get(
+                'https://api.carbon-greentravel.com/api/products_list',
+                {
+                    params: {
+                        category_id: filterProduct.category_id,
+                        name: filterProduct.name,
+                        page: pageNumber,
+                        perPage: filterProduct.per_page
+                    }
                 }
-            });
+            );
             setListProduct(response.data.data);
             setPage(response.data.currentPage);
             setTotalPages(response.data.totalPages);
@@ -101,10 +104,12 @@ export default function HeaderBanner(props) {
     };
     const getCategories = async (event) => {
         try {
-            await axios.get('https://api.carbon-greentravel.com/api/categories').then((response) => {
-                console.log(response.data.data);
-                setListProductCetagory(response.data.data);
-            });
+            await axios
+                .get('https://api.carbon-greentravel.com/api/categories')
+                .then((response) => {
+                    console.log(response.data.data);
+                    setListProductCetagory(response.data.data);
+                });
         } catch (error) {
             console.log(error);
         }
@@ -181,7 +186,7 @@ export default function HeaderBanner(props) {
                 await axios
                     .get('https://api.carbon-greentravel.com/api/cart_count', {
                         params: {
-                            user_id: Cookies.get('user_idCk')? Cookies.get('user_idCk'):0
+                            user_id: Cookies.get('user_idCk') ? Cookies.get('user_idCk') : 0
                         }
                     })
                     .then((response) => {
@@ -198,34 +203,104 @@ export default function HeaderBanner(props) {
         <>
             {/* // <div> */}
 
-            <Container fluid={'true'} style={{ backgroundColor: '#f0f0f0' }}>
-                    <Container>
-                        <Row>
-                            <style jsx>{`
-                                .paddingDestop {
-                                    padding: 30px;
-                                    display: none;
-                                }
-                                @media (min-width: 991.98px) {
-                                    .paddingDestop {
-                                        display: none;
-                                        padding: 2px;
-                                    }
-                                }
-                                @media (min-width: 791.98px) {
-                                    .paddingDestop {
-                                        padding: 0px;
-                                        display: none;
-                                    }
-                                }
-                                .btn-primary {
-                                    color: #fff;
-                                    background-color: #007a06;
-                                    border-color: #007a06;
-                                }
-                            `}</style>
+            <Container>
+                <div
+                    style={{
+                        // display: 'flex',
+                        position: 'sticky',
+                        zIndex: 999,
+                        backgroundColor: '#FFF',
+                        height: 100,
+                        top: 0.5
+                        // justifyContent: 'center'
+                    }}>
+                    <Form autoComplete="off" onSubmit={searchFilter}>
+                        <Row style={{ padding: 25 }}>
+                            <Col md={2} xs={12} style={{ padding: '5px' }}>
+                                <InputGroup>
+                                    <Form.Select
+                                        name="category_id"
+                                        value={filterProduct.category_id}
+                                        id="category_id"
+                                        onChange={hendleChange}>
+                                        <option key={-1} value={-1}>
+                                            ประเภทอุตสาหกรรม
+                                        </option>
+                                        {listProductCetagory &&
+                                            listProductCetagory.map((data, index) => {
+                                                return (
+                                                    <>
+                                                        <option key={index} value={data.id}>
+                                                            {data.name}
+                                                        </option>
+                                                    </>
+                                                );
+                                            })}
+                                    </Form.Select>
+                                </InputGroup>
+                            </Col>
+                            <Col xs={12} md={10} style={{ padding: '5px' }}>
+                                <InputGroup>
+                                    <Form.Control
+                                        placeholder="Search..."
+                                        aria-label="Search"
+                                        enterKeyHint=""
+                                        name="name"
+                                        id="name"
+                                        value={filterProduct.name}
+                                        autoComplete="off"
+                                        onKeyPress={(ev) => {
+                                            if (ev.key === 'Enter') {
+                                                ev.preventDefault();
+                                                searchFilter();
+                                            }
+                                        }}
+                                        onChange={hendleChange}
+                                    />
+                                    <Button
+                                        variant="outline-secondary"
+                                        // type="submit"
+                                        disableElevation
+                                        onClick={() => {
+                                            searchFilter();
+                                        }}>
+                                        <FaSearch />
+                                    </Button>
+                                    <Button variant="outline-secondary" onClick={clearFilter}>
+                                        <FaSync />
+                                    </Button>
+                                </InputGroup>
+                            </Col>
+                        </Row>
+                        <br />
+                    </Form>
+                </div>
+                <Row>
+                    <style jsx>{`
+                        .paddingDestop {
+                            padding: 30px;
+                            display: none;
+                        }
+                        @media (min-width: 991.98px) {
+                            .paddingDestop {
+                                display: none;
+                                padding: 2px;
+                            }
+                        }
+                        @media (min-width: 791.98px) {
+                            .paddingDestop {
+                                padding: 0px;
+                                display: none;
+                            }
+                        }
+                        .btn-primary {
+                            color: #fff;
+                            background-color: #007a06;
+                            border-color: #007a06;
+                        }
+                    `}</style>
 
-                            {/* <div
+                    {/* <div
                             className={styles.btncart_content}
                         >
                             <Button
@@ -255,174 +330,124 @@ export default function HeaderBanner(props) {
                                 />
                             </Button>
                         </div> */}
-                            <Col xs={12} md={12} style={{ marginTop: '0' }}>
-                                <Container>
-                                <div style={{zIndex:'9999',padding:'inherit'}}>
-                                    <Form autoComplete="off" onSubmit={searchFilter}>
-                                        <Row>
-                                            <Col md={2} xs={12} style={{ padding: '5px' }}>
-                                                <InputGroup>
-                                                    <Form.Select
-                                                        name="category_id"
-                                                        value={filterProduct.category_id}
-                                                        id="category_id"
-                                                        onChange={hendleChange}>
-                                                        <option key={-1} value={-1}>
-                                                            ประเภทอุตสาหกรรม
-                                                        </option>
-                                                        {listProductCetagory &&
-                                                            listProductCetagory.map(
-                                                                (data, index) => {
-                                                                    return (
-                                                                        <>
-                                                                            <option
-                                                                                key={index}
-                                                                                value={data.id}>
-                                                                                {data.name}
-                                                                            </option>
-                                                                        </>
-                                                                    );
-                                                                }
-                                                            )}
-                                                    </Form.Select>
-                                                </InputGroup>
-                                            </Col>
-                                            <Col xs={12} md={10} style={{ padding: '5px' }}>
-                                                <InputGroup>
-                                                    <Form.Control
-                                                        placeholder="Search..."
-                                                        aria-label="Search"
-                                                        enterKeyHint=""
-                                                        name="name"
-                                                        id="name"
-                                                        value={filterProduct.name}
-                                                        autoComplete="off"
-                                                        onKeyPress={(ev) => {
-                                                            if (ev.key === 'Enter') {
-                                                                ev.preventDefault();
-                                                                searchFilter();
-                                                            }
-                                                        }}
-                                                        onChange={hendleChange}
-                                                    />
-                                                    <Button
-                                                        variant="outline-secondary"
-                                                        // type="submit"
-                                                        disableElevation
-                                                        onClick={() => {
-                                                            searchFilter();
-                                                        }}>
-                                                        <FaSearch />
-                                                    </Button>
-                                                    <Button
-                                                        variant="outline-secondary"
-                                                        onClick={clearFilter}>
-                                                        <FaSync />
-                                                    </Button>
-                                                </InputGroup>
-                                            </Col>
-                                        </Row>
-                                        <br />
-                                    </Form>
-                                    </div>
-                                    <br/>
-                                    
-                                  
-                                    <div>
-                                        <Row
-                                            xs={1}
-                                            md={3}
-                                            className="g-2"
-                                            style={{
-                                                height: '560px',
-                                                overflowX: 'auto',
-                                                marginTop: '-25px'
-                                            }}>
-                                            {listProduct &&
-                                                listProduct.map((data, index) => (
-                                                    <Col key={index}>
-                                                        <Card style={{border:'none'}}>
-                                                            <div className="text-center">
-                                                                <Image
-                                                                    src={
-                                                                        data.image
-                                                                            ? data.image
-                                                                            : STORE.cart
-                                                                    }
-                                                                    alt="cart"
-                                                                    width={120}
-                                                                    height={120}
-                                                                    className="mt-3"
-                                                                />
-                                                            </div>
-                                                            <Card.Body className="text-center">
-                                                                <Card.Title>{data.name}</Card.Title>
-                                                                <Card.Text>
-                                                                    <div>
-                                                                        ปริมาณ CF: {data.CO2} kgCO2e
-                                                                    </div>
-                                                                    สินค้าคาร์บอนต่ำ
-                                                                </Card.Text>
-                                                                <Button
-                                                                    variant="primary"
-                                                                    onClick={() => {
-                                                                        setModalShow(true);
-                                                                        Productid(data);
-                                                                    }}>
-                                                                    รายละเอียด
-                                                                </Button>
-                                                            </Card.Body>
-                                                        </Card>
-                                                    </Col>
-                                                ))}
-                                        </Row>
-                                        <MydModalWithGrid
-                                            show={modalShow}
-                                            data={productid}
-                                            onHide={() => setModalShow(false)}
-                                        />
-                                    </div>
-                                    <br />
-                                    <div>
-                                        <PaginationCustom
-                                            handlePageChange={handlePageChange}
-                                            currentPage={page}
-                                            totalPages={totalPages}
-                                        />
-                                        <br />
-                                        <br />
-                                        <br />
-                                    </div>
-                                </Container>
-                            </Col>
-                        </Row>
-                        <div className={styles.btncart_content}>
-                            <Button
-                                className={styles.btncart}
-                                onClick={() => router.push('/calculateCO2')}>
-                                <div
+                    <Col xs={12} md={12} style={{ marginTop: '0' }}>
+                        <Container>
+                            <br />
+
+                            <div>
+                                <Row
+                                    xs={1}
+                                    md={4}
+                                    className="g-2"
                                     style={{
-                                        height: '25px',
-                                        width: '25px',
-                                        backgroundColor: 'red',
-                                        borderRadius: '50%',
-                                        position: 'absolute',
-                                        display: 'inline-block',
-                                        transform: 'translate(50px, 40px)',
-                                        zIndex: 999
+                                        height: 'auto',
+                                        overflowX: 'auto',
+                                        marginTop: '-25px',
+                                        padding: '25px'
                                     }}>
-                                    {totalCount ? totalCount : 0}
-                                </div>
-                                <Image
-                                    // src={STORE.cart}
-                                    src={STORE.IconCal}
-                                    alt="cart"
-                                    width={70}
-                                    height={70}
+                                    {listProduct && listProduct.length > 0 ? (
+                                        listProduct.map((data, index) => (
+                                            <Col key={index}>
+                                                <Card
+                                                    style={{
+                                                        border: 'none',
+                                                        minHeight: '150px',
+                                                        border: '1px solid #f0f0f0'
+                                                    }}>
+                                                    <div className="text-center">
+                                                        {data.image ? (
+                                                            <Image
+                                                                src={
+                                                                    data.image
+                                                                        ? data.image
+                                                                        : STORE.cart
+                                                                }
+                                                                alt="cart"
+                                                                width={120}
+                                                                height={120}
+                                                                className="mt-3"
+                                                            />
+                                                        ) : (
+                                                            <Image
+                                                                src={STORE.cart}
+                                                                alt="cart"
+                                                                width={120}
+                                                                height={120}
+                                                                className="mt-3"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <Card.Body className="text-center">
+                                                        <Card.Title>{data.name}</Card.Title>
+                                                        <Card.Text>
+                                                            <div>ปริมาณ CF: {data.CO2} kgCO2e</div>
+                                                            สินค้าคาร์บอนต่ำ
+                                                        </Card.Text>
+                                                        <Button
+                                                            variant="primary"
+                                                            onClick={() => {
+                                                                setModalShow(true);
+                                                                Productid(data);
+                                                            }}>
+                                                            รายละเอียด
+                                                        </Button>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        ))
+                                    ) : (
+                                        <Col md={12}>
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                <p>ไม่พบข้อมูล</p>
+                                            </div>
+                                        </Col>
+                                    )}
+                                </Row>
+                                <MydModalWithGrid
+                                    show={modalShow}
+                                    data={productid}
+                                    onHide={() => setModalShow(false)}
                                 />
-                            </Button>
+                            </div>
+                        </Container>
+                    </Col>
+                </Row>
+
+                <br />
+                <PaginationCustom
+                    handlePageChange={handlePageChange}
+                    currentPage={page}
+                    totalPages={totalPages}
+                />
+
+                <div className={styles.btncart_content}>
+                    <Button className={styles.btncart} onClick={() => router.push('/calculateCO2')}>
+                        <div
+                            style={{
+                                height: '25px',
+                                width: '25px',
+                                backgroundColor: 'red',
+                                borderRadius: '50%',
+                                position: 'absolute',
+                                display: 'inline-block',
+                                transform: 'translate(50px, 40px)',
+                                zIndex: 999
+                            }}>
+                            {totalCount ? totalCount : 0}
                         </div>
-                    </Container>
+                        <Image
+                            // src={STORE.cart}
+                            src={STORE.IconCal}
+                            alt="cart"
+                            width={70}
+                            height={70}
+                        />
+                    </Button>
+                </div>
             </Container>
         </>
     );

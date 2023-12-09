@@ -32,18 +32,20 @@ const PaginationComponent = ({
 // console.log('hello')
   return (
     <div className="d-flex justify-content-center">
-      <Pagination>
-        {currentPage > 1 && (
+      <Pagination >
+        {/* {currentPage > 1 && ( */}
           <Pagination.Prev
+          disabled={!(currentPage > 1)}
             onClick={() => handlePageChange(currentPage - 1)}
           />
-        )}
+        {/* )} */}
         {pageItems}
-        {currentPage < totalPages && (
+        {/* {currentPage < totalPages && ( */}
           <Pagination.Next
+          disabled={!(currentPage < totalPages)}
             onClick={() => handlePageChange(currentPage + 1)}
           />
-        )}
+        {/* )} */}
       </Pagination>
     </div>
   );

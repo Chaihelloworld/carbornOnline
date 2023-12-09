@@ -48,8 +48,11 @@ export default function Home() {
     return (
         <>
             <Navbar />
+            <Container fluid={'true'} > 
+
             <Banner />
-            <Footer />
+            </Container>
+
             <ActionBottom />
             {/* <div
                             className={styles.btncart_content}
